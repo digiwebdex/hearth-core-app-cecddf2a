@@ -6,7 +6,7 @@ WORKDIR /app
 RUN apk add --no-cache openssl
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma
-RUN npm ci --omit=dev && npx prisma generate
+RUN npm install --omit=dev --no-audit --no-fund && npx prisma generate
 
 FROM node:20-alpine AS runtime
 WORKDIR /app
