@@ -1,8 +1,69 @@
 {
   "common": {
     "brand": "Travel Agency Web",
+    "brandSub": "Website & Software Solution",
     "login": "Login",
     "register": "Register",
-    "logout": "Logout"
+    "logout": "Logout",
+    "startFreeTrial": "Start 3-Day Free Trial",
+    "bookDemo": "Book a Demo",
+    "viewPricing": "View Pricing",
+    "subscribeNow": "Subscribe Now",
+    "contactUs": "Contact Us",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "language": "Language",
+    "createAccount": "Create Account",
+    "signIn": "Sign In",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "password": "Password",
+    "fullName": "Full Name",
+    "agencyName": "Agency Name",
+    "creating": "Creating…",
+    "signingIn": "Signing in…",
+    "forgotPassword": "Forgot password?",
+    "backToLogin": "Back to Login",
+    "selectedPlan": "Selected plan",
+    "perMonth": "/month",
+    "free": "Free",
+    "custom": "Custom",
+    "popular": "Popular",
+    "bestValue": "Best Value",
+    "noCreditCard": "No credit card required",
+    "instantAccess": "Instant access — no waiting",
+    "cancelAnytime": "Cancel anytime",
+    "welcomeBack": "Welcome back",
+    "loading": "Loading…"
+  },
+  "nav": {
+    "home": "Home", "features": "Features", "pricing": "Pricing",
+    "faq": "FAQ", "contact": "Contact", "demo": "Demo"
+  },
+  "landing": {
+    "heroBadge": "🚀 #1 Travel Agency Software in Bangladesh",
+    "heroTitle1": "Run Your Entire Travel Agency",
+    "heroTitle2": "From One Platform",
+    "heroSubtitle": "From the first phone call to the final boarding pass — manage leads, quotations, bookings, payments and vendors. Start your free trial today.",
+    "ctaPrimary": "View Pricing & Start",
+    "ctaSecondary": "Get a Free Demo",
+    "statAgencies": "Travel Agencies",
+    "statBookings": "Bookings Managed",
+    "statUptime": "Uptime",
+    "statSupport": "Support"
+  },
+  "auth": {
+    "registerTitle": "Create your account",
+    "registerSubtitle": "Start your travel agency in minutes — no credit card required.",
+    "trialBadge": "3-day Pro trial · full access",
+    "welcomeBack": "Welcome back",
+    "signInSubtitle": "Sign in to your account"
+  },
+  "footer": {
+    "product": "Product", "company": "Company", "contact": "Contact",
+    "privacy": "Privacy", "terms": "Terms", "support": "Support",
+    "tagline": "Leads, quotations, bookings, invoices and vendors in one place.",
+    "rights": "All rights reserved."
   }
 }
