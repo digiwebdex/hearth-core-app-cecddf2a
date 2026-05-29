@@ -2,14 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, Mail, MapPin, ArrowUp } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import logoImg from "@/assets/logo-icon.png";
-
-const navLinks = [
-  { label: "Features", path: "/features" },
-  { label: "Pricing", path: "/pricing" },
-  { label: "FAQ", path: "/faq" },
-  { label: "Contact", path: "/contact-us" },
-];
 
 interface Props {
   children: React.ReactNode;
