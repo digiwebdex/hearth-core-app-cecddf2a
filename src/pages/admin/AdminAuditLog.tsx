@@ -119,29 +119,29 @@ const AdminAuditLog = () => {
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2 flex-1 min-w-[200px] max-w-sm">
             <Search className="h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search actor, target, action…" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Input placeholder={t("adminAuditLog.filters.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
           <Select value={moduleFilter} onValueChange={setModuleFilter}>
-            <SelectTrigger className="w-[170px]"><SelectValue placeholder="Module" /></SelectTrigger>
+            <SelectTrigger className="w-[170px]"><SelectValue placeholder={t("adminAuditLog.filters.module")} /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Modules</SelectItem>
+              <SelectItem value="all">{t("adminAuditLog.filters.allModules")}</SelectItem>
               {(Object.keys(MODULE_LABELS) as AuditModule[]).map((m) => (
                 <SelectItem key={m} value={m}>{MODULE_LABELS[m]} {stats.moduleCounts[m] ? `(${stats.moduleCounts[m]})` : ""}</SelectItem>
               ))}
             </SelectContent>
           </Select>
           <Select value={tenantFilter} onValueChange={setTenantFilter}>
-            <SelectTrigger className="w-[170px]"><SelectValue placeholder="Tenant" /></SelectTrigger>
+            <SelectTrigger className="w-[170px]"><SelectValue placeholder={t("adminAuditLog.filters.tenant")} /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Tenants</SelectItem>
-              {tenants.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+              <SelectItem value="all">{t("adminAuditLog.filters.allTenants")}</SelectItem>
+              {tenants.map((tn) => <SelectItem key={tn} value={tn}>{tn}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>
 
         {/* Log Table */}
         <Card>
-          <CardHeader><CardTitle>Events ({filtered.length})</CardTitle></CardHeader>
+          <CardHeader><CardTitle>{t("adminAuditLog.table.title", { count: filtered.length })}</CardTitle></CardHeader>
           <CardContent>
             {loading ? (
               <div className="space-y-3">{[1,2,3,4,5].map(i => <Skeleton key={i} className="h-12 w-full" />)}</div>
@@ -149,19 +149,19 @@ const AdminAuditLog = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Timestamp</TableHead>
-                    <TableHead>Actor</TableHead>
-                    <TableHead>Tenant</TableHead>
-                    <TableHead>Module</TableHead>
-                    <TableHead>Action</TableHead>
-                    <TableHead>Target</TableHead>
-                    <TableHead>Changes</TableHead>
+                    <TableHead>{t("adminAuditLog.table.timestamp")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.actor")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.tenant")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.module")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.action")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.target")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.changes")}</TableHead>
                     <TableHead className="w-[60px]"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filtered.length === 0 ? (
-                    <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">No audit events found.</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">{t("adminAuditLog.table.empty")}</TableCell></TableRow>
                   ) : (
                     filtered.map((log) => (
                       <TableRow key={log.id}>
