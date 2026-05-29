@@ -2343,8 +2343,55 @@
       "testSmsDelivered": "Delivered",
       "testFailed": "Test failed"
     }
+  },
+  "adminDashboard": {
+    "title": "Admin Dashboard",
+    "subtitle": "Platform analytics and overview — live data",
+    "refresh": "Refresh",
+    "loadFailed": "Failed to load admin data",
+    "stats": {
+      "totalRevenue": "Total Revenue",
+      "totalAgencies": "Total Agencies",
+      "activeSubs": "Active Subscriptions",
+      "pendingPayments": "Pending Payments",
+      "totalUsers": "Total Users",
+      "totalBookings": "Total Bookings"
+    },
+    "planDist": {
+      "title": "Plan Distribution",
+      "desc": "Agencies by subscription plan",
+      "empty": "No agencies yet"
+    },
+    "status": {
+      "title": "Subscription Status",
+      "desc": "Active vs expired agencies",
+      "active": "Active",
+      "expired": "Expired",
+      "other": "Other",
+      "total": "Total",
+      "agencies": "{{count}} agencies"
+    },
+    "recentTenants": {
+      "title": "Recent Agencies",
+      "desc": "Latest registrations",
+      "viewAll": "View All",
+      "empty": "No agencies yet",
+      "users": "{{count}} users"
+    },
+    "recentPayments": {
+      "title": "Recent Payments",
+      "desc": "Latest payment requests",
+      "viewAll": "View All",
+      "empty": "No payment requests yet"
+    },
+    "paymentStatus": {
+      "approved": "approved",
+      "rejected": "rejected",
+      "pending": "pending"
+    }
   }
 }
+
 
 
 
