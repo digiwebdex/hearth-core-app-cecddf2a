@@ -47,7 +47,7 @@ app.use(cors({
       !requestOrigin ||
       allowedOrigins.includes("*") ||
       allowedOrigins.includes(requestOrigin) ||
-      isTravelAgencyWebOrigin(requestOrigin)
+      isAllowedRootDomain(requestOrigin)
     ) {
       callback(null, true);
     } else {
