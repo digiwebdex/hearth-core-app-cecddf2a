@@ -31,6 +31,23 @@
 "heroSubtitle":"প্রথম ফোন কল থেকে শেষ বোর্ডিং পাস — লিড, কোটেশন, বুকিং, পেমেন্ট, ভেন্ডর সব এক জায়গায়। আজই ফ্রি ট্রায়াল শুরু করুন।",
 "ctaPrimary":"প্যাকেজ দেখে শুরু করুন","ctaSecondary":"ফ্রি ডেমো নিন",
 "statAgencies":"ট্রাভেল এজেন্সি","statBookings":"বুকিং",
-"statUptime":"আপটাইম","statSupport":"সাপোর্ট"
-}
-}
+"statUptime":"আপটাইম","statSupport":"সাপোর্ট",
+"workflowBadge":"কীভাবে কাজ করে",
+"workflowTitle":"অনুসন্ধান থেকে ট্রিপ — সহজে",
+"workflowSubtitle":"ট্রাভেল এজেন্সি যেভাবে কাজ করে, ঠিক সেভাবেই সাজানো ওয়ার্কফ্লো।",
+"stepLead":"লিড সংগ্রহ","stepLeadSub":"যেকোনো সোর্স থেকে",
+"stepQuote":"কোটেশন পাঠান","stepQuoteSub":"প্রফেশনাল PDF",
+"stepWin":"ক্লায়েন্ট জিতুন","stepWinSub":"অটো-কনভার্সন",
+"stepBook":"বুকিং নিশ্চিত","stepBookSub":"সব ট্রাভেল টাইপ",
+"stepPay":"পেমেন্ট নিন","stepPaySub":"বিকাশ, কার্ড, ব্যাংক",
+"stepTrip":"ট্রিপ ম্যানেজ","stepTripSub":"ডকুমেন্ট ও অপারেশন",
+"featuresBadge":"ফিচারসমূহ",
+"featuresTitle":"ট্রাভেল প্রফেশনালদের জন্য তৈরি",
+"featuresSubtitle":"প্রতিটি মডিউল বাস্তব কাজের ধরন অনুযায়ী ডিজাইন করা।",
+"seeAllFeatures":"সকল ফিচার দেখুন",
+"pricingBadge":"মূল্য","pricingTitle":"যেকোনো এজেন্সির জন্য প্যাকেজ",
+"pricingSubtitle":"আপনার টিমের জন্য সঠিক প্যাকেজ বেছে নিন। যেকোনো সময় আপগ্রেড করুন।",
+"compareAll":"সব প্যাকেজ তুলনা করুন",
+"testimonialsBadge":"প্রশংসাপত্র",
+"testimonialsTitle":"ট্রাভেল এজেন্সিরা আমাদের বিশ্বাস করেন",
+"testimonialsSubtitle":"যারা ইতিমধ্য
