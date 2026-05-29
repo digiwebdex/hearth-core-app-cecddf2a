@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import PermissionGate from "@/components/PermissionGate";
@@ -47,6 +48,7 @@ const getCategoryMeta = (c: VendorCategory) => CATEGORIES.find((x) => x.value ==
 const getBillStatusMeta = (s: VendorBillStatus) => BILL_STATUS_META.find((x) => x.value === s) || BILL_STATUS_META[0];
 
 const Vendors = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [vendors, setVendors] = useState<Vendor[]>([]);

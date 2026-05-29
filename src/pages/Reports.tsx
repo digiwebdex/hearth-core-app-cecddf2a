@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -40,6 +41,7 @@ function DatePicker({ date, onChange, label }: { date: Date | undefined; onChang
 }
 
 const Reports = () => {
+  const { t } = useTranslation();
   const { currentPlan } = useAuth();
   const [activeTab, setActiveTab] = useState("sales");
   const [loading, setLoading] = useState(true);

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import LoadingState from "@/components/LoadingState";
@@ -31,6 +32,7 @@ const STATUS_META: { value: QuotationStatus; label: string; color: string }[] = 
 const getStatusMeta = (s: QuotationStatus) => STATUS_META.find((x) => x.value === s) || STATUS_META[0];
 
 const Quotations = () => {
+  const { t } = useTranslation();
   const [quotations, setQuotations] = useState<Quotation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");

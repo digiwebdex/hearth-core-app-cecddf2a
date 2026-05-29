@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import DashboardLayout from "@/components/DashboardLayout";
 import PermissionGate from "@/components/PermissionGate";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -177,6 +178,7 @@ const emptyPayForm = {
 
 // ════════════════════════════════════════
 const HajjUmrah = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
 
   // State
