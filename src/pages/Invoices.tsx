@@ -734,57 +734,58 @@ const Invoices = () => {
         {/* ═══════ ADD PAYMENT DIALOG ═══════ */}
         <Dialog open={payDialogOpen} onOpenChange={(open) => { setPayDialogOpen(open); if (!open && !detailDialogOpen) setSelectedInvoiceId(null); }}>
           <DialogContent>
-            <DialogHeader><DialogTitle>Record Payment</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{t("invoicesForm.payDialog.title")}</DialogTitle></DialogHeader>
             {selectedInvoice && (
               <div className="mb-3 rounded-md border p-3 space-y-1 text-sm">
-                <div className="flex justify-between"><span className="text-muted-foreground">Total:</span><span className="font-medium">৳{selectedInvoice.totalAmount.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Paid so far:</span><span className="text-green-600 font-medium">৳{selectedInvoice.paidAmount.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Remaining:</span><span className="text-destructive font-semibold">৳{selectedInvoice.dueAmount.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.payDialog.totalLabel")}</span><span className="font-medium">৳{selectedInvoice.totalAmount.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.payDialog.paidLabel")}</span><span className="text-green-600 font-medium">৳{selectedInvoice.paidAmount.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.payDialog.remainingLabel")}</span><span className="text-destructive font-semibold">৳{selectedInvoice.dueAmount.toLocaleString()}</span></div>
               </div>
             )}
             <form onSubmit={handleAddPayment} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Amount (৳)</Label>
+                  <Label>{t("invoicesForm.payDialog.amount")}</Label>
                   <Input type="number" min={0.01} step={0.01} max={selectedInvoice?.dueAmount} value={paymentForm.amount || ""} onChange={(e) => setPaymentForm((f) => ({ ...f, amount: parseFloat(e.target.value) || 0 }))} required />
                 </div>
                 <div className="space-y-2">
-                  <Label>Method</Label>
+                  <Label>{t("invoicesForm.payDialog.method")}</Label>
                   <Select value={paymentForm.method} onValueChange={(v) => setPaymentForm((f) => ({ ...f, method: v as PaymentMethod }))}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      {PAYMENT_METHODS.map((m) => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}
+                      {PAYMENT_METHOD_VALUES.map((m) => <SelectItem key={m} value={m}>{t(`invoicesForm.methods.${m}`)}</SelectItem>)}
                     </SelectContent>
                   </Select>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Payment Date</Label>
+                  <Label>{t("invoicesForm.payDialog.date")}</Label>
                   <Input type="date" value={paymentForm.date} onChange={(e) => setPaymentForm((f) => ({ ...f, date: e.target.value }))} required />
                 </div>
                 <div className="space-y-2">
-                  <Label>Transaction Ref</Label>
-                  <Input value={paymentForm.transactionRef} onChange={(e) => setPaymentForm((f) => ({ ...f, transactionRef: e.target.value }))} placeholder="e.g. TXN-12345" />
+                  <Label>{t("invoicesForm.payDialog.ref")}</Label>
+                  <Input value={paymentForm.transactionRef} onChange={(e) => setPaymentForm((f) => ({ ...f, transactionRef: e.target.value }))} placeholder={t("invoicesForm.payDialog.refPh")} />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Received By</Label>
-                  <Input value={paymentForm.receivedBy} onChange={(e) => setPaymentForm((f) => ({ ...f, receivedBy: e.target.value }))} placeholder={user?.name || "Staff name"} />
+                  <Label>{t("invoicesForm.payDialog.receivedBy")}</Label>
+                  <Input value={paymentForm.receivedBy} onChange={(e) => setPaymentForm((f) => ({ ...f, receivedBy: e.target.value }))} placeholder={user?.name || t("invoicesForm.payDialog.receivedByPh")} />
                 </div>
                 <div className="space-y-2">
-                  <Label>Notes</Label>
-                  <Input value={paymentForm.notes} onChange={(e) => setPaymentForm((f) => ({ ...f, notes: e.target.value }))} placeholder="Optional payment notes..." />
+                  <Label>{t("invoicesForm.payDialog.notes")}</Label>
+                  <Input value={paymentForm.notes} onChange={(e) => setPaymentForm((f) => ({ ...f, notes: e.target.value }))} placeholder={t("invoicesForm.payDialog.notesPh")} />
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button type="submit" className="flex-1">Record Payment</Button>
-                <DialogClose asChild><Button type="button" variant="outline">Cancel</Button></DialogClose>
+                <Button type="submit" className="flex-1">{t("invoicesForm.payDialog.submit")}</Button>
+                <DialogClose asChild><Button type="button" variant="outline">{t("invoicesForm.cancel")}</Button></DialogClose>
               </div>
             </form>
           </DialogContent>
         </Dialog>
+
 
         {/* ═══════ REFUND DIALOG ═══════ */}
         <Dialog open={refundDialogOpen} onOpenChange={setRefundDialogOpen}>
