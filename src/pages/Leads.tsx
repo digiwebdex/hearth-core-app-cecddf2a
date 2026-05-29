@@ -227,7 +227,7 @@ const Leads = () => {
           <div key={col.value} className="space-y-2">
             <div className="flex items-center justify-between">
               <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${col.color}`}>
-                {col.label}
+                {t(`leadsForm.statuses.${col.value}`)}
               </span>
               <span className="text-xs text-muted-foreground">{items.length}</span>
             </div>
