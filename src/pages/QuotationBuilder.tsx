@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams, useNavigate } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import LoadingState from "@/components/LoadingState";
