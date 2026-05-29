@@ -296,7 +296,7 @@ const Invoices = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a"); a.href = url; a.download = "invoices.csv";
     document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-    toast({ title: "Exported invoices" });
+    toast({ title: t("invoicesForm.toast.exported") });
   };
 
   return (
