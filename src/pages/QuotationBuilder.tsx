@@ -28,18 +28,19 @@ import {
   GripVertical, ChevronUp, ChevronDown, FileText,
 } from "lucide-react";
 
-const ITEM_TYPES: { value: QuotationItemType; label: string; icon: any }[] = [
-  { value: "hotel", label: "Hotel / Accommodation", icon: Hotel },
-  { value: "flight", label: "Flight / Air Ticket", icon: Plane },
-  { value: "visa", label: "Visa Processing", icon: Stamp },
-  { value: "transport", label: "Transport / Transfer", icon: Car },
-  { value: "tour", label: "Tour / Sightseeing", icon: Map },
-  { value: "activity", label: "Activity / Excursion", icon: Bike },
-  { value: "insurance", label: "Travel Insurance", icon: Shield },
-  { value: "service_fee", label: "Service Fee", icon: DollarSign },
-  { value: "discount", label: "Discount", icon: Percent },
-  { value: "tax", label: "Tax / VAT", icon: Receipt },
+const ITEM_TYPES: { value: QuotationItemType; labelKey: string; icon: any }[] = [
+  { value: "hotel", labelKey: "hotel", icon: Hotel },
+  { value: "flight", labelKey: "flight", icon: Plane },
+  { value: "visa", labelKey: "visa", icon: Stamp },
+  { value: "transport", labelKey: "transport", icon: Car },
+  { value: "tour", labelKey: "tour", icon: Map },
+  { value: "activity", labelKey: "activity", icon: Bike },
+  { value: "insurance", labelKey: "insurance", icon: Shield },
+  { value: "service_fee", labelKey: "service_fee", icon: DollarSign },
+  { value: "discount", labelKey: "discount", icon: Percent },
+  { value: "tax", labelKey: "tax", icon: Receipt },
 ];
+
 
 const getItemIcon = (type: QuotationItemType) => ITEM_TYPES.find((t) => t.value === type)?.icon || FileText;
 
