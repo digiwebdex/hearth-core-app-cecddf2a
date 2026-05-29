@@ -95,21 +95,21 @@ const Bookings = () => {
     if (editingId) {
       bookingApi.update(editingId, booking).then(() => {
         setItems((prev) => prev.map((b) => b.id === editingId ? { ...b, ...booking } : b));
-        toast({ title: "Booking updated" });
+        toast({ title: t("bookingsForm.bookingUpdated") });
       }).catch((err: any) => {
-        toast({ title: "Update failed", description: err.message, variant: "destructive" });
+        toast({ title: t("bookingsForm.updateFailed"), description: err.message, variant: "destructive" });
       });
     } else {
       bookingApi.create(booking).then((created: any) => {
         setItems((prev) => [...prev, created]);
-        toast({ title: "Booking created" });
+        toast({ title: t("bookingsForm.bookingCreated") });
         sendBookingSms({
           bookingId: created.id, bookingType: created.type, bookingStatus: created.status,
           bookingAmount: created.amount, clientName: created.clientName || created.clientId,
           clientPhone: "", company: "Travel Agency",
-        }).then((res) => { if (res.sent) toast({ title: "SMS sent to client" }); }).catch(() => {});
+        }).then((res) => { if (res.sent) toast({ title: t("bookingsForm.smsSent") }); }).catch(() => {});
       }).catch((err: any) => {
-        toast({ title: "Create failed", description: err.message, variant: "destructive" });
+        toast({ title: t("bookingsForm.createFailed"), description: err.message, variant: "destructive" });
       });
     }
     resetForm();
@@ -131,9 +131,9 @@ const Bookings = () => {
   const handleDelete = (id: string) => {
     bookingApi.delete(id).then(() => {
       setItems((prev) => prev.filter((b) => b.id !== id));
-      toast({ title: "Booking deleted", variant: "destructive" });
+      toast({ title: t("bookingsForm.bookingDeleted"), variant: "destructive" });
     }).catch((err: any) => {
-      toast({ title: "Delete failed", description: err.message, variant: "destructive" });
+      toast({ title: t("bookingsForm.deleteFailed"), description: err.message, variant: "destructive" });
     });
   };
 
@@ -156,10 +156,10 @@ const Bookings = () => {
       const booking = await quotationApi.convertToBooking(quotation.id);
       setItems((prev) => [booking, ...prev]);
       setQuotationDialogOpen(false);
-      toast({ title: "Booking created from quotation", description: `${quotation.title || quotation.destination} converted successfully.` });
+      toast({ title: t("bookingsForm.convertedTitle"), description: t("bookingsForm.convertedDesc", { name: quotation.title || quotation.destination }) });
       navigate(`/bookings/${booking.id}`);
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Conversion failed", description: err.message });
+      toast({ variant: "destructive", title: t("bookingsForm.conversionFailed"), description: err.message });
     }
   };
 
