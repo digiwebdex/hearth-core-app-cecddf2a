@@ -575,6 +575,227 @@
       "hoursT": "Business Hours",
       "hoursV": "Saturday - Thursday",
       "hoursS": "9:00 AM - 7:00 PM (BST)"
+    },
+    "onboarding": {
+      "s1Title": "Company Profile",
+      "s1Desc": "Set up your organization details",
+      "s2Title": "First Client",
+      "s2Desc": "Add your first client",
+      "s3Title": "First Booking",
+      "s3Desc": "Create a booking",
+      "s4Title": "First Invoice",
+      "s4Desc": "Generate an invoice",
+      "companyName": "Company Name",
+      "companyPh": "Your Travel Agency",
+      "phone": "Phone",
+      "address": "Address",
+      "addressPh": "Dhaka, Bangladesh",
+      "saving": "Saving…",
+      "continue": "Continue",
+      "back": "Back",
+      "clientName": "Client Name",
+      "clientNamePh": "Ahmed Rahman",
+      "clientPhonePh": "+8801711...",
+      "email": "Email",
+      "emailPh": "client@email.com",
+      "bookingType": "Booking Type",
+      "tour": "Tour Package",
+      "ticket": "Air Ticket",
+      "hotel": "Hotel",
+      "visa": "Visa",
+      "sellingPrice": "Selling Price (৳)",
+      "cost": "Cost (৳)",
+      "profit": "Profit",
+      "step4Note": "Generate an invoice for the booking of",
+      "generating": "Generating…",
+      "generateInvoice": "Generate Invoice",
+      "allSet": "You're all set! 🎉",
+      "allSetDesc": "Your company profile, first client, booking, and invoice are ready. Head to your dashboard to explore all features.",
+      "goDashboard": "Go to Dashboard",
+      "skip": "Skip onboarding →",
+      "savedCompany": "Company profile saved!",
+      "savedClient": "Client added!",
+      "savedBooking": "Booking created!",
+      "savedInvoice": "Invoice generated!",
+      "failSave": "Failed to save",
+      "fail": "Failed"
+    },
+    "legal": {
+      "privacyTitle": "Privacy Policy",
+      "privacyMeta": "Read our privacy policy. Learn how we collect, use, and protect your data.",
+      "termsTitle": "Terms of Service",
+      "termsMeta": "Read our terms of service. Understand the rules and guidelines for using our travel agency management platform.",
+      "lastUpdated": "Last updated: April 1, 2026",
+      "contact": "Contact",
+      "contactBody": "Email: support@travelagencyweb.com\nPhone: +880 1234-567890\nAddress: Dhaka, Bangladesh"
+    },
+    "privacy": {
+      "sections": [
+        {
+          "h": "1. Introduction",
+          "p": [
+            "Travel Agency Website & Software Solution (\"we\", \"our\", \"us\") is a multi-tenant travel agency management platform. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform."
+          ]
+        },
+        {
+          "h": "2. Information We Collect",
+          "p": [
+            "**Account Information:** When you register, we collect your name, email address, phone number, company name, and password.",
+            "**Business Data:** Client records, booking details, invoices, payment records, vendor information, and other operational data you enter into the platform.",
+            "**Traveler Information:** Passport details, travel documents, and personal information of travelers managed through your agency. This data is stored on behalf of your agency and is your responsibility to collect with proper consent.",
+            "**Usage Data:** We automatically collect information about how you interact with the platform, including pages visited, features used, and session duration.",
+            "**Payment Information:** Subscription payment details such as transaction IDs and payment method. We do not store full credit card numbers."
+          ]
+        },
+        {
+          "h": "3. How We Use Your Information",
+          "p": [
+            "We use collected information to:"
+          ],
+          "list": [
+            "Provide and maintain the platform",
+            "Process your subscription and billing",
+            "Send transactional notifications (booking confirmations, payment receipts)",
+            "Improve platform features and user experience",
+            "Provide customer support",
+            "Ensure platform security and prevent fraud"
+          ]
+        },
+        {
+          "h": "4. Data Isolation & Multi-Tenancy",
+          "p": [
+            "Each agency on our platform operates in a completely isolated workspace. Your business data (clients, bookings, invoices, vendor information) is never accessible to other agencies or tenants on the platform. Super-admin access is limited to platform management and does not include access to your operational data content."
+          ]
+        },
+        {
+          "h": "5. Data Sharing",
+          "p": [
+            "We do not sell your data. We may share information with:"
+          ],
+          "list": [
+            "**Payment Processors:** SSLCommerz, bKash, or other payment gateways to process subscription payments",
+            "**SMS/Email Providers:** To deliver notifications you configure",
+            "**Legal Requirements:** When required by law or to protect our rights"
+          ]
+        },
+        {
+          "h": "6. Data Security",
+          "p": [
+            "We implement industry-standard security measures including encrypted connections (HTTPS), secure authentication with hashed passwords, regular backups, and access controls. However, no method of transmission over the Internet is 100% secure."
+          ]
+        },
+        {
+          "h": "7. Data Retention",
+          "p": [
+            "We retain your data as long as your account is active. If you cancel your subscription, your data will be retained for 90 days before permanent deletion. You can request earlier deletion by contacting support."
+          ]
+        },
+        {
+          "h": "8. Your Rights",
+          "p": [
+            "You have the right to access, correct, export, or delete your personal data. You can export most data through the platform's built-in export features. For account deletion or data requests, contact us at support@travelagencyweb.com."
+          ]
+        },
+        {
+          "h": "9. Changes to This Policy",
+          "p": [
+            "We may update this Privacy Policy from time to time. We will notify registered users of significant changes via email. Continued use of the platform after changes constitutes acceptance."
+          ]
+        },
+        {
+          "h": "10. Contact",
+          "p": [
+            "If you have questions about this Privacy Policy, contact us at:"
+          ],
+          "contact": true
+        }
+      ]
+    },
+    "terms": {
+      "sections": [
+        {
+          "h": "1. Acceptance of Terms",
+          "p": [
+            "By accessing or using Travel Agency Website & Software Solution (\"the Platform\"), you agree to be bound by these Terms of Service. If you do not agree, do not use the Platform."
+          ]
+        },
+        {
+          "h": "2. Description of Service",
+          "p": [
+            "The Platform is a multi-tenant software-as-a-service (SaaS) platform for travel agency management. It provides tools for lead management, quotation building, booking operations, invoicing, payment tracking, vendor management, team collaboration, and reporting."
+          ]
+        },
+        {
+          "h": "3. Account Registration",
+          "p": [
+            "To use the Platform, you must register an account with accurate information. You are responsible for maintaining the confidentiality of your login credentials and for all activities that occur under your account. Each agency operates as a separate tenant with isolated data."
+          ]
+        },
+        {
+          "h": "4. Subscription & Billing",
+          "p": [
+            "The Platform offers multiple subscription plans with varying features and limits. You will be billed according to your selected plan and billing cycle (monthly or yearly). Prices are in Bangladeshi Taka (BDT) unless otherwise stated.",
+            "You may upgrade or downgrade your plan at any time. Upgrades take effect immediately. Downgrades take effect at the end of the current billing cycle. Refunds are not provided for partial billing periods unless required by law."
+          ]
+        },
+        {
+          "h": "5. Acceptable Use",
+          "p": [
+            "You agree not to:"
+          ],
+          "list": [
+            "Use the Platform for any unlawful purpose",
+            "Attempt to gain unauthorized access to other tenants' data",
+            "Interfere with or disrupt the Platform's infrastructure",
+            "Upload malicious code, viruses, or harmful content",
+            "Resell access to the Platform without written consent",
+            "Use the Platform to store or transmit content that violates any applicable law"
+          ]
+        },
+        {
+          "h": "6. Data Ownership",
+          "p": [
+            "You retain ownership of all data you enter into the Platform, including client records, booking details, financial data, and documents. We do not claim ownership of your business data. You grant us a limited license to process and store this data solely for the purpose of providing the service."
+          ]
+        },
+        {
+          "h": "7. Service Availability",
+          "p": [
+            "We strive to maintain 99.9% uptime but do not guarantee uninterrupted access. Scheduled maintenance will be communicated in advance when possible. We are not liable for any losses resulting from temporary service unavailability."
+          ]
+        },
+        {
+          "h": "8. Limitation of Liability",
+          "p": [
+            "To the maximum extent permitted by law, the Platform shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, business opportunities, or goodwill, arising from your use of the Platform."
+          ]
+        },
+        {
+          "h": "9. Termination",
+          "p": [
+            "Either party may terminate the agreement at any time. You can cancel your subscription from your account settings. We may suspend or terminate your account if you violate these terms. Upon termination, your data will be retained for 90 days before permanent deletion."
+          ]
+        },
+        {
+          "h": "10. Changes to Terms",
+          "p": [
+            "We may modify these Terms of Service at any time. Material changes will be communicated via email to registered users. Continued use of the Platform after changes constitutes acceptance of the updated terms."
+          ]
+        },
+        {
+          "h": "11. Governing Law",
+          "p": [
+            "These terms shall be governed by and construed in accordance with the laws of Bangladesh. Any disputes arising from these terms shall be resolved in the courts of Dhaka, Bangladesh."
+          ]
+        },
+        {
+          "h": "12. Contact",
+          "p": [
+            "For questions about these Terms of Service, contact us at:"
+          ],
+          "contact": true
+        }
+      ]
     }
   }
 }
