@@ -18,11 +18,51 @@
     "noCreditCard": "ক্রেডিট কার্ড লাগবে না",
     "instantAccess": "তাৎক্ষণিক অ্যাক্সেস", "cancelAnytime": "যেকোনো সময় বাতিল",
     "welcome": "স্বাগতম", "welcomeBack": "আবার স্বাগতম",
-    "loading": "লোড হচ্ছে…", "or": "অথবা", "trial": "ট্রায়াল"
+    "loading": "লোড হচ্ছে…", "or": "অথবা", "trial": "ট্রায়াল",
+    "refresh": "রিফ্রেশ", "viewAll": "সব দেখুন", "search": "খুঁজুন",
+    "save": "সংরক্ষণ", "cancel": "বাতিল", "edit": "সম্পাদনা", "delete": "মুছুন",
+    "new": "নতুন", "actions": "অ্যাকশন", "status": "স্ট্যাটাস",
+    "amount": "পরিমাণ", "date": "তারিখ", "name": "নাম", "today": "আজ"
   },
   "nav": {
     "home": "হোম", "features": "ফিচার", "pricing": "প্যাকেজ",
     "faq": "প্রশ্নোত্তর", "contact": "যোগাযোগ", "demo": "ডেমো"
+  },
+  "sidebar": {
+    "overview": "ওভারভিউ", "crm": "সিআরএম", "management": "ব্যবস্থাপনা", "admin": "অ্যাডমিন",
+    "dashboard": "ড্যাশবোর্ড", "clients": "ক্লায়েন্ট", "agents": "এজেন্ট",
+    "vendors": "ভেন্ডর", "leads": "লিড", "tasks": "টাস্ক",
+    "quotations": "কোটেশন", "bookings": "বুকিং", "invoices": "ইনভয়েস",
+    "accounts": "একাউন্টস", "reports": "রিপোর্ট", "notifications": "নোটিফিকেশন",
+    "hajjUmrah": "হজ্জ ও উমরাহ",
+    "team": "টিম", "roles": "ভূমিকা", "organization": "প্রতিষ্ঠান",
+    "website": "ওয়েবসাইট", "subscription": "সাবস্ক্রিপশন", "settings": "সেটিংস",
+    "userGuide": "ইউজার গাইড", "adminPanel": "অ্যাডমিন প্যানেল",
+    "upgradeTo": "আপগ্রেড করুন"
+  },
+  "dashboard": {
+    "title": "ড্যাশবোর্ড",
+    "subtitle": "আপনার এজেন্সির একনজরে — লিড, বুকিং, পেমেন্ট ও অপারেশন।",
+    "welcomeTitle": "আপনার ট্রাভেল এজেন্সি ড্যাশবোর্ডে স্বাগতম",
+    "welcomeDesc": "একটি লিড যোগ করে, কোটেশন পাঠিয়ে অথবা বুকিং তৈরি করে শুরু করুন।",
+    "addLead": "লিড যোগ করুন", "createQuotation": "কোটেশন তৈরি",
+    "newBooking": "নতুন বুকিং", "createInvoice": "ইনভয়েস তৈরি",
+    "activeLeads": "সক্রিয় লিড", "followUpsDue": "ফলো-আপ আজ বাকি",
+    "quotationsSent": "কোটেশন পাঠানো", "awaitingApproval": "অনুমোদনের অপেক্ষায়",
+    "confirmedBookings": "নিশ্চিত বুকিং", "upcomingDepartures": "আসন্ন ডিপার্চার",
+    "next7Days": "পরবর্তী ৭ দিন", "salesThisMonth": "এই মাসের বিক্রয়",
+    "overdueInvoices": "বকেয়া ইনভয়েস", "outstanding": "অপরিশোধিত",
+    "vendorDues": "ভেন্ডর দেনা", "totalRevenue": "মোট আয়",
+    "recentBookings": "সাম্প্রতিক বুকিং", "noBookings": "এখনো কোনো বুকিং নেই",
+    "topDestinations": "শীর্ষ গন্তব্য", "byBookingCount": "বুকিং সংখ্যা অনুযায়ী",
+    "destinationHint": "বুকিং বাড়ার সাথে সাথে গন্তব্যের তথ্য আসবে।",
+    "recentPayments": "সাম্প্রতিক পেমেন্ট", "noPayments": "এখনো কোনো পেমেন্ট নেই",
+    "quickSummary": "দ্রুত সারাংশ", "totalClients": "মোট ক্লায়েন্ট",
+    "totalBookings": "মোট বুকিং", "teamMembers": "টিম সদস্য",
+    "followUpsToday": "আজকের ফলো-আপ", "quickActions": "দ্রুত অ্যাকশন",
+    "booking": "বুকিং", "destination": "গন্তব্য", "travelDate": "ভ্রমণ তারিখ",
+    "method": "মাধ্যম", "reference": "রেফারেন্স",
+    "loadFailed": "ড্যাশবোর্ড লোড করা যায়নি"
   },
   "landing": {
     "heroBadge": "🚀 বাংলাদেশের #১ ট্রাভেল এজেন্সি সফটওয়্যার",
