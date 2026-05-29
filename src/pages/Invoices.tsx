@@ -170,7 +170,7 @@ const Invoices = () => {
     if (!selectedInvoice) return;
     const payAmount = Math.min(paymentForm.amount, selectedInvoice.dueAmount);
     if (payAmount <= 0) {
-      toast({ title: "Invalid amount", variant: "destructive" });
+      toast({ title: t("invoicesForm.toast.invalidAmount"), variant: "destructive" });
       return;
     }
     try {
