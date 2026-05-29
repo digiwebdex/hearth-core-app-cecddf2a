@@ -1,37 +1,52 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useMemo } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle2, Clock } from "lucide-react";
+import { Sparkles, Clock, CheckCircle2 } from "lucide-react";
+import { PLANS } from "@/lib/plans";
 
 const Register = () => {
+  const [searchParams] = useSearchParams();
+  const planParam = (searchParams.get("plan") || "pro").toLowerCase();
+  const selectedPlan = useMemo(
+    () => PLANS.find((p) => p.id === planParam) || PLANS.find((p) => p.id === "pro") || PLANS[0],
+    [planParam]
+  );
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [tenantName, setTenantName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const isFree = selectedPlan.id === "free";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const result = await register({ name, email, password, tenantName });
+      const result = await register({ name, email, password, tenantName, plan: selectedPlan.id });
       if (result.pendingApproval) {
-        setSubmitted(true);
         toast({
           title: "Account submitted",
-          description: "Your account is pending admin approval.",
+          description: result.message || "Pending admin approval.",
         });
+        navigate("/login");
       } else {
-        // Defensive fallback (auto-approved path)
+        toast({
+          title: isFree ? "Welcome!" : "🎉 3-day Pro Trial Started!",
+          description: isFree
+            ? "Your free account is ready."
+            : "Explore all Pro features for the next 3 days.",
+        });
         navigate("/onboarding");
       }
     } catch (err: any) {
@@ -41,52 +56,28 @@ const Register = () => {
     }
   };
 
-  if (submitted) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background px-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
-              <CheckCircle2 className="h-7 w-7 text-primary" />
-            </div>
-            <CardTitle className="text-2xl">Account Submitted</CardTitle>
-            <CardDescription>Thank you for signing up!</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="rounded-lg border bg-muted/40 p-4">
-              <div className="flex items-start gap-3">
-                <Clock className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
-                <div className="space-y-1 text-sm">
-                  <p className="font-medium">Pending admin approval</p>
-                  <p className="text-muted-foreground">
-                    Our team has been notified and will review your account shortly.
-                    You'll be able to log in as soon as your account is approved.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="text-sm text-muted-foreground">
-              <p><span className="font-medium text-foreground">Email:</span> {email}</p>
-              <p><span className="font-medium text-foreground">Agency:</span> {tenantName}</p>
-            </div>
-            <Button asChild className="w-full" variant="outline">
-              <Link to="/login">Back to Login</Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-8">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
+          <div className="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+            <Sparkles className="h-7 w-7 text-primary" />
+          </div>
           <CardTitle className="text-2xl">Create your account</CardTitle>
           <CardDescription>
-            Register your organization to get started.<br />
-            <span className="text-xs">New accounts require admin approval before login.</span>
+            Start your travel agency in minutes — no credit card required.
           </CardDescription>
+          <div className="mt-3 flex flex-col items-center gap-2">
+            <Badge variant="secondary" className="text-xs">
+              Selected plan: <span className="ml-1 font-semibold">{selectedPlan.name}</span>
+            </Badge>
+            {!isFree && (
+              <div className="flex items-center gap-1.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 px-3 py-1 text-xs font-medium">
+                <Clock className="h-3.5 w-3.5" />
+                3-day Pro trial · full access
+              </div>
+            )}
+          </div>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -103,12 +94,17 @@ const Register = () => {
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="tenantName">Organization Name</Label>
+              <Label htmlFor="tenantName">Agency / Organization Name</Label>
               <Input id="tenantName" value={tenantName} onChange={(e) => setTenantName(e.target.value)} required />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Submitting…" : "Submit for Approval"}
+              {loading ? "Creating account…" : isFree ? "Create Free Account" : "Start 3-Day Free Trial"}
             </Button>
+            <div className="space-y-1.5 pt-2 text-xs text-muted-foreground">
+              <p className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-primary" /> No credit card required</p>
+              <p className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-primary" /> Instant access — no waiting for approval</p>
+              <p className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-primary" /> Cancel anytime</p>
+            </div>
           </form>
           <p className="mt-4 text-center text-sm text-muted-foreground">
             Already have an account? <Link to="/login" className="text-primary underline">Sign in</Link>
