@@ -1,22 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
 import MarketingLayout from "@/components/MarketingLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { PLANS, type PlanType } from "@/lib/plans";
+import { PLANS } from "@/lib/plans";
 import {
-  Plane, Globe, Users, CreditCard, BarChart3, Shield, Moon, Receipt,
-  Check, X, ArrowRight, Star, Zap, Crown, Rocket, Gem,
-  Target, FileText, Store, UserCheck, MapPin, ChevronDown, Quote,
+  Plane, BarChart3, Shield, Moon, Receipt,
+  Check, ArrowRight, Zap, Crown, Rocket, Gem, Star,
+  Target, FileText, Store, ChevronDown, Quote,
 } from "lucide-react";
 
 const BRAND = "Travel Agency Website & Software Solution";
