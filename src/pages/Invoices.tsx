@@ -197,14 +197,14 @@ const Invoices = () => {
       }));
       setPaymentForm({ amount: 0, method: "cash", transactionRef: "", date: new Date().toISOString().split("T")[0], notes: "", receivedBy: "" });
       setPayDialogOpen(false);
-      toast({ title: "Payment recorded", description: `৳${payAmount.toLocaleString()} via ${paymentForm.method}` });
+      toast({ title: t("invoicesForm.toast.paymentRecorded"), description: `৳${payAmount.toLocaleString()} · ${t(`invoicesForm.methods.${paymentForm.method}`)}` });
       sendPaymentSms({
         paymentAmount: payAmount, paymentMethod: paymentForm.method,
         invoiceId: selectedInvoice.id, balance: Math.max(0, selectedInvoice.dueAmount - payAmount),
         clientName: selectedInvoice.clientName || "", clientPhone: "", company: "Travel Agency",
-      }).then((res) => { if (res.sent) toast({ title: "Payment SMS sent" }); }).catch(() => {});
+      }).then((res) => { if (res.sent) toast({ title: t("invoicesForm.toast.paymentSmsSent") }); }).catch(() => {});
     } catch (err: any) {
-      toast({ title: "Failed", description: err.message, variant: "destructive" });
+      toast({ title: t("invoicesForm.toast.failed"), description: err.message, variant: "destructive" });
     }
   };
 
