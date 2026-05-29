@@ -398,70 +398,70 @@ const AdminTenants = () => {
       <Dialog open={!!editTenant} onOpenChange={(o) => !o && setEditTenant(null)}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Edit Agency</DialogTitle>
-            <DialogDescription>Update company info and subscription.</DialogDescription>
+            <DialogTitle>{tt("adminTenants.dialog.editTitle")}</DialogTitle>
+            <DialogDescription>{tt("adminTenants.dialog.editDesc")}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-2">
             <div className="grid gap-2">
-              <Label>Company Name</Label>
+              <Label>{tt("adminTenants.fields.companyName")}</Label>
               <Input value={editForm.name} onChange={(e) => setEditForm({ ...editForm, name: e.target.value })} />
             </div>
             <div className="grid grid-cols-3 gap-3">
               <div className="grid gap-2">
-                <Label>Plan</Label>
+                <Label>{tt("adminTenants.fields.plan")}</Label>
                 <Select value={editForm.subscriptionPlan} onValueChange={(v) => setEditForm({ ...editForm, subscriptionPlan: v })}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="basic">Basic</SelectItem>
-                    <SelectItem value="pro">Pro</SelectItem>
-                    <SelectItem value="business">Business</SelectItem>
-                    <SelectItem value="enterprise">Unlimited</SelectItem>
+                    <SelectItem value="basic">{tt("adminTenants.plans.basic")}</SelectItem>
+                    <SelectItem value="pro">{tt("adminTenants.plans.pro")}</SelectItem>
+                    <SelectItem value="business">{tt("adminTenants.plans.business")}</SelectItem>
+                    <SelectItem value="enterprise">{tt("adminTenants.plans.enterprise")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label>Status</Label>
+                <Label>{tt("adminTenants.fields.status")}</Label>
                 <Select value={editForm.subscriptionStatus} onValueChange={(v) => setEditForm({ ...editForm, subscriptionStatus: v })}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="trial">Trial</SelectItem>
-                    <SelectItem value="suspended">Suspended</SelectItem>
+                    <SelectItem value="active">{tt("adminTenants.status.active")}</SelectItem>
+                    <SelectItem value="trial">{tt("adminTenants.status.trial")}</SelectItem>
+                    <SelectItem value="suspended">{tt("adminTenants.status.suspended")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label>Expiry</Label>
+                <Label>{tt("adminTenants.fields.expiry")}</Label>
                 <Input type="date" value={editForm.subscriptionExpiry} onChange={(e) => setEditForm({ ...editForm, subscriptionExpiry: e.target.value })} />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <div className="grid gap-2"><Label>Phone</Label><Input value={editForm.phone} onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })} /></div>
-              <div className="grid gap-2"><Label>WhatsApp</Label><Input value={editForm.whatsapp} onChange={(e) => setEditForm({ ...editForm, whatsapp: e.target.value })} /></div>
+              <div className="grid gap-2"><Label>{tt("adminTenants.fields.phone")}</Label><Input value={editForm.phone} onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })} /></div>
+              <div className="grid gap-2"><Label>{tt("adminTenants.fields.whatsapp")}</Label><Input value={editForm.whatsapp} onChange={(e) => setEditForm({ ...editForm, whatsapp: e.target.value })} /></div>
             </div>
-            <div className="grid gap-2"><Label>Address</Label><Input value={editForm.address} onChange={(e) => setEditForm({ ...editForm, address: e.target.value })} /></div>
+            <div className="grid gap-2"><Label>{tt("adminTenants.fields.address")}</Label><Input value={editForm.address} onChange={(e) => setEditForm({ ...editForm, address: e.target.value })} /></div>
             <div className="grid grid-cols-3 gap-3">
-              <div className="grid gap-2"><Label>City</Label><Input value={editForm.city} onChange={(e) => setEditForm({ ...editForm, city: e.target.value })} /></div>
-              <div className="grid gap-2"><Label>Country</Label><Input value={editForm.country} onChange={(e) => setEditForm({ ...editForm, country: e.target.value })} /></div>
-              <div className="grid gap-2"><Label>Website</Label><Input value={editForm.website} onChange={(e) => setEditForm({ ...editForm, website: e.target.value })} /></div>
+              <div className="grid gap-2"><Label>{tt("adminTenants.fields.city")}</Label><Input value={editForm.city} onChange={(e) => setEditForm({ ...editForm, city: e.target.value })} /></div>
+              <div className="grid gap-2"><Label>{tt("adminTenants.fields.country")}</Label><Input value={editForm.country} onChange={(e) => setEditForm({ ...editForm, country: e.target.value })} /></div>
+              <div className="grid gap-2"><Label>{tt("adminTenants.fields.website")}</Label><Input value={editForm.website} onChange={(e) => setEditForm({ ...editForm, website: e.target.value })} /></div>
             </div>
-            <div className="grid gap-2"><Label>Notes</Label><Input value={editForm.notes} onChange={(e) => setEditForm({ ...editForm, notes: e.target.value })} /></div>
+            <div className="grid gap-2"><Label>{tt("adminTenants.fields.notes")}</Label><Input value={editForm.notes} onChange={(e) => setEditForm({ ...editForm, notes: e.target.value })} /></div>
 
             <div className="space-y-3 border-t pt-4">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Owner Account</h3>
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">{tt("adminTenants.sections.ownerAccount")}</h3>
               <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-2"><Label>Owner Name</Label><Input value={editForm.ownerName} onChange={(e) => setEditForm({ ...editForm, ownerName: e.target.value })} /></div>
-                <div className="grid gap-2"><Label>Owner Email</Label><Input type="email" value={editForm.ownerEmail} onChange={(e) => setEditForm({ ...editForm, ownerEmail: e.target.value })} /></div>
+                <div className="grid gap-2"><Label>{tt("adminTenants.fields.ownerName")}</Label><Input value={editForm.ownerName} onChange={(e) => setEditForm({ ...editForm, ownerName: e.target.value })} /></div>
+                <div className="grid gap-2"><Label>{tt("adminTenants.fields.ownerEmail")}</Label><Input type="email" value={editForm.ownerEmail} onChange={(e) => setEditForm({ ...editForm, ownerEmail: e.target.value })} /></div>
               </div>
               <div className="grid gap-2">
-                <Label>Reset Password</Label>
-                <Input type="text" value={editForm.ownerPassword} onChange={(e) => setEditForm({ ...editForm, ownerPassword: e.target.value })} placeholder="Leave blank to keep current password (min 6 chars)" />
+                <Label>{tt("adminTenants.fields.resetPassword")}</Label>
+                <Input type="text" value={editForm.ownerPassword} onChange={(e) => setEditForm({ ...editForm, ownerPassword: e.target.value })} placeholder={tt("adminTenants.fields.resetPasswordPlaceholder")} />
               </div>
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setEditTenant(null)} disabled={savingEdit}>Cancel</Button>
-            <Button onClick={saveEdit} disabled={savingEdit}>{savingEdit ? "Saving…" : "Save changes"}</Button>
+            <Button variant="outline" onClick={() => setEditTenant(null)} disabled={savingEdit}>{tt("adminTenants.actions.cancel")}</Button>
+            <Button onClick={saveEdit} disabled={savingEdit}>{savingEdit ? tt("adminTenants.saving") : tt("adminTenants.saveChanges")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -469,15 +469,19 @@ const AdminTenants = () => {
       <AlertDialog open={!!deleteTarget} onOpenChange={(o) => !o && setDeleteTarget(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete agency?</AlertDialogTitle>
+            <AlertDialogTitle>{tt("adminTenants.dialog.deleteTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete <strong>{deleteTarget?.name}</strong> and all its users, bookings, clients, invoices, and related data. This action cannot be undone.
+              <Trans
+                i18nKey="adminTenants.dialog.deleteDesc"
+                values={{ name: deleteTarget?.name || "" }}
+                components={{ 1: <strong /> }}
+              />
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={deleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={deleting}>{tt("adminTenants.actions.cancel")}</AlertDialogCancel>
             <AlertDialogAction onClick={confirmDelete} disabled={deleting} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-              {deleting ? "Deleting…" : "Delete permanently"}
+              {deleting ? tt("adminTenants.deleting") : tt("adminTenants.deletePermanently")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
