@@ -333,7 +333,7 @@ const Bookings = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Total Bookings</div>
+                <div className="text-sm text-muted-foreground">{t("bookingsForm.totalBookings")}</div>
                 <Plane className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold">{items.length}</p>
@@ -342,7 +342,7 @@ const Bookings = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Revenue</div>
+                <div className="text-sm text-muted-foreground">{t("bookingsForm.revenue")}</div>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold">৳{totals.amount.toLocaleString()}</p>
@@ -351,7 +351,7 @@ const Bookings = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Profit</div>
+                <div className="text-sm text-muted-foreground">{t("bookingsForm.profitLabel")}</div>
                 <DollarSign className="h-4 w-4 text-green-600" />
               </div>
               <p className="text-2xl font-bold text-green-600">৳{totals.profit.toLocaleString()}</p>
@@ -360,7 +360,7 @@ const Bookings = () => {
           <Card className={unpaidBookings > 0 ? "border-amber-300 dark:border-amber-600" : ""}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Unpaid</div>
+                <div className="text-sm text-muted-foreground">{t("bookingsForm.unpaid")}</div>
                 <AlertTriangle className={`h-4 w-4 ${unpaidBookings > 0 ? "text-amber-500" : "text-muted-foreground"}`} />
               </div>
               <p className="text-2xl font-bold">{unpaidBookings}</p>
@@ -369,7 +369,7 @@ const Bookings = () => {
           <Card className={upcomingTravel > 0 ? "border-blue-300 dark:border-blue-600" : ""}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Upcoming (14d)</div>
+                <div className="text-sm text-muted-foreground">{t("bookingsForm.upcoming14")}</div>
                 <CalendarIcon className={`h-4 w-4 ${upcomingTravel > 0 ? "text-blue-500" : "text-muted-foreground"}`} />
               </div>
               <p className="text-2xl font-bold">{upcomingTravel}</p>
@@ -381,37 +381,37 @@ const Bookings = () => {
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
             <Button variant={statusFilter === "all" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("all")}>
-              All ({statusCounts.all})
+              {t("bookingsForm.all")} ({statusCounts.all})
             </Button>
             {STATUS_META.map((s) => (
               <Button key={s.value} variant={statusFilter === s.value ? "default" : "outline"} size="sm" onClick={() => setStatusFilter(s.value)}>
-                {s.label} ({statusCounts[s.value] || 0})
+                {t(`bookingsForm.statuses.${s.value}`)} ({statusCounts[s.value] || 0})
               </Button>
             ))}
           </div>
           <div className="flex flex-wrap gap-3">
             <div className="flex items-center gap-2 max-w-sm flex-1">
               <Search className="h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search title, client, destination..." value={search} onChange={(e) => setSearch(e.target.value)} />
+              <Input placeholder={t("bookingsForm.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
             <Select value={paymentFilter} onValueChange={setPaymentFilter}>
-              <SelectTrigger className="w-[150px]"><SelectValue placeholder="Payment" /></SelectTrigger>
+              <SelectTrigger className="w-[150px]"><SelectValue placeholder={t("bookingsForm.payment")} /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Payments</SelectItem>
-                <SelectItem value="unpaid">Unpaid</SelectItem>
-                <SelectItem value="partial">Partial</SelectItem>
-                <SelectItem value="paid">Paid</SelectItem>
+                <SelectItem value="all">{t("bookingsForm.payments.all")}</SelectItem>
+                <SelectItem value="unpaid">{t("bookingsForm.payments.unpaid")}</SelectItem>
+                <SelectItem value="partial">{t("bookingsForm.payments.partial")}</SelectItem>
+                <SelectItem value="paid">{t("bookingsForm.payments.paid")}</SelectItem>
               </SelectContent>
             </Select>
             <Button variant="outline" size="sm" onClick={() => setShowFilters((v) => !v)} className="gap-1.5">
-              <Filter className="h-4 w-4" /> Filters
+              <Filter className="h-4 w-4" /> {t("bookingsForm.filters")}
               {activeFilterCount > 0 && (
                 <Badge variant="secondary" className="ml-1 h-5 w-5 p-0 flex items-center justify-center text-[10px]">{activeFilterCount}</Badge>
               )}
             </Button>
             {activeFilterCount > 0 && (
               <Button variant="ghost" size="sm" onClick={() => { setDestinationFilter(""); setTravelDateFrom(undefined); setTravelDateTo(undefined); }}>
-                Clear filters
+                {t("bookingsForm.clearFilters")}
               </Button>
             )}
           </div>
