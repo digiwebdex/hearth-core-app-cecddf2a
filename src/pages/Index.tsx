@@ -297,19 +297,17 @@ const Index = () => {
 
       <section className="py-24">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Modernize Your Travel Agency?</h2>
-          <p className="text-white/45 max-w-xl mx-auto mb-8">
-            Join hundreds of travel agencies already using our platform.
-          </p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t("landing.finalCtaTitle")}</h2>
+          <p className="text-white/45 max-w-xl mx-auto mb-8">{t("landing.finalCtaSubtitle")}</p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link to="/pricing">
               <Button size="lg" className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 h-12 text-base shadow-lg shadow-amber-500/25">
-                View Pricing
+                {t("common.viewPricing")}
               </Button>
             </Link>
             <Link to="/demo">
               <Button size="lg" variant="outline" className="border-white/15 bg-white/5 text-white hover:bg-white/10 px-8 h-12 text-base">
-                Schedule a Demo
+                {t("landing.scheduleDemo")}
               </Button>
             </Link>
           </div>
@@ -331,27 +329,27 @@ const Index = () => {
           return (
             <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto bg-[#111827] border-white/10 text-white">
               <DialogHeader>
-                <DialogTitle className="text-xl">Subscribe to <span className="text-amber-400">{selectedPlanInfo.name}</span> Plan</DialogTitle>
-                <DialogDescription className="text-white/45">Fill in your company details to get started.</DialogDescription>
+                <DialogTitle className="text-xl">{t("register.subscribeTo")} <span className="text-amber-400">{selectedPlanInfo.name}</span> {t("register.planSuffix")}</DialogTitle>
+                <DialogDescription className="text-white/45">{t("register.fillDetails")}</DialogDescription>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4 mt-4">
                 <div className="p-3 rounded-lg bg-amber-400/10 border border-amber-400/20 flex items-center justify-between">
-                  <span className="text-sm font-medium">{selectedPlanInfo.name} Plan</span>
-                  <span className="font-bold text-amber-400">{selectedPlanInfo.price === -1 ? "Contact Us for Price" : `৳${selectedPlanInfo.price.toLocaleString()}/mo`}</span>
+                  <span className="text-sm font-medium">{selectedPlanInfo.name}</span>
+                  <span className="font-bold text-amber-400">{selectedPlanInfo.price === -1 ? t("register.contactForPrice") : `৳${selectedPlanInfo.price.toLocaleString()}${t("common.perMonth")}`}</span>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2"><Label className="text-white/60">Company Name *</Label><Input value={form.companyName} onChange={(e) => update("companyName", e.target.value)} placeholder="Your Travel Agency" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
-                  <div className="space-y-2"><Label className="text-white/60">Owner Name *</Label><Input value={form.ownerName} onChange={(e) => update("ownerName", e.target.value)} placeholder="Full name" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
+                  <div className="space-y-2"><Label className="text-white/60">{t("register.companyName")} *</Label><Input value={form.companyName} onChange={(e) => update("companyName", e.target.value)} placeholder={t("register.yourAgency")} required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
+                  <div className="space-y-2"><Label className="text-white/60">{t("register.ownerName")} *</Label><Input value={form.ownerName} onChange={(e) => update("ownerName", e.target.value)} placeholder={t("common.fullName")} required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2"><Label className="text-white/60">Email *</Label><Input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="you@company.com" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
-                  <div className="space-y-2"><Label className="text-white/60">Phone *</Label><Input value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+880 1XXX-XXXXXX" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
+                  <div className="space-y-2"><Label className="text-white/60">{t("common.email")} *</Label><Input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="you@company.com" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
+                  <div className="space-y-2"><Label className="text-white/60">{t("register.phone")} *</Label><Input value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+880 1XXX-XXXXXX" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
                 </div>
-                <div className="space-y-2"><Label className="text-white/60">Password *</Label><Input type="password" value={form.password} onChange={(e) => update("password", e.target.value)} placeholder="Min 8 characters" required minLength={8} className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
+                <div className="space-y-2"><Label className="text-white/60">{t("common.password")} *</Label><Input type="password" value={form.password} onChange={(e) => update("password", e.target.value)} placeholder={t("register.minChars")} required minLength={8} className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
                 <Button type="submit" disabled={loading} className="w-full h-11 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg shadow-amber-500/20">
-                  {loading ? "Creating Account..." : "Create Account"}
+                  {loading ? t("register.creating") : t("common.createAccount")}
                 </Button>
-                <p className="text-center text-xs text-white/25">Already have an account? <Link to="/login" className="text-amber-400 underline">Sign in</Link></p>
+                <p className="text-center text-xs text-white/25">{t("common.alreadyHaveAccount")} <Link to="/login" className="text-amber-400 underline">{t("common.signIn")}</Link></p>
               </form>
             </DialogContent>
           );
