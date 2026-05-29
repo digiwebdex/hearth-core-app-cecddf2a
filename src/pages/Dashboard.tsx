@@ -210,23 +210,23 @@ const Dashboard = () => {
           {/* Recent Bookings */}
           <Card className="lg:col-span-2">
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="flex items-center gap-2 text-lg"><Plane className="h-5 w-5" /> Recent Bookings</CardTitle>
-              <Button variant="ghost" size="sm" onClick={() => navigate("/bookings")}>View All <ArrowRight className="ml-1 h-4 w-4" /></Button>
+              <CardTitle className="flex items-center gap-2 text-lg"><Plane className="h-5 w-5" /> {t("dashboard.recentBookings")}</CardTitle>
+              <Button variant="ghost" size="sm" onClick={() => navigate("/bookings")}>{t("common.viewAll")} <ArrowRight className="ml-1 h-4 w-4" /></Button>
             </CardHeader>
             <CardContent>
               {loading ? (
                 <div className="space-y-3">{[1, 2, 3].map((i) => <Skeleton key={i} className="h-10 w-full" />)}</div>
               ) : !stats?.recentBookings?.length ? (
-                <EmptyState icon={Plane} title="No bookings yet" description="Create your first booking from a confirmed quotation or directly." actionLabel="New Booking" onAction={() => navigate("/bookings")} />
+                <EmptyState icon={Plane} title={t("dashboard.noBookings")} description="" actionLabel={t("dashboard.newBooking")} onAction={() => navigate("/bookings")} />
               ) : (
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Booking</TableHead>
-                      <TableHead>Destination</TableHead>
-                      <TableHead className="text-right">Amount</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Travel Date</TableHead>
+                      <TableHead>{t("dashboard.booking")}</TableHead>
+                      <TableHead>{t("dashboard.destination")}</TableHead>
+                      <TableHead className="text-right">{t("common.amount")}</TableHead>
+                      <TableHead>{t("common.status")}</TableHead>
+                      <TableHead>{t("dashboard.travelDate")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -259,14 +259,14 @@ const Dashboard = () => {
           {/* Top Destinations */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg"><MapPin className="h-5 w-5" /> Top Destinations</CardTitle>
-              <CardDescription>By booking count</CardDescription>
+              <CardTitle className="flex items-center gap-2 text-lg"><MapPin className="h-5 w-5" /> {t("dashboard.topDestinations")}</CardTitle>
+              <CardDescription>{t("dashboard.byBookingCount")}</CardDescription>
             </CardHeader>
             <CardContent>
               {loading ? (
                 <div className="space-y-3">{[1, 2, 3].map((i) => <Skeleton key={i} className="h-8 w-full" />)}</div>
               ) : !stats?.topDestinations?.length ? (
-                <p className="text-sm text-muted-foreground text-center py-6">Destination data will appear as bookings grow.</p>
+                <p className="text-sm text-muted-foreground text-center py-6">{t("dashboard.destinationHint")}</p>
               ) : (
                 <div className="space-y-3">
                   {stats.topDestinations.map((d, i) => {
@@ -292,22 +292,22 @@ const Dashboard = () => {
           {/* Recent Payments */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="flex items-center gap-2 text-lg"><CreditCard className="h-5 w-5" /> Recent Payments</CardTitle>
-              <Button variant="ghost" size="sm" onClick={() => navigate("/invoices")}>View All <ArrowRight className="ml-1 h-4 w-4" /></Button>
+              <CardTitle className="flex items-center gap-2 text-lg"><CreditCard className="h-5 w-5" /> {t("dashboard.recentPayments")}</CardTitle>
+              <Button variant="ghost" size="sm" onClick={() => navigate("/invoices")}>{t("common.viewAll")} <ArrowRight className="ml-1 h-4 w-4" /></Button>
             </CardHeader>
             <CardContent>
               {loading ? (
                 <div className="space-y-3">{[1, 2, 3].map((i) => <Skeleton key={i} className="h-10 w-full" />)}</div>
               ) : !stats?.recentPayments?.length ? (
-                <EmptyState icon={CreditCard} title="No payments yet" description="Payments will show here once you record them against invoices." actionLabel="Go to Invoices" onAction={() => navigate("/invoices")} />
+                <EmptyState icon={CreditCard} title={t("dashboard.noPayments")} description="" actionLabel={t("sidebar.invoices")} onAction={() => navigate("/invoices")} />
               ) : (
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Method</TableHead>
-                      <TableHead className="text-right">Amount</TableHead>
-                      <TableHead>Reference</TableHead>
-                      <TableHead>Date</TableHead>
+                      <TableHead>{t("dashboard.method")}</TableHead>
+                      <TableHead className="text-right">{t("common.amount")}</TableHead>
+                      <TableHead>{t("dashboard.reference")}</TableHead>
+                      <TableHead>{t("common.date")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -328,22 +328,22 @@ const Dashboard = () => {
           {/* Quick Actions & Stats */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg"><CalendarDays className="h-5 w-5" /> Quick Summary</CardTitle>
+              <CardTitle className="flex items-center gap-2 text-lg"><CalendarDays className="h-5 w-5" /> {t("dashboard.quickSummary")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
-                <MiniStat label="Total Clients" value={stats?.totalClients ?? 0} loading={loading} />
-                <MiniStat label="Total Bookings" value={stats?.totalBookings ?? 0} loading={loading} />
-                <MiniStat label="Team Members" value={stats?.totalUsers ?? 0} loading={loading} />
-                <MiniStat label="Follow-ups Today" value={stats?.followUpsDueToday ?? 0} loading={loading} highlight={!!stats?.followUpsDueToday} />
+                <MiniStat label={t("dashboard.totalClients")} value={stats?.totalClients ?? 0} loading={loading} />
+                <MiniStat label={t("dashboard.totalBookings")} value={stats?.totalBookings ?? 0} loading={loading} />
+                <MiniStat label={t("dashboard.teamMembers")} value={stats?.totalUsers ?? 0} loading={loading} />
+                <MiniStat label={t("dashboard.followUpsToday")} value={stats?.followUpsDueToday ?? 0} loading={loading} highlight={!!stats?.followUpsDueToday} />
               </div>
               <div className="pt-2 space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">Quick Actions</p>
+                <p className="text-xs font-medium text-muted-foreground">{t("dashboard.quickActions")}</p>
                 <div className="flex flex-wrap gap-2">
-                  <Button size="sm" variant="outline" onClick={() => navigate("/leads")}><UserPlus className="mr-1 h-3.5 w-3.5" /> New Lead</Button>
-                  <Button size="sm" variant="outline" onClick={() => navigate("/quotations/new")}><Send className="mr-1 h-3.5 w-3.5" /> Quotation</Button>
-                  <Button size="sm" variant="outline" onClick={() => navigate("/bookings")}><Plane className="mr-1 h-3.5 w-3.5" /> Booking</Button>
-                  <Button size="sm" variant="outline" onClick={() => navigate("/invoices")}><FileText className="mr-1 h-3.5 w-3.5" /> Invoice</Button>
+                  <Button size="sm" variant="outline" onClick={() => navigate("/leads")}><UserPlus className="mr-1 h-3.5 w-3.5" /> {t("sidebar.leads")}</Button>
+                  <Button size="sm" variant="outline" onClick={() => navigate("/quotations/new")}><Send className="mr-1 h-3.5 w-3.5" /> {t("sidebar.quotations")}</Button>
+                  <Button size="sm" variant="outline" onClick={() => navigate("/bookings")}><Plane className="mr-1 h-3.5 w-3.5" /> {t("sidebar.bookings")}</Button>
+                  <Button size="sm" variant="outline" onClick={() => navigate("/invoices")}><FileText className="mr-1 h-3.5 w-3.5" /> {t("sidebar.invoices")}</Button>
                 </div>
               </div>
             </CardContent>
