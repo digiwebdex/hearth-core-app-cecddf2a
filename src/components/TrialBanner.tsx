@@ -2,10 +2,12 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Clock, Crown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const TrialBanner = () => {
   const { isTrialActive, trialDaysLeft } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   if (!isTrialActive) return null;
 
@@ -22,15 +24,15 @@ const TrialBanner = () => {
       <div className="flex items-center gap-2">
         <Clock className="h-4 w-4" />
         <span>
-          <strong>Pro Trial:</strong>{" "}
+          <strong>{t("trial.proTrial")}:</strong>{" "}
           {trialDaysLeft > 0
-            ? `${trialDaysLeft} day${trialDaysLeft === 1 ? "" : "s"} left`
-            : "Ending today"}
-          {" "}— upgrade anytime to keep all features.
+            ? `${trialDaysLeft} ${t("trial.daysLeft")}`
+            : t("trial.endingToday")}
+          {" "}— {t("trial.upgradeAnytime")}
         </span>
       </div>
       <Button size="sm" variant={urgent ? "destructive" : "default"} onClick={() => navigate("/subscription")} className="gap-1.5">
-        <Crown className="h-3.5 w-3.5" /> Upgrade Now
+        <Crown className="h-3.5 w-3.5" /> {t("trial.upgradeNow")}
       </Button>
     </div>
   );

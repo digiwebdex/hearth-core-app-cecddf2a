@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import DashboardLayout from "@/components/DashboardLayout";
 import LoadingState from "@/components/LoadingState";
 import ErrorState from "@/components/ErrorState";
@@ -41,6 +42,7 @@ const Clients = () => {
   const [passportExpiry, setPassportExpiry] = useState<Date | undefined>();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const fetchClients = useCallback(async () => {
     setLoading(true);
@@ -144,11 +146,11 @@ const Clients = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2"><UserCheck className="h-8 w-8" /> Clients</h1>
-            <p className="text-muted-foreground">Manage your client database</p>
+            <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2"><UserCheck className="h-8 w-8" /> {t("sidebar.clients")}</h1>
+            <p className="text-muted-foreground">{t("pages.clientsSubtitle")}</p>
           </div>
           <PermissionGate module="clients" action="create">
-            <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" /> New Client</Button>
+            <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" /> {t("pages.newClient")}</Button>
           </PermissionGate>
         </div>
 
@@ -162,7 +164,7 @@ const Clients = () => {
         ) : error ? (
           <ErrorState message={error} onRetry={fetchClients} />
         ) : clients.length === 0 ? (
-          <EmptyState icon={UserCheck} title="No clients yet" description="Add your first client to get started" actionLabel="Add Client" onAction={openNew} />
+          <EmptyState icon={UserCheck} title={t("pages.noClients")} description={t("pages.addFirstClient")} actionLabel={t("pages.addClient")} onAction={openNew} />
         ) : (
           <Card>
             <CardContent className="p-0">
