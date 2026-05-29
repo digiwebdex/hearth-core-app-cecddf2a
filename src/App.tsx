@@ -42,6 +42,8 @@ import PaymentCallback from "./pages/PaymentCallback";
 import RoleManagement from "./pages/RoleManagement";
 import NotificationLog from "./pages/NotificationLog";
 import Onboarding from "./pages/Onboarding";
+import VerifyEmail from "./pages/VerifyEmail";
+import SettingsBilling from "./pages/SettingsBilling";
 import UserGuide from "./pages/UserGuide";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminTenants from "./pages/admin/AdminTenants";
@@ -102,6 +104,7 @@ const AppContent = () => (
               <Route path="/register" element={<Register />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
               <Route path="/features" element={<Features />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/demo" element={<Demo />} />
@@ -152,6 +155,7 @@ const AppContent = () => (
               <Route path="/team" element={<P><Team /></P>} />
               <Route path="/organization" element={<P><Organization /></P>} />
               <Route path="/settings" element={<P><SettingsPage /></P>} />
+              <Route path="/settings/billing" element={<P><SettingsBilling /></P>} />
               <Route path="/website" element={<P><WebsiteCustomizer /></P>} />
               <Route path="/user-guide" element={<P><UserGuide /></P>} />
 

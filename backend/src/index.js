@@ -16,10 +16,6 @@ const defaultOrigins = [
   "https://www.travelagencyweb.com",
   "https://app.travelagencyweb.com",
   "https://portal.travelagencyweb.com",
-  "https://tourandtravels.cloud",
-  "https://www.tourandtravels.cloud",
-  "https://app.tourandtravels.cloud",
-  "https://portal.tourandtravels.cloud",
   "http://localhost:5173",
 ];
 const allowedOrigins = (process.env.CORS_ORIGIN
@@ -32,8 +28,7 @@ const isAllowedRootDomain = (origin) => {
     const { protocol, hostname } = new URL(origin);
     if (protocol !== "https:") return false;
     return (
-      hostname === "travelagencyweb.com" || hostname.endsWith(".travelagencyweb.com") ||
-      hostname === "tourandtravels.cloud" || hostname.endsWith(".tourandtravels.cloud")
+      hostname === "travelagencyweb.com" || hostname.endsWith(".travelagencyweb.com")
     );
   } catch {
     return false;

@@ -85,12 +85,20 @@ router.post("/register", async (req, res) => {
         subscriptionExpiry,
       },
     });
+
+    // Email verification token (24h)
+    const emailVerifyToken = crypto.randomBytes(32).toString("hex");
+    const emailVerifyExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
     const user = await prisma.user.create({
       data: {
         name, email, password: hashed,
         role: "tenant_owner",
         status: "active", // auto-approved
         tenantId: tenant.id,
+        emailVerified: false,
+        emailVerifyToken,
+        emailVerifyExpiry,
       },
     });
     await prisma.tenant.update({ where: { id: tenant.id }, data: { ownerId: user.id } });
@@ -106,13 +114,18 @@ router.post("/register", async (req, res) => {
     }).catch(() => {});
 
     try {
+      const { sendEmailVerification } = require("../services/emailService");
+      sendEmailVerification(email, name, emailVerifyToken).catch(() => {});
+    } catch (e) { /* ignore */ }
+
+    try {
       const { notifyNewSignup } = require("../services/telegramService");
       notifyNewSignup({ name, email, tenantName: tenant.name, userId: user.id, plan: requestedPlan }).catch(() => {});
     } catch (e) { /* ignore */ }
 
     // Issue JWT — instant access
     const token = jwt.sign({ userId: user.id, tenantId: tenant.id, role: user.role }, SECRET, { expiresIn: "7d" });
-    const { password: _, resetToken: _r, resetTokenExpiry: _e, ...safeUser } = user;
+    const { password: _, resetToken: _r, resetTokenExpiry: _e, emailVerifyToken: _vt, ...safeUser } = user;
 
     res.json({
       token,
@@ -120,10 +133,51 @@ router.post("/register", async (req, res) => {
       tenant,
       intendedPlan: requestedPlan,
       trialDays: requestedPlan === "free" ? 0 : 3,
+      emailVerificationSent: true,
       message: requestedPlan === "free"
-        ? "Welcome! Your free account is ready."
-        : "Welcome! Your 3-day Pro trial has started.",
+        ? "Welcome! Your free account is ready. Please verify your email."
+        : "Welcome! Your 3-day Pro trial has started. Please verify your email.",
     });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Verify email — public, by token
+router.post("/verify-email", async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) return res.status(400).json({ message: "Token is required" });
+    const user = await prisma.user.findFirst({
+      where: { emailVerifyToken: token, emailVerifyExpiry: { gt: new Date() } },
+    });
+    if (!user) return res.status(400).json({ message: "Invalid or expired verification link" });
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { emailVerified: true, emailVerifyToken: null, emailVerifyExpiry: null },
+    });
+    res.json({ message: "Email verified successfully", email: user.email });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Resend verification email — authenticated
+router.post("/resend-verification", authenticate, async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({ where: { id: req.userId } });
+    if (!user) return res.status(404).json({ message: "User not found" });
+    if (user.emailVerified) return res.json({ message: "Email already verified" });
+
+    const emailVerifyToken = crypto.randomBytes(32).toString("hex");
+    const emailVerifyExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { emailVerifyToken, emailVerifyExpiry },
+    });
+    const { sendEmailVerification } = require("../services/emailService");
+    await sendEmailVerification(user.email, user.name, emailVerifyToken);
+    res.json({ message: "Verification email sent" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
