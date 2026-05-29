@@ -2186,6 +2186,44 @@
       "rejectedDesc": "Payment rejected.",
       "actionFailed": "Action failed"
     }
+  },
+  "adminPendingUsers": {
+    "title": "Pending Signups",
+    "subtitle": "Review and approve new agency registrations.",
+    "refresh": "Refresh",
+    "awaiting": "Awaiting Approval",
+    "empty": "No pending signups right now.",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "agency": "Agency",
+      "submitted": "Submitted",
+      "actions": "Actions"
+    },
+    "actions": {
+      "approve": "Approve",
+      "reject": "Reject",
+      "cancel": "Cancel",
+      "approving": "Approving…",
+      "rejecting": "Rejecting…"
+    },
+    "approveDialog": {
+      "title": "Approve this user?",
+      "description": "{{name}} ({{email}}) will be able to log in immediately and start a 14-day Pro trial."
+    },
+    "rejectDialog": {
+      "title": "Reject {{email}}?",
+      "reasonLabel": "Reason (optional, shown on login attempt)"
+    },
+    "toast": {
+      "loadFailed": "Failed to load",
+      "approved": "User approved",
+      "approvedDesc": "{{email}} can now log in.",
+      "approveFailed": "Approval failed",
+      "rejected": "User rejected",
+      "rejectFailed": "Rejection failed"
+    }
   }
 }
+
 
