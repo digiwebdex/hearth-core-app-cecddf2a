@@ -104,12 +104,12 @@ const AdminTenants = () => {
         prev.map((t) => t.id === tenant.id ? { ...t, subscriptionStatus: newStatus } : t)
       );
       toast({
-        title: newStatus === "suspended" ? "Company suspended" : "Company reactivated",
+        title: newStatus === "suspended" ? tt("adminTenants.toast.companySuspended") : tt("adminTenants.toast.companyReactivated"),
         description: tenant.name,
         variant: newStatus === "suspended" ? "destructive" : "default",
       });
     } catch (err: any) {
-      toast({ title: "Action failed", description: err.message, variant: "destructive" });
+      toast({ title: tt("adminTenants.toast.actionFailed"), description: err.message, variant: "destructive" });
     }
   };
 
