@@ -231,27 +231,28 @@ const QuotationBuilder = () => {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <Button variant="ghost" size="sm" onClick={() => navigate("/quotations")} className="mb-1">
-              <ArrowLeft className="mr-1 h-4 w-4" /> Back to Quotations
+              <ArrowLeft className="mr-1 h-4 w-4" /> {t("quotationBuilder.back")}
             </Button>
-            <h1 className="text-2xl font-bold">{isEdit ? "Edit Quotation" : "New Quotation"}</h1>
+            <h1 className="text-2xl font-bold">{isEdit ? t("quotationBuilder.editTitle") : t("quotationBuilder.newTitle")}</h1>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => handleSave("draft")} disabled={saving}>
-              <Save className="mr-2 h-4 w-4" /> Save Draft
+              <Save className="mr-2 h-4 w-4" /> {t("quotationBuilder.saveDraft")}
             </Button>
             <Button onClick={() => handleSave("sent")} disabled={saving}>
-              <Save className="mr-2 h-4 w-4" /> Save & Send
+              <Save className="mr-2 h-4 w-4" /> {t("quotationBuilder.saveSend")}
             </Button>
           </div>
         </div>
 
         <Tabs defaultValue="details" className="space-y-4">
           <TabsList>
-            <TabsTrigger value="details">Details</TabsTrigger>
-            <TabsTrigger value="itinerary">Itinerary ({itinerary.length} days)</TabsTrigger>
-            <TabsTrigger value="pricing">Pricing ({items.length} items)</TabsTrigger>
-            <TabsTrigger value="notes">Notes & Terms</TabsTrigger>
+            <TabsTrigger value="details">{t("quotationBuilder.tabs.details")}</TabsTrigger>
+            <TabsTrigger value="itinerary">{t("quotationBuilder.tabs.itinerary", { count: itinerary.length })}</TabsTrigger>
+            <TabsTrigger value="pricing">{t("quotationBuilder.tabs.pricing", { count: items.length })}</TabsTrigger>
+            <TabsTrigger value="notes">{t("quotationBuilder.tabs.notes")}</TabsTrigger>
           </TabsList>
+
 
           {/* ── DETAILS TAB ── */}
           <TabsContent value="details" className="space-y-4">
