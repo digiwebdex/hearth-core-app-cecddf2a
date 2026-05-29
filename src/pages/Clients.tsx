@@ -205,16 +205,16 @@ const Clients = () => {
                         </TableCell>
                         <TableCell>
                           <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
-                            <Button variant="ghost" size="icon" title="View" onClick={() => navigate(`/clients/${c.id}`)}>
+                            <Button variant="ghost" size="icon" title={t("clientsForm.view")} onClick={() => navigate(`/clients/${c.id}`)}>
                               <Eye className="h-4 w-4" />
                             </Button>
                             <PermissionGate module="clients" action="edit">
-                              <Button variant="ghost" size="icon" title="Edit" onClick={() => openEdit(c)}>
+                              <Button variant="ghost" size="icon" title={t("clientsForm.edit")} onClick={() => openEdit(c)}>
                                 <Pencil className="h-4 w-4" />
                               </Button>
                             </PermissionGate>
                             <PermissionGate module="clients" action="delete">
-                              <Button variant="ghost" size="icon" title="Delete" onClick={() => handleDelete(c.id)}>
+                              <Button variant="ghost" size="icon" title={t("clientsForm.delete")} onClick={() => handleDelete(c.id)}>
                                 <Trash2 className="h-4 w-4 text-destructive" />
                               </Button>
                             </PermissionGate>
