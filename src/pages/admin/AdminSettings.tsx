@@ -270,41 +270,41 @@ const AdminSettings = () => {
           <TabsContent value="email">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2"><Mail className="h-5 w-5 text-primary" /> Email / SMTP Settings</CardTitle>
-                <CardDescription>Configure SMTP server for sending emails platform-wide</CardDescription>
+                <CardTitle className="flex items-center gap-2"><Mail className="h-5 w-5 text-primary" /> {t("adminSettings.email.title")}</CardTitle>
+                <CardDescription>{t("adminSettings.email.desc")}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-center justify-between rounded-lg border p-4">
                   <div>
-                    <p className="font-medium">Enable Email System</p>
-                    <p className="text-sm text-muted-foreground">Allow sending emails from the platform</p>
+                    <p className="font-medium">{t("adminSettings.email.enable")}</p>
+                    <p className="text-sm text-muted-foreground">{t("adminSettings.email.enableDesc")}</p>
                   </div>
                   <Switch checked={email.enabled} onCheckedChange={(v) => setEmail({ ...email, enabled: v })} />
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>SMTP Host</Label>
+                    <Label>{t("adminSettings.email.host")}</Label>
                     <Input placeholder="smtp.gmail.com" value={email.smtpHost} onChange={(e) => setEmail({ ...email, smtpHost: e.target.value })} />
                   </div>
                   <div className="space-y-2">
-                    <Label>SMTP Port</Label>
+                    <Label>{t("adminSettings.email.port")}</Label>
                     <Input type="number" placeholder="587" value={email.smtpPort} onChange={(e) => setEmail({ ...email, smtpPort: parseInt(e.target.value) || 587 })} />
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <Switch checked={email.smtpSecure} onCheckedChange={(v) => setEmail({ ...email, smtpSecure: v })} />
-                  <Label>Use SSL/TLS</Label>
+                  <Label>{t("adminSettings.email.ssl")}</Label>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>SMTP Username</Label>
+                    <Label>{t("adminSettings.email.user")}</Label>
                     <Input placeholder="your@email.com" value={email.smtpUser} onChange={(e) => setEmail({ ...email, smtpUser: e.target.value })} />
                   </div>
                   <div className="space-y-2">
-                    <Label>SMTP Password</Label>
+                    <Label>{t("adminSettings.email.pass")}</Label>
                     <div className="relative">
                       <Input
                         type={showPasswords.smtp ? "text" : "password"}
@@ -321,27 +321,27 @@ const AdminSettings = () => {
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>From Name</Label>
+                    <Label>{t("adminSettings.email.fromName")}</Label>
                     <Input placeholder="Travel Agency Website & Software Solution" value={email.fromName} onChange={(e) => setEmail({ ...email, fromName: e.target.value })} />
                   </div>
                   <div className="space-y-2">
-                    <Label>From Email</Label>
+                    <Label>{t("adminSettings.email.fromEmail")}</Label>
                     <Input type="email" placeholder="noreply@travelagencyweb.com" value={email.fromEmail} onChange={(e) => setEmail({ ...email, fromEmail: e.target.value })} />
                   </div>
                 </div>
 
-                <Button onClick={() => handleSave("Email")} disabled={saving}>
+                <Button onClick={() => handleSave(t("adminSettings.tabs.email"))} disabled={saving}>
                   {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-                  Save Email Settings
+                  {t("adminSettings.email.saveBtn")}
                 </Button>
 
                 {/* Test Email */}
                 <div className="pt-4 border-t">
-                  <h4 className="text-sm font-semibold mb-3">Send Test Email</h4>
+                  <h4 className="text-sm font-semibold mb-3">{t("adminSettings.email.testTitle")}</h4>
                   <div className="flex gap-2">
-                    <Input placeholder="test@example.com" type="email" value={testEmail} onChange={(e) => setTestEmail(e.target.value)} className="max-w-xs" />
+                    <Input placeholder={t("adminSettings.email.testPlaceholder")} type="email" value={testEmail} onChange={(e) => setTestEmail(e.target.value)} className="max-w-xs" />
                     <Button variant="outline" onClick={handleTestEmail} disabled={!testEmail}>
-                      <Send className="mr-2 h-4 w-4" /> Send Test
+                      <Send className="mr-2 h-4 w-4" /> {t("adminSettings.common.sendTest")}
                     </Button>
                   </div>
                 </div>
