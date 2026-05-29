@@ -471,28 +471,28 @@ const Invoices = () => {
         ) : error ? (
           <ErrorState message={error} onRetry={fetchInvoices} />
         ) : invoices.length === 0 ? (
-          <EmptyState icon={Receipt} title="No invoices yet" description="Create your first invoice from a booking to start tracking payments." actionLabel="New Invoice" onAction={() => setCreateDialogOpen(true)} />
+          <EmptyState icon={Receipt} title={t("invoicesForm.empty.title")} description={t("invoicesForm.empty.desc")} actionLabel={t("invoicesForm.empty.action")} onAction={() => setCreateDialogOpen(true)} />
         ) : (
           <Card>
             <CardContent className="p-0">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Invoice</TableHead>
-                    <TableHead>Booking</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead className="text-right">Total</TableHead>
-                    <TableHead className="text-right">Paid</TableHead>
-                    <TableHead className="text-right">Due</TableHead>
-                    <TableHead>Progress</TableHead>
-                    <TableHead>Due Date</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[160px]">Actions</TableHead>
+                    <TableHead>{t("invoicesForm.table.invoice")}</TableHead>
+                    <TableHead>{t("invoicesForm.table.booking")}</TableHead>
+                    <TableHead>{t("invoicesForm.table.client")}</TableHead>
+                    <TableHead className="text-right">{t("invoicesForm.table.total")}</TableHead>
+                    <TableHead className="text-right">{t("invoicesForm.table.paid")}</TableHead>
+                    <TableHead className="text-right">{t("invoicesForm.table.due")}</TableHead>
+                    <TableHead>{t("invoicesForm.table.progress")}</TableHead>
+                    <TableHead>{t("invoicesForm.table.dueDate")}</TableHead>
+                    <TableHead>{t("invoicesForm.table.status")}</TableHead>
+                    <TableHead className="w-[160px]">{t("invoicesForm.table.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filtered.length === 0 ? (
-                    <TableRow><TableCell colSpan={10} className="text-center py-8 text-muted-foreground">No invoices match your filters.</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={10} className="text-center py-8 text-muted-foreground">{t("invoicesForm.table.noMatch")}</TableCell></TableRow>
                   ) : (
                     filtered.map((inv) => {
                       const meta = getStatusMeta(inv.status);
@@ -522,31 +522,31 @@ const Invoices = () => {
                             ) : "—"}
                           </TableCell>
                           <TableCell>
-                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{meta.label}</span>
+                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{t(`invoicesForm.statuses.${inv.status}`)}</span>
                           </TableCell>
                           <TableCell>
                             <div className="flex gap-1">
-                              <Button variant="ghost" size="icon" title="View Details" onClick={() => { loadInvoiceDetails(inv.id); setDetailDialogOpen(true); }}>
+                              <Button variant="ghost" size="icon" title={t("invoicesForm.actions.viewDetails")} onClick={() => { loadInvoiceDetails(inv.id); setDetailDialogOpen(true); }}>
                                 <Eye className="h-4 w-4" />
                               </Button>
-                              <Button variant="ghost" size="icon" title="View Receipt" onClick={() => navigate(`/invoices/${inv.id}/receipt`)}>
+                              <Button variant="ghost" size="icon" title={t("invoicesForm.actions.viewReceipt")} onClick={() => navigate(`/invoices/${inv.id}/receipt`)}>
                                 <FileText className="h-4 w-4" />
                               </Button>
                               {inv.status !== "paid" && inv.status !== "cancelled" && inv.status !== "refunded" && (
                                 <PermissionGate module="invoices" action="edit">
-                                  <Button variant="ghost" size="icon" title="Add Payment" onClick={() => { setSelectedInvoiceId(inv.id); setPayDialogOpen(true); }}>
+                                  <Button variant="ghost" size="icon" title={t("invoicesForm.actions.addPayment")} onClick={() => { setSelectedInvoiceId(inv.id); setPayDialogOpen(true); }}>
                                     <CreditCard className="h-4 w-4" />
                                   </Button>
                                 </PermissionGate>
                               )}
-                              <Button variant="ghost" size="icon" title="Send Invoice Email" onClick={async () => {
-                                try { await emailApi.sendInvoice(inv.id); toast({ title: "Invoice email sent" }); }
-                                catch (err: any) { toast({ title: "Email failed", description: err.message, variant: "destructive" }); }
+                              <Button variant="ghost" size="icon" title={t("invoicesForm.actions.sendEmail")} onClick={async () => {
+                                try { await emailApi.sendInvoice(inv.id); toast({ title: t("invoicesForm.toast.emailSent") }); }
+                                catch (err: any) { toast({ title: t("invoicesForm.toast.emailFailed"), description: err.message, variant: "destructive" }); }
                               }}>
                                 <Mail className="h-4 w-4 text-primary" />
                               </Button>
                               {inv.status !== "paid" && inv.status !== "cancelled" && inv.status !== "refunded" && (
-                                <Button variant="ghost" size="icon" title="Pay Online" onClick={() => { setPayGatewayInvoice({ id: inv.id, amount: inv.dueAmount }); setPayGatewayOpen(true); }}>
+                                <Button variant="ghost" size="icon" title={t("invoicesForm.actions.payOnline")} onClick={() => { setPayGatewayInvoice({ id: inv.id, amount: inv.dueAmount }); setPayGatewayOpen(true); }}>
                                   <Wallet className="h-4 w-4 text-primary" />
                                 </Button>
                               )}
@@ -561,6 +561,7 @@ const Invoices = () => {
             </CardContent>
           </Card>
         )}
+
 
         {/* ═══════ DETAIL DIALOG ═══════ */}
         <Dialog open={detailDialogOpen} onOpenChange={(open) => { setDetailDialogOpen(open); if (!open) setSelectedInvoiceId(null); }}>
