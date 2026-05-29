@@ -246,7 +246,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, status: "cancelled" as SubscriptionStatus, cancelReason: actionReason, cancelledAt: new Date().toISOString() } : s
     ));
-    toast({ title: "Cancelled", variant: "destructive" });
+    toast({ title: tt("adminSubscriptions.toast.cancelled"), variant: "destructive" });
     setDialogOpen(false);
   };
 
