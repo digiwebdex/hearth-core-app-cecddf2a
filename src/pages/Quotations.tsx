@@ -215,7 +215,7 @@ const Quotations = () => {
                       const meta = getStatusMeta(q.status);
                       return (
                         <TableRow key={q.id} className="cursor-pointer" onClick={() => navigate(`/quotations/${q.id}`)}>
-                          <TableCell className="font-medium max-w-[200px] truncate">{q.title || "Untitled"}</TableCell>
+                          <TableCell className="font-medium max-w-[200px] truncate">{q.title || t("quotationsForm.table.untitled")}</TableCell>
                           <TableCell className="text-sm">{q.clientName || q.leadName || "—"}</TableCell>
                           <TableCell>
                             {q.destination ? (
@@ -228,34 +228,34 @@ const Quotations = () => {
                           <TableCell className="font-medium">৳{(q.grandTotal || 0).toLocaleString()}</TableCell>
                           <TableCell className="text-sm text-green-600">৳{(q.totalProfit || 0).toLocaleString()}</TableCell>
                           <TableCell>
-                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{meta.label}</span>
+                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{t(`quotationsForm.statuses.${q.status}`)}</span>
                           </TableCell>
                           <TableCell className="text-sm text-muted-foreground">v{q.version || 1}</TableCell>
                           <TableCell className="text-sm text-muted-foreground">{q.validUntil || "—"}</TableCell>
                           <TableCell>
                             <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
-                              <Button variant="ghost" size="icon" title="View" onClick={() => navigate(`/quotations/${q.id}`)}>
+                              <Button variant="ghost" size="icon" title={t("quotationsForm.actions.view")} onClick={() => navigate(`/quotations/${q.id}`)}>
                                 <Eye className="h-4 w-4" />
                               </Button>
                               <PermissionGate module="quotations" action="edit">
-                                <Button variant="ghost" size="icon" title="Edit" onClick={() => navigate(`/quotations/${q.id}/edit`)}>
+                                <Button variant="ghost" size="icon" title={t("quotationsForm.actions.edit")} onClick={() => navigate(`/quotations/${q.id}/edit`)}>
                                   <Pencil className="h-4 w-4" />
                                 </Button>
                               </PermissionGate>
                               <PermissionGate module="quotations" action="create">
-                                <Button variant="ghost" size="icon" title="Duplicate" onClick={() => handleDuplicate(q.id)}>
+                                <Button variant="ghost" size="icon" title={t("quotationsForm.actions.duplicate")} onClick={() => handleDuplicate(q.id)}>
                                   <Copy className="h-4 w-4" />
                                 </Button>
                               </PermissionGate>
                               {q.status === "approved" && (
                                 <PermissionGate module="quotations" action="approve">
-                                  <Button variant="ghost" size="icon" title="Convert to Booking" onClick={() => handleConvert(q)}>
+                                  <Button variant="ghost" size="icon" title={t("quotationsForm.actions.convert")} onClick={() => handleConvert(q)}>
                                     <ArrowRight className="h-4 w-4 text-green-600" />
                                   </Button>
                                 </PermissionGate>
                               )}
                               <PermissionGate module="quotations" action="delete">
-                                <Button variant="ghost" size="icon" title="Delete" onClick={() => handleDelete(q.id)}>
+                                <Button variant="ghost" size="icon" title={t("quotationsForm.actions.delete")} onClick={() => handleDelete(q.id)}>
                                   <Trash2 className="h-4 w-4 text-destructive" />
                                 </Button>
                               </PermissionGate>
