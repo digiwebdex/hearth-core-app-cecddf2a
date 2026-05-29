@@ -296,12 +296,12 @@ const QuotationBuilder = () => {
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-xs">Day {day.dayNumber}</Badge>
+                      <Badge variant="outline" className="text-xs">{t("quotationBuilder.itinerary.dayBadge", { n: day.dayNumber })}</Badge>
                       <Input
                         className="h-8 font-medium border-none shadow-none px-1 text-base focus-visible:ring-0"
                         value={day.title}
                         onChange={(e) => updateDay(day.dayNumber, { title: e.target.value })}
-                        placeholder="Day title"
+                        placeholder={t("quotationBuilder.itinerary.dayTitlePh")}
                       />
                     </div>
                     <div className="flex gap-1">
@@ -319,25 +319,26 @@ const QuotationBuilder = () => {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="space-y-2">
-                    <Label className="text-xs">Description</Label>
-                    <Textarea rows={3} value={day.description} onChange={(e) => updateDay(day.dayNumber, { description: e.target.value })} placeholder="Describe the day's activities, sights, and experiences..." />
+                    <Label className="text-xs">{t("quotationBuilder.itinerary.description")}</Label>
+                    <Textarea rows={3} value={day.description} onChange={(e) => updateDay(day.dayNumber, { description: e.target.value })} placeholder={t("quotationBuilder.itinerary.descriptionPh")} />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-2">
-                      <Label className="text-xs">Meals</Label>
-                      <Input value={day.meals || ""} onChange={(e) => updateDay(day.dayNumber, { meals: e.target.value })} placeholder="e.g. Breakfast, Lunch" />
+                      <Label className="text-xs">{t("quotationBuilder.itinerary.meals")}</Label>
+                      <Input value={day.meals || ""} onChange={(e) => updateDay(day.dayNumber, { meals: e.target.value })} placeholder={t("quotationBuilder.itinerary.mealsPh")} />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-xs">Accommodation</Label>
-                      <Input value={day.accommodation || ""} onChange={(e) => updateDay(day.dayNumber, { accommodation: e.target.value })} placeholder="e.g. Hilton Pattaya" />
+                      <Label className="text-xs">{t("quotationBuilder.itinerary.accommodation")}</Label>
+                      <Input value={day.accommodation || ""} onChange={(e) => updateDay(day.dayNumber, { accommodation: e.target.value })} placeholder={t("quotationBuilder.itinerary.accommodationPh")} />
                     </div>
                   </div>
                 </CardContent>
               </Card>
             ))}
             <Button variant="outline" onClick={addDay} className="w-full">
-              <Plus className="mr-2 h-4 w-4" /> Add Day {itinerary.length + 1}
+              <Plus className="mr-2 h-4 w-4" /> {t("quotationBuilder.itinerary.addDay", { n: itinerary.length + 1 })}
             </Button>
+
           </TabsContent>
 
           {/* ── PRICING TAB ── */}
