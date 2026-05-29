@@ -29,13 +29,13 @@ import EmptyState from "@/components/EmptyState";
 import LoadingState from "@/components/LoadingState";
 import ErrorState from "@/components/ErrorState";
 
-const STATUS_META: { value: BookingStatus; label: string; color: string; icon: any }[] = [
-  { value: "pending", label: "Pending", color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200", icon: Clock },
-  { value: "confirmed", label: "Confirmed", color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200", icon: CheckCircle2 },
-  { value: "ticketed", label: "Ticketed", color: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200", icon: Ticket },
-  { value: "traveling", label: "Traveling", color: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200", icon: Plane },
-  { value: "completed", label: "Completed", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200", icon: CheckCircle2 },
-  { value: "cancelled", label: "Cancelled", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200", icon: XCircle },
+const STATUS_META: { value: BookingStatus; color: string; icon: any }[] = [
+  { value: "pending", color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200", icon: Clock },
+  { value: "confirmed", color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200", icon: CheckCircle2 },
+  { value: "ticketed", color: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200", icon: Ticket },
+  { value: "traveling", color: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200", icon: Plane },
+  { value: "completed", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200", icon: CheckCircle2 },
+  { value: "cancelled", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200", icon: XCircle },
 ];
 
 const TYPE_ICONS: Record<BookingType, any> = {
@@ -95,21 +95,21 @@ const Bookings = () => {
     if (editingId) {
       bookingApi.update(editingId, booking).then(() => {
         setItems((prev) => prev.map((b) => b.id === editingId ? { ...b, ...booking } : b));
-        toast({ title: "Booking updated" });
+        toast({ title: t("bookingsForm.bookingUpdated") });
       }).catch((err: any) => {
-        toast({ title: "Update failed", description: err.message, variant: "destructive" });
+        toast({ title: t("bookingsForm.updateFailed"), description: err.message, variant: "destructive" });
       });
     } else {
       bookingApi.create(booking).then((created: any) => {
         setItems((prev) => [...prev, created]);
-        toast({ title: "Booking created" });
+        toast({ title: t("bookingsForm.bookingCreated") });
         sendBookingSms({
           bookingId: created.id, bookingType: created.type, bookingStatus: created.status,
           bookingAmount: created.amount, clientName: created.clientName || created.clientId,
           clientPhone: "", company: "Travel Agency",
-        }).then((res) => { if (res.sent) toast({ title: "SMS sent to client" }); }).catch(() => {});
+        }).then((res) => { if (res.sent) toast({ title: t("bookingsForm.smsSent") }); }).catch(() => {});
       }).catch((err: any) => {
-        toast({ title: "Create failed", description: err.message, variant: "destructive" });
+        toast({ title: t("bookingsForm.createFailed"), description: err.message, variant: "destructive" });
       });
     }
     resetForm();
@@ -131,9 +131,9 @@ const Bookings = () => {
   const handleDelete = (id: string) => {
     bookingApi.delete(id).then(() => {
       setItems((prev) => prev.filter((b) => b.id !== id));
-      toast({ title: "Booking deleted", variant: "destructive" });
+      toast({ title: t("bookingsForm.bookingDeleted"), variant: "destructive" });
     }).catch((err: any) => {
-      toast({ title: "Delete failed", description: err.message, variant: "destructive" });
+      toast({ title: t("bookingsForm.deleteFailed"), description: err.message, variant: "destructive" });
     });
   };
 
@@ -156,10 +156,10 @@ const Bookings = () => {
       const booking = await quotationApi.convertToBooking(quotation.id);
       setItems((prev) => [booking, ...prev]);
       setQuotationDialogOpen(false);
-      toast({ title: "Booking created from quotation", description: `${quotation.title || quotation.destination} converted successfully.` });
+      toast({ title: t("bookingsForm.convertedTitle"), description: t("bookingsForm.convertedDesc", { name: quotation.title || quotation.destination }) });
       navigate(`/bookings/${booking.id}`);
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Conversion failed", description: err.message });
+      toast({ variant: "destructive", title: t("bookingsForm.conversionFailed"), description: err.message });
     }
   };
 
@@ -236,90 +236,90 @@ const Bookings = () => {
                 </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
-                  <DialogTitle>{editingId ? "Edit" : "New"} Booking</DialogTitle>
+                  <DialogTitle>{editingId ? t("bookingsForm.editBooking") : t("bookingsForm.newBooking")}</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-2">
-                    <Label>Booking Title</Label>
-                    <Input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder="e.g. Thailand Family Tour — 5N/6D" />
+                    <Label>{t("bookingsForm.bookingTitle")}</Label>
+                    <Input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder={t("bookingsForm.titlePlaceholder")} />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Type</Label>
+                      <Label>{t("bookingsForm.type")}</Label>
                       <Select value={form.type} onValueChange={(v) => setForm((f) => ({ ...f, type: v as BookingType }))}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="tour">Tour</SelectItem>
-                          <SelectItem value="ticket">Ticket</SelectItem>
-                          <SelectItem value="hotel">Hotel</SelectItem>
-                          <SelectItem value="visa">Visa</SelectItem>
-                          <SelectItem value="package">Package</SelectItem>
+                          <SelectItem value="tour">{t("bookingsForm.types.tour")}</SelectItem>
+                          <SelectItem value="ticket">{t("bookingsForm.types.ticket")}</SelectItem>
+                          <SelectItem value="hotel">{t("bookingsForm.types.hotel")}</SelectItem>
+                          <SelectItem value="visa">{t("bookingsForm.types.visa")}</SelectItem>
+                          <SelectItem value="package">{t("bookingsForm.types.package")}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label>Status</Label>
+                      <Label>{t("bookingsForm.status")}</Label>
                       <Select value={form.status} onValueChange={(v) => setForm((f) => ({ ...f, status: v as BookingStatus }))}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
-                          {STATUS_META.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
+                          {STATUS_META.map((s) => <SelectItem key={s.value} value={s.value}>{t(`bookingsForm.statuses.${s.value}`)}</SelectItem>)}
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Client Name</Label>
-                      <Input value={form.clientName} onChange={(e) => setForm((f) => ({ ...f, clientName: e.target.value }))} placeholder="e.g. Mr. Karim Ahmed" required />
+                      <Label>{t("bookingsForm.clientName")}</Label>
+                      <Input value={form.clientName} onChange={(e) => setForm((f) => ({ ...f, clientName: e.target.value }))} placeholder={t("bookingsForm.clientPlaceholder")} required />
                     </div>
                     <div className="space-y-2">
-                      <Label>Agent / Staff</Label>
-                      <Input value={form.agentId} onChange={(e) => setForm((f) => ({ ...f, agentId: e.target.value }))} placeholder="Assigned agent" />
+                      <Label>{t("bookingsForm.agentStaff")}</Label>
+                      <Input value={form.agentId} onChange={(e) => setForm((f) => ({ ...f, agentId: e.target.value }))} placeholder={t("bookingsForm.agentPlaceholder")} />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Destination</Label>
-                      <Input value={form.destination} onChange={(e) => setForm((f) => ({ ...f, destination: e.target.value }))} placeholder="e.g. Bangkok, Thailand" />
+                      <Label>{t("bookingsForm.destination")}</Label>
+                      <Input value={form.destination} onChange={(e) => setForm((f) => ({ ...f, destination: e.target.value }))} placeholder={t("bookingsForm.destinationFormPlaceholder")} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Travelers</Label>
+                      <Label>{t("bookingsForm.travelers")}</Label>
                       <Input type="number" min={1} value={form.travelerCount} onChange={(e) => setForm((f) => ({ ...f, travelerCount: +e.target.value }))} />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Travel From</Label>
+                      <Label>{t("bookingsForm.travelFrom")}</Label>
                       <Input type="date" value={form.travelDateFrom} onChange={(e) => setForm((f) => ({ ...f, travelDateFrom: e.target.value }))} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Travel To</Label>
+                      <Label>{t("bookingsForm.travelTo")}</Label>
                       <Input type="date" value={form.travelDateTo} onChange={(e) => setForm((f) => ({ ...f, travelDateTo: e.target.value }))} />
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label>Selling Amount (৳)</Label>
+                      <Label>{t("bookingsForm.sellingAmount")}</Label>
                       <Input type="number" min={0} step={0.01} value={form.amount || ""} onChange={(e) => setForm((f) => ({ ...f, amount: parseFloat(e.target.value) || 0 }))} required />
                     </div>
                     <div className="space-y-2">
-                      <Label>Cost (৳)</Label>
+                      <Label>{t("bookingsForm.cost")}</Label>
                       <Input type="number" min={0} step={0.01} value={form.cost || ""} onChange={(e) => setForm((f) => ({ ...f, cost: parseFloat(e.target.value) || 0 }))} required />
                     </div>
                     <div className="space-y-2">
-                      <Label>Profit (৳)</Label>
+                      <Label>{t("bookingsForm.profit")}</Label>
                       <div className={`flex h-10 items-center rounded-md border px-3 text-sm font-semibold ${profit >= 0 ? "text-green-600" : "text-destructive"}`}>
                         ৳{profit.toLocaleString()}
                       </div>
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label>Internal Notes</Label>
-                    <Input value={form.internalNotes} onChange={(e) => setForm((f) => ({ ...f, internalNotes: e.target.value }))} placeholder="Notes visible to staff only..." />
+                    <Label>{t("bookingsForm.internalNotes")}</Label>
+                    <Input value={form.internalNotes} onChange={(e) => setForm((f) => ({ ...f, internalNotes: e.target.value }))} placeholder={t("bookingsForm.notesPlaceholder")} />
                   </div>
                   <div className="flex gap-2">
-                    <Button type="submit" className="flex-1">{editingId ? "Update" : "Create"}</Button>
-                    <DialogClose asChild><Button type="button" variant="outline">Cancel</Button></DialogClose>
+                    <Button type="submit" className="flex-1">{editingId ? t("bookingsForm.update") : t("bookingsForm.create")}</Button>
+                    <DialogClose asChild><Button type="button" variant="outline">{t("bookingsForm.cancel")}</Button></DialogClose>
                   </div>
                 </form>
               </DialogContent>
@@ -333,7 +333,7 @@ const Bookings = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Total Bookings</div>
+                <div className="text-sm text-muted-foreground">{t("bookingsForm.totalBookings")}</div>
                 <Plane className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold">{items.length}</p>
@@ -342,7 +342,7 @@ const Bookings = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Revenue</div>
+                <div className="text-sm text-muted-foreground">{t("bookingsForm.revenue")}</div>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold">৳{totals.amount.toLocaleString()}</p>
@@ -351,7 +351,7 @@ const Bookings = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Profit</div>
+                <div className="text-sm text-muted-foreground">{t("bookingsForm.profitLabel")}</div>
                 <DollarSign className="h-4 w-4 text-green-600" />
               </div>
               <p className="text-2xl font-bold text-green-600">৳{totals.profit.toLocaleString()}</p>
@@ -360,7 +360,7 @@ const Bookings = () => {
           <Card className={unpaidBookings > 0 ? "border-amber-300 dark:border-amber-600" : ""}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Unpaid</div>
+                <div className="text-sm text-muted-foreground">{t("bookingsForm.unpaid")}</div>
                 <AlertTriangle className={`h-4 w-4 ${unpaidBookings > 0 ? "text-amber-500" : "text-muted-foreground"}`} />
               </div>
               <p className="text-2xl font-bold">{unpaidBookings}</p>
@@ -369,7 +369,7 @@ const Bookings = () => {
           <Card className={upcomingTravel > 0 ? "border-blue-300 dark:border-blue-600" : ""}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Upcoming (14d)</div>
+                <div className="text-sm text-muted-foreground">{t("bookingsForm.upcoming14")}</div>
                 <CalendarIcon className={`h-4 w-4 ${upcomingTravel > 0 ? "text-blue-500" : "text-muted-foreground"}`} />
               </div>
               <p className="text-2xl font-bold">{upcomingTravel}</p>
@@ -381,37 +381,37 @@ const Bookings = () => {
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
             <Button variant={statusFilter === "all" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("all")}>
-              All ({statusCounts.all})
+              {t("bookingsForm.all")} ({statusCounts.all})
             </Button>
             {STATUS_META.map((s) => (
               <Button key={s.value} variant={statusFilter === s.value ? "default" : "outline"} size="sm" onClick={() => setStatusFilter(s.value)}>
-                {s.label} ({statusCounts[s.value] || 0})
+                {t(`bookingsForm.statuses.${s.value}`)} ({statusCounts[s.value] || 0})
               </Button>
             ))}
           </div>
           <div className="flex flex-wrap gap-3">
             <div className="flex items-center gap-2 max-w-sm flex-1">
               <Search className="h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search title, client, destination..." value={search} onChange={(e) => setSearch(e.target.value)} />
+              <Input placeholder={t("bookingsForm.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
             <Select value={paymentFilter} onValueChange={setPaymentFilter}>
-              <SelectTrigger className="w-[150px]"><SelectValue placeholder="Payment" /></SelectTrigger>
+              <SelectTrigger className="w-[150px]"><SelectValue placeholder={t("bookingsForm.payment")} /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Payments</SelectItem>
-                <SelectItem value="unpaid">Unpaid</SelectItem>
-                <SelectItem value="partial">Partial</SelectItem>
-                <SelectItem value="paid">Paid</SelectItem>
+                <SelectItem value="all">{t("bookingsForm.payments.all")}</SelectItem>
+                <SelectItem value="unpaid">{t("bookingsForm.payments.unpaid")}</SelectItem>
+                <SelectItem value="partial">{t("bookingsForm.payments.partial")}</SelectItem>
+                <SelectItem value="paid">{t("bookingsForm.payments.paid")}</SelectItem>
               </SelectContent>
             </Select>
             <Button variant="outline" size="sm" onClick={() => setShowFilters((v) => !v)} className="gap-1.5">
-              <Filter className="h-4 w-4" /> Filters
+              <Filter className="h-4 w-4" /> {t("bookingsForm.filters")}
               {activeFilterCount > 0 && (
                 <Badge variant="secondary" className="ml-1 h-5 w-5 p-0 flex items-center justify-center text-[10px]">{activeFilterCount}</Badge>
               )}
             </Button>
             {activeFilterCount > 0 && (
               <Button variant="ghost" size="sm" onClick={() => { setDestinationFilter(""); setTravelDateFrom(undefined); setTravelDateTo(undefined); }}>
-                Clear filters
+                {t("bookingsForm.clearFilters")}
               </Button>
             )}
           </div>
@@ -423,16 +423,16 @@ const Bookings = () => {
             <CardContent className="p-3">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="space-y-1">
-                  <Label className="text-xs">Destination</Label>
-                  <Input className="h-8 text-xs" placeholder="e.g. Dubai, Thailand" value={destinationFilter} onChange={(e) => setDestinationFilter(e.target.value)} />
+                  <Label className="text-xs">{t("bookingsForm.destination")}</Label>
+                  <Input className="h-8 text-xs" placeholder={t("bookingsForm.destinationPlaceholder")} value={destinationFilter} onChange={(e) => setDestinationFilter(e.target.value)} />
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs">Travel Date From</Label>
+                  <Label className="text-xs">{t("bookingsForm.travelDateFrom")}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button variant="outline" size="sm" className={cn("w-full justify-start text-left font-normal h-8 text-xs", !travelDateFrom && "text-muted-foreground")}>
                         <CalendarIcon className="mr-1 h-3 w-3" />
-                        {travelDateFrom ? format(travelDateFrom, "PP") : "Any"}
+                        {travelDateFrom ? format(travelDateFrom, "PP") : t("bookingsForm.any")}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -441,12 +441,12 @@ const Bookings = () => {
                   </Popover>
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs">Travel Date To</Label>
+                  <Label className="text-xs">{t("bookingsForm.travelDateTo")}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button variant="outline" size="sm" className={cn("w-full justify-start text-left font-normal h-8 text-xs", !travelDateTo && "text-muted-foreground")}>
                         <CalendarIcon className="mr-1 h-3 w-3" />
-                        {travelDateTo ? format(travelDateTo, "PP") : "Any"}
+                        {travelDateTo ? format(travelDateTo, "PP") : t("bookingsForm.any")}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -465,27 +465,27 @@ const Bookings = () => {
         ) : error ? (
           <ErrorState message={error} onRetry={fetchBookings} />
         ) : items.length === 0 ? (
-          <EmptyState icon={Plane} title="No bookings yet" description="Create your first booking to start tracking tours, tickets, hotels, and visas." actionLabel="New Booking" onAction={() => setDialogOpen(true)} />
+          <EmptyState icon={Plane} title={t("bookingsForm.noBookingsYet")} description={t("bookingsForm.noBookingsDesc")} actionLabel={t("bookingsForm.newBooking")} onAction={() => setDialogOpen(true)} />
         ) : (
           <Card>
             <CardContent className="p-0">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Booking</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Destination</TableHead>
-                    <TableHead>Travel Date</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
-                    <TableHead className="text-right">Profit</TableHead>
-                    <TableHead>Payment</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[120px]">Actions</TableHead>
+                    <TableHead>{t("bookingsForm.booking")}</TableHead>
+                    <TableHead>{t("bookingsForm.client")}</TableHead>
+                    <TableHead>{t("bookingsForm.destination")}</TableHead>
+                    <TableHead>{t("bookingsForm.travelDate")}</TableHead>
+                    <TableHead className="text-right">{t("bookingsForm.amount")}</TableHead>
+                    <TableHead className="text-right">{t("bookingsForm.profitLabel")}</TableHead>
+                    <TableHead>{t("bookingsForm.payment")}</TableHead>
+                    <TableHead>{t("bookingsForm.status")}</TableHead>
+                    <TableHead className="w-[120px]">{t("bookingsForm.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filtered.length === 0 ? (
-                    <TableRow><TableCell colSpan={9} className="text-center py-8 text-muted-foreground">No bookings found.</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={9} className="text-center py-8 text-muted-foreground">{t("bookingsForm.noBookingsFound")}</TableCell></TableRow>
                   ) : (
                     filtered.map((b) => {
                       const meta = getStatusMeta(b.status);
@@ -496,8 +496,8 @@ const Bookings = () => {
                             <div className="flex items-center gap-2">
                               <TypeIcon className="h-4 w-4 text-muted-foreground" />
                               <div>
-                                <p className="font-medium text-sm truncate max-w-[180px]">{b.title || `${b.type} Booking`}</p>
-                                <p className="text-xs text-muted-foreground capitalize">{b.type}</p>
+                                <p className="font-medium text-sm truncate max-w-[180px]">{b.title || t("bookingsForm.bookingTypeFallback", { type: t(`bookingsForm.types.${b.type}`) })}</p>
+                                <p className="text-xs text-muted-foreground">{t(`bookingsForm.types.${b.type}`)}</p>
                               </div>
                             </div>
                           </TableCell>
@@ -518,24 +518,24 @@ const Bookings = () => {
                                 b.paymentStatus === "paid" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" :
                                 b.paymentStatus === "partial" ? "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200" :
                                 "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-                              )}>{b.paymentStatus}</span>
+                              )}>{t(`bookingsForm.payments.${b.paymentStatus}`)}</span>
                             ) : <span className="text-xs text-muted-foreground">—</span>}
                           </TableCell>
                           <TableCell>
-                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{meta.label}</span>
+                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{t(`bookingsForm.statuses.${b.status}`)}</span>
                           </TableCell>
                           <TableCell>
                             <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
-                              <Button variant="ghost" size="icon" title="View" onClick={() => navigate(`/bookings/${b.id}`)}>
+                              <Button variant="ghost" size="icon" title={t("bookingsForm.view")} onClick={() => navigate(`/bookings/${b.id}`)}>
                                 <Eye className="h-4 w-4" />
                               </Button>
                               <PermissionGate module="bookings" action="edit">
-                                <Button variant="ghost" size="icon" title="Edit" onClick={() => handleEdit(b)}>
+                                <Button variant="ghost" size="icon" title={t("bookingsForm.edit")} onClick={() => handleEdit(b)}>
                                   <Pencil className="h-4 w-4" />
                                 </Button>
                               </PermissionGate>
                               <PermissionGate module="bookings" action="delete">
-                                <Button variant="ghost" size="icon" title="Delete" onClick={() => handleDelete(b.id)}>
+                                <Button variant="ghost" size="icon" title={t("bookingsForm.delete")} onClick={() => handleDelete(b.id)}>
                                   <Trash2 className="h-4 w-4 text-destructive" />
                                 </Button>
                               </PermissionGate>
@@ -556,18 +556,18 @@ const Bookings = () => {
       <Dialog open={quotationDialogOpen} onOpenChange={setQuotationDialogOpen}>
         <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Create Booking from Quotation</DialogTitle>
+            <DialogTitle>{t("bookingsForm.createFromQuotation")}</DialogTitle>
           </DialogHeader>
           {loadingQuotations ? (
-            <div className="py-8 text-center text-sm text-muted-foreground">Loading approved quotations...</div>
+            <div className="py-8 text-center text-sm text-muted-foreground">{t("bookingsForm.loadingQuotations")}</div>
           ) : approvedQuotations.length === 0 ? (
             <div className="py-8 text-center space-y-2">
-              <p className="text-sm text-muted-foreground">No approved quotations available.</p>
-              <p className="text-xs text-muted-foreground">Quotations must be in "Approved" status to convert into bookings.</p>
+              <p className="text-sm text-muted-foreground">{t("bookingsForm.noApprovedQuotations")}</p>
+              <p className="text-xs text-muted-foreground">{t("bookingsForm.mustBeApproved")}</p>
             </div>
           ) : (
             <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Select an approved quotation to convert into a booking:</p>
+              <p className="text-sm text-muted-foreground">{t("bookingsForm.selectQuotation")}</p>
               {approvedQuotations.map((q) => (
                 <div
                   key={q.id}
@@ -579,7 +579,7 @@ const Bookings = () => {
                     <div className="flex items-center gap-3 mt-0.5 text-xs text-muted-foreground">
                       {q.clientName && <span>{q.clientName}</span>}
                       {q.destination && <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{q.destination}</span>}
-                      <span>{q.travelerCount} travelers</span>
+                      <span>{t("bookingsForm.travelersCount", { count: q.travelerCount })}</span>
                     </div>
                   </div>
                   <div className="text-right ml-3">
