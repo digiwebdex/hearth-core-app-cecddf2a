@@ -1273,5 +1273,61 @@
       "terms": "Terms & Conditions",
       "termsPh": "Enter terms and conditions..."
     }
+  },
+  "quotationDetails": {
+    "back": "Back to Quotations",
+    "untitled": "Untitled Quotation",
+    "notFound": "Quotation not found",
+    "error": "Error",
+    "statusUpdated": "Status updated to {{label}}",
+    "bookingCreated": "Booking created from quotation!",
+    "duplicated": "Quotation duplicated — new revision created",
+    "actions": {
+      "edit": "Edit",
+      "revise": "Revise",
+      "print": "Print",
+      "convert": "Convert to Booking"
+    },
+    "stats": {
+      "grandTotal": "Grand Total",
+      "estProfit": "Est. Profit",
+      "travelers": "Travelers",
+      "validUntil": "Valid Until"
+    },
+    "tabs": {
+      "itinerary": "Itinerary",
+      "pricing": "Pricing ({{count}} items)",
+      "versions": "Version History ({{count}})"
+    },
+    "noItinerary": "No itinerary added.",
+    "th": {
+      "type": "Type",
+      "description": "Description",
+      "cost": "Cost",
+      "selling": "Selling",
+      "qty": "Qty",
+      "subtotal": "Subtotal"
+    },
+    "totals": {
+      "totalCost": "Total Cost",
+      "totalSelling": "Total Selling",
+      "discount": "Discount",
+      "tax": "Tax",
+      "grandTotal": "Grand Total",
+      "profit": "Profit"
+    },
+    "versions": {
+      "title": "Version History",
+      "empty": "No version history available.",
+      "version": "Version {{n}}",
+      "by": "by {{name}}"
+    },
+    "statuses": {
+      "draft": "Draft",
+      "sent": "Sent",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "expired": "Expired"
+    }
   }
 }
