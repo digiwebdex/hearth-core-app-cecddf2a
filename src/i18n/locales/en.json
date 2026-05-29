@@ -1187,5 +1187,91 @@
       "converted": "Booking created from quotation!",
       "error": "Error"
     }
+  },
+  "quotationBuilder": {
+    "back": "Back to Quotations",
+    "newTitle": "New Quotation",
+    "editTitle": "Edit Quotation",
+    "saveDraft": "Save Draft",
+    "saveSend": "Save & Send",
+    "errorLoading": "Error loading quotation",
+    "updated": "Quotation updated",
+    "created": "Quotation created",
+    "error": "Error",
+    "pickDate": "Pick a date",
+    "tabs": {
+      "details": "Details",
+      "itinerary": "Itinerary ({{count}} days)",
+      "pricing": "Pricing ({{count}} items)",
+      "notes": "Notes & Terms"
+    },
+    "details": {
+      "section": "Quotation Details",
+      "title": "Quotation Title *",
+      "titlePh": "e.g. Malaysia Family Tour — 4N/5D",
+      "clientName": "Client Name",
+      "clientNamePh": "e.g. Mr. Karim Ahmed",
+      "leadName": "Lead Name (if from lead)",
+      "leadNamePh": "Optional — link to existing lead",
+      "destination": "Destination *",
+      "destinationPh": "e.g. Dubai & Abu Dhabi, UAE",
+      "travelers": "Number of Travelers",
+      "travelFrom": "Travel From",
+      "travelTo": "Travel To",
+      "validUntil": "Quote Valid Until"
+    },
+    "itinerary": {
+      "dayBadge": "Day {{n}}",
+      "dayTitlePh": "Day title",
+      "description": "Description",
+      "descriptionPh": "Describe the day's activities, sights, and experiences...",
+      "meals": "Meals",
+      "mealsPh": "e.g. Breakfast, Lunch",
+      "accommodation": "Accommodation",
+      "accommodationPh": "e.g. Hilton Pattaya",
+      "addDay": "Add Day {{n}}"
+    },
+    "pricing": {
+      "lineItems": "Line Items",
+      "addItem": "Add Item",
+      "descriptionPh": "Description",
+      "th": {
+        "type": "Type",
+        "description": "Description",
+        "cost": "Cost (৳)",
+        "markup": "Markup %",
+        "selling": "Selling (৳)",
+        "qty": "Qty",
+        "nights": "Nights",
+        "subtotal": "Subtotal"
+      },
+      "totals": {
+        "totalCost": "Total Cost",
+        "totalSelling": "Total Selling",
+        "discount": "Discount",
+        "tax": "Tax",
+        "grandTotal": "Grand Total",
+        "estProfit": "Estimated Profit",
+        "profitMargin": "Profit Margin"
+      }
+    },
+    "itemTypes": {
+      "hotel": "Hotel / Accommodation",
+      "flight": "Flight / Air Ticket",
+      "visa": "Visa Processing",
+      "transport": "Transport / Transfer",
+      "tour": "Tour / Sightseeing",
+      "activity": "Activity / Excursion",
+      "insurance": "Travel Insurance",
+      "service_fee": "Service Fee",
+      "discount": "Discount",
+      "tax": "Tax / VAT"
+    },
+    "notes": {
+      "internal": "Internal Notes",
+      "internalPh": "Internal notes (not visible to client)...",
+      "terms": "Terms & Conditions",
+      "termsPh": "Enter terms and conditions..."
+    }
   }
 }

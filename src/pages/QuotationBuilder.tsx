@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams, useNavigate } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import LoadingState from "@/components/LoadingState";
@@ -27,18 +28,19 @@ import {
   GripVertical, ChevronUp, ChevronDown, FileText,
 } from "lucide-react";
 
-const ITEM_TYPES: { value: QuotationItemType; label: string; icon: any }[] = [
-  { value: "hotel", label: "Hotel / Accommodation", icon: Hotel },
-  { value: "flight", label: "Flight / Air Ticket", icon: Plane },
-  { value: "visa", label: "Visa Processing", icon: Stamp },
-  { value: "transport", label: "Transport / Transfer", icon: Car },
-  { value: "tour", label: "Tour / Sightseeing", icon: Map },
-  { value: "activity", label: "Activity / Excursion", icon: Bike },
-  { value: "insurance", label: "Travel Insurance", icon: Shield },
-  { value: "service_fee", label: "Service Fee", icon: DollarSign },
-  { value: "discount", label: "Discount", icon: Percent },
-  { value: "tax", label: "Tax / VAT", icon: Receipt },
+const ITEM_TYPES: { value: QuotationItemType; labelKey: string; icon: any }[] = [
+  { value: "hotel", labelKey: "hotel", icon: Hotel },
+  { value: "flight", labelKey: "flight", icon: Plane },
+  { value: "visa", labelKey: "visa", icon: Stamp },
+  { value: "transport", labelKey: "transport", icon: Car },
+  { value: "tour", labelKey: "tour", icon: Map },
+  { value: "activity", labelKey: "activity", icon: Bike },
+  { value: "insurance", labelKey: "insurance", icon: Shield },
+  { value: "service_fee", labelKey: "service_fee", icon: DollarSign },
+  { value: "discount", labelKey: "discount", icon: Percent },
+  { value: "tax", labelKey: "tax", icon: Receipt },
 ];
+
 
 const getItemIcon = (type: QuotationItemType) => ITEM_TYPES.find((t) => t.value === type)?.icon || FileText;
 
@@ -58,6 +60,7 @@ const calcSellingPrice = (cost: number, markup: number) => Math.round(cost * (1 
 const calcSubtotal = (price: number, qty: number) => price * qty;
 
 const QuotationBuilder = () => {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isEdit = !!id;
@@ -118,7 +121,7 @@ const QuotationBuilder = () => {
       if (q.itinerary?.length) setItinerary(q.itinerary);
       setLoading(false);
     }).catch(() => {
-      toast({ variant: "destructive", title: "Error loading quotation" });
+      toast({ variant: "destructive", title: t("quotationBuilder.errorLoading") });
       setLoading(false);
     });
   }, [id]);
@@ -189,14 +192,14 @@ const QuotationBuilder = () => {
     try {
       if (isEdit) {
         await quotationApi.update(id!, payload);
-        toast({ title: "Quotation updated" });
+        toast({ title: t("quotationBuilder.updated") });
       } else {
         const created = await quotationApi.create(payload);
-        toast({ title: "Quotation created" });
+        toast({ title: t("quotationBuilder.created") });
         navigate(`/quotations/${created.id}`);
       }
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("quotationBuilder.error"), description: err.message });
     } finally {
       setSaving(false);
     }
@@ -209,7 +212,7 @@ const QuotationBuilder = () => {
         <PopoverTrigger asChild>
           <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}>
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : "Pick a date"}
+            {date ? format(date, "PPP") : t("quotationBuilder.pickDate")}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
@@ -228,60 +231,62 @@ const QuotationBuilder = () => {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <Button variant="ghost" size="sm" onClick={() => navigate("/quotations")} className="mb-1">
-              <ArrowLeft className="mr-1 h-4 w-4" /> Back to Quotations
+              <ArrowLeft className="mr-1 h-4 w-4" /> {t("quotationBuilder.back")}
             </Button>
-            <h1 className="text-2xl font-bold">{isEdit ? "Edit Quotation" : "New Quotation"}</h1>
+            <h1 className="text-2xl font-bold">{isEdit ? t("quotationBuilder.editTitle") : t("quotationBuilder.newTitle")}</h1>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => handleSave("draft")} disabled={saving}>
-              <Save className="mr-2 h-4 w-4" /> Save Draft
+              <Save className="mr-2 h-4 w-4" /> {t("quotationBuilder.saveDraft")}
             </Button>
             <Button onClick={() => handleSave("sent")} disabled={saving}>
-              <Save className="mr-2 h-4 w-4" /> Save & Send
+              <Save className="mr-2 h-4 w-4" /> {t("quotationBuilder.saveSend")}
             </Button>
           </div>
         </div>
 
         <Tabs defaultValue="details" className="space-y-4">
           <TabsList>
-            <TabsTrigger value="details">Details</TabsTrigger>
-            <TabsTrigger value="itinerary">Itinerary ({itinerary.length} days)</TabsTrigger>
-            <TabsTrigger value="pricing">Pricing ({items.length} items)</TabsTrigger>
-            <TabsTrigger value="notes">Notes & Terms</TabsTrigger>
+            <TabsTrigger value="details">{t("quotationBuilder.tabs.details")}</TabsTrigger>
+            <TabsTrigger value="itinerary">{t("quotationBuilder.tabs.itinerary", { count: itinerary.length })}</TabsTrigger>
+            <TabsTrigger value="pricing">{t("quotationBuilder.tabs.pricing", { count: items.length })}</TabsTrigger>
+            <TabsTrigger value="notes">{t("quotationBuilder.tabs.notes")}</TabsTrigger>
           </TabsList>
+
 
           {/* ── DETAILS TAB ── */}
           <TabsContent value="details" className="space-y-4">
             <Card>
-              <CardHeader><CardTitle className="text-sm">Quotation Details</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="text-sm">{t("quotationBuilder.details.section")}</CardTitle></CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="md:col-span-2 space-y-2">
-                    <Label>Quotation Title *</Label>
-                    <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Malaysia Family Tour — 4N/5D" />
+                    <Label>{t("quotationBuilder.details.title")}</Label>
+                    <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder={t("quotationBuilder.details.titlePh")} />
                   </div>
                   <div className="space-y-2">
-                    <Label>Client Name</Label>
-                    <Input value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="e.g. Mr. Karim Ahmed" />
+                    <Label>{t("quotationBuilder.details.clientName")}</Label>
+                    <Input value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder={t("quotationBuilder.details.clientNamePh")} />
                   </div>
                   <div className="space-y-2">
-                    <Label>Lead Name (if from lead)</Label>
-                    <Input value={leadName} onChange={(e) => setLeadName(e.target.value)} placeholder="Optional — link to existing lead" />
+                    <Label>{t("quotationBuilder.details.leadName")}</Label>
+                    <Input value={leadName} onChange={(e) => setLeadName(e.target.value)} placeholder={t("quotationBuilder.details.leadNamePh")} />
                   </div>
                   <div className="space-y-2">
-                    <Label>Destination *</Label>
-                    <Input value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="e.g. Dubai & Abu Dhabi, UAE" />
+                    <Label>{t("quotationBuilder.details.destination")}</Label>
+                    <Input value={destination} onChange={(e) => setDestination(e.target.value)} placeholder={t("quotationBuilder.details.destinationPh")} />
                   </div>
                   <div className="space-y-2">
-                    <Label>Number of Travelers</Label>
+                    <Label>{t("quotationBuilder.details.travelers")}</Label>
                     <Input type="number" min={1} value={travelerCount} onChange={(e) => setTravelerCount(+e.target.value)} />
                   </div>
-                  <DatePick label="Travel From" date={travelFrom} onChange={setTravelFrom} />
-                  <DatePick label="Travel To" date={travelTo} onChange={setTravelTo} />
-                  <DatePick label="Quote Valid Until" date={validUntil} onChange={setValidUntil} />
+                  <DatePick label={t("quotationBuilder.details.travelFrom")} date={travelFrom} onChange={setTravelFrom} />
+                  <DatePick label={t("quotationBuilder.details.travelTo")} date={travelTo} onChange={setTravelTo} />
+                  <DatePick label={t("quotationBuilder.details.validUntil")} date={validUntil} onChange={setValidUntil} />
                 </div>
               </CardContent>
             </Card>
+
           </TabsContent>
 
           {/* ── ITINERARY TAB ── */}
@@ -291,12 +296,12 @@ const QuotationBuilder = () => {
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-xs">Day {day.dayNumber}</Badge>
+                      <Badge variant="outline" className="text-xs">{t("quotationBuilder.itinerary.dayBadge", { n: day.dayNumber })}</Badge>
                       <Input
                         className="h-8 font-medium border-none shadow-none px-1 text-base focus-visible:ring-0"
                         value={day.title}
                         onChange={(e) => updateDay(day.dayNumber, { title: e.target.value })}
-                        placeholder="Day title"
+                        placeholder={t("quotationBuilder.itinerary.dayTitlePh")}
                       />
                     </div>
                     <div className="flex gap-1">
@@ -314,25 +319,26 @@ const QuotationBuilder = () => {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="space-y-2">
-                    <Label className="text-xs">Description</Label>
-                    <Textarea rows={3} value={day.description} onChange={(e) => updateDay(day.dayNumber, { description: e.target.value })} placeholder="Describe the day's activities, sights, and experiences..." />
+                    <Label className="text-xs">{t("quotationBuilder.itinerary.description")}</Label>
+                    <Textarea rows={3} value={day.description} onChange={(e) => updateDay(day.dayNumber, { description: e.target.value })} placeholder={t("quotationBuilder.itinerary.descriptionPh")} />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-2">
-                      <Label className="text-xs">Meals</Label>
-                      <Input value={day.meals || ""} onChange={(e) => updateDay(day.dayNumber, { meals: e.target.value })} placeholder="e.g. Breakfast, Lunch" />
+                      <Label className="text-xs">{t("quotationBuilder.itinerary.meals")}</Label>
+                      <Input value={day.meals || ""} onChange={(e) => updateDay(day.dayNumber, { meals: e.target.value })} placeholder={t("quotationBuilder.itinerary.mealsPh")} />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-xs">Accommodation</Label>
-                      <Input value={day.accommodation || ""} onChange={(e) => updateDay(day.dayNumber, { accommodation: e.target.value })} placeholder="e.g. Hilton Pattaya" />
+                      <Label className="text-xs">{t("quotationBuilder.itinerary.accommodation")}</Label>
+                      <Input value={day.accommodation || ""} onChange={(e) => updateDay(day.dayNumber, { accommodation: e.target.value })} placeholder={t("quotationBuilder.itinerary.accommodationPh")} />
                     </div>
                   </div>
                 </CardContent>
               </Card>
             ))}
             <Button variant="outline" onClick={addDay} className="w-full">
-              <Plus className="mr-2 h-4 w-4" /> Add Day {itinerary.length + 1}
+              <Plus className="mr-2 h-4 w-4" /> {t("quotationBuilder.itinerary.addDay", { n: itinerary.length + 1 })}
             </Button>
+
           </TabsContent>
 
           {/* ── PRICING TAB ── */}
@@ -340,22 +346,22 @@ const QuotationBuilder = () => {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm">Line Items</CardTitle>
-                  <Button size="sm" onClick={() => addItem()}><Plus className="mr-1 h-3.5 w-3.5" /> Add Item</Button>
+                  <CardTitle className="text-sm">{t("quotationBuilder.pricing.lineItems")}</CardTitle>
+                  <Button size="sm" onClick={() => addItem()}><Plus className="mr-1 h-3.5 w-3.5" /> {t("quotationBuilder.pricing.addItem")}</Button>
                 </div>
               </CardHeader>
               <CardContent className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-[120px]">Type</TableHead>
-                      <TableHead className="min-w-[200px]">Description</TableHead>
-                      <TableHead className="w-[100px]">Cost (৳)</TableHead>
-                      <TableHead className="w-[80px]">Markup %</TableHead>
-                      <TableHead className="w-[100px]">Selling (৳)</TableHead>
-                      <TableHead className="w-[60px]">Qty</TableHead>
-                      <TableHead className="w-[60px]">Nights</TableHead>
-                      <TableHead className="w-[100px]">Subtotal</TableHead>
+                      <TableHead className="w-[120px]">{t("quotationBuilder.pricing.th.type")}</TableHead>
+                      <TableHead className="min-w-[200px]">{t("quotationBuilder.pricing.th.description")}</TableHead>
+                      <TableHead className="w-[100px]">{t("quotationBuilder.pricing.th.cost")}</TableHead>
+                      <TableHead className="w-[80px]">{t("quotationBuilder.pricing.th.markup")}</TableHead>
+                      <TableHead className="w-[100px]">{t("quotationBuilder.pricing.th.selling")}</TableHead>
+                      <TableHead className="w-[60px]">{t("quotationBuilder.pricing.th.qty")}</TableHead>
+                      <TableHead className="w-[60px]">{t("quotationBuilder.pricing.th.nights")}</TableHead>
+                      <TableHead className="w-[100px]">{t("quotationBuilder.pricing.th.subtotal")}</TableHead>
                       <TableHead className="w-[40px]"></TableHead>
                     </TableRow>
                   </TableHeader>
@@ -368,16 +374,16 @@ const QuotationBuilder = () => {
                             <Select value={item.type} onValueChange={(v) => updateItem(item.id, { type: v as QuotationItemType })}>
                               <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                               <SelectContent>
-                                {ITEM_TYPES.map((t) => (
-                                  <SelectItem key={t.value} value={t.value}>
-                                    <div className="flex items-center gap-1.5"><t.icon className="h-3 w-3" />{t.label}</div>
+                                {ITEM_TYPES.map((it) => (
+                                  <SelectItem key={it.value} value={it.value}>
+                                    <div className="flex items-center gap-1.5"><it.icon className="h-3 w-3" />{t(`quotationBuilder.itemTypes.${it.labelKey}`)}</div>
                                   </SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>
                           </TableCell>
                           <TableCell>
-                            <Input className="h-8 text-xs" value={item.description} onChange={(e) => updateItem(item.id, { description: e.target.value })} placeholder="Description" />
+                            <Input className="h-8 text-xs" value={item.description} onChange={(e) => updateItem(item.id, { description: e.target.value })} placeholder={t("quotationBuilder.pricing.descriptionPh")} />
                           </TableCell>
                           <TableCell>
                             <Input type="number" className="h-8 text-xs" value={item.costPrice} onChange={(e) => updateItem(item.id, { costPrice: +e.target.value })} />
@@ -410,41 +416,42 @@ const QuotationBuilder = () => {
               </CardContent>
             </Card>
 
+
             {/* Totals Card */}
             <Card>
               <CardContent className="pt-6">
                 <div className="max-w-sm ml-auto space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Total Cost</span>
+                    <span className="text-muted-foreground">{t("quotationBuilder.pricing.totals.totalCost")}</span>
                     <span>৳{totals.totalCost.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Total Selling</span>
+                    <span className="text-muted-foreground">{t("quotationBuilder.pricing.totals.totalSelling")}</span>
                     <span>৳{totals.totalSelling.toLocaleString()}</span>
                   </div>
                   {totals.discountAmount > 0 && (
                     <div className="flex justify-between text-sm text-red-600">
-                      <span>Discount</span>
+                      <span>{t("quotationBuilder.pricing.totals.discount")}</span>
                       <span>-৳{totals.discountAmount.toLocaleString()}</span>
                     </div>
                   )}
                   {totals.taxAmount > 0 && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Tax</span>
+                      <span className="text-muted-foreground">{t("quotationBuilder.pricing.totals.tax")}</span>
                       <span>+৳{totals.taxAmount.toLocaleString()}</span>
                     </div>
                   )}
                   <Separator />
                   <div className="flex justify-between font-bold text-lg">
-                    <span>Grand Total</span>
+                    <span>{t("quotationBuilder.pricing.totals.grandTotal")}</span>
                     <span>৳{totals.grandTotal.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm text-green-600 font-medium">
-                    <span>Estimated Profit</span>
+                    <span>{t("quotationBuilder.pricing.totals.estProfit")}</span>
                     <span>৳{totals.totalProfit.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Profit Margin</span>
+                    <span>{t("quotationBuilder.pricing.totals.profitMargin")}</span>
                     <span>{totals.totalSelling > 0 ? ((totals.totalProfit / totals.totalSelling) * 100).toFixed(1) : 0}%</span>
                   </div>
                 </div>
@@ -455,15 +462,15 @@ const QuotationBuilder = () => {
           {/* ── NOTES TAB ── */}
           <TabsContent value="notes" className="space-y-4">
             <Card>
-              <CardHeader><CardTitle className="text-sm">Internal Notes</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="text-sm">{t("quotationBuilder.notes.internal")}</CardTitle></CardHeader>
               <CardContent>
-                <Textarea rows={4} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Internal notes (not visible to client)..." />
+                <Textarea rows={4} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder={t("quotationBuilder.notes.internalPh")} />
               </CardContent>
             </Card>
             <Card>
-              <CardHeader><CardTitle className="text-sm">Terms & Conditions</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="text-sm">{t("quotationBuilder.notes.terms")}</CardTitle></CardHeader>
               <CardContent>
-                <Textarea rows={8} value={terms} onChange={(e) => setTerms(e.target.value)} placeholder="Enter terms and conditions..." />
+                <Textarea rows={8} value={terms} onChange={(e) => setTerms(e.target.value)} placeholder={t("quotationBuilder.notes.termsPh")} />
               </CardContent>
             </Card>
           </TabsContent>
