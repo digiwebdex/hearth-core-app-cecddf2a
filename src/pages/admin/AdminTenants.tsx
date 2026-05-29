@@ -17,7 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { adminApi, type AdminTenant } from "@/lib/api";
 
 const AdminTenants = () => {
-  const { t } = useTranslation();
+  const { t: tt } = useTranslation();
   const navigate = useNavigate();
   const [tenants, setTenants] = useState<AdminTenant[]>([]);
   const [loading, setLoading] = useState(true);
