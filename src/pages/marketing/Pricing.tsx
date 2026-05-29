@@ -118,17 +118,17 @@ const Pricing = () => {
                   <CardContent className="space-y-4">
                     <div className="text-center">
                       {price === -1 ? (
-                        <span className="text-2xl font-extrabold text-amber-400">Custom</span>
+                        <span className="text-2xl font-extrabold text-amber-400">{t("marketing.pricing.custom")}</span>
                       ) : price === 0 ? (
-                        <span className="text-3xl font-extrabold text-amber-400">Free</span>
+                        <span className="text-3xl font-extrabold text-amber-400">{t("marketing.pricing.free")}</span>
                       ) : (
                         <>
                           <span className="text-3xl font-extrabold text-amber-400">৳{price.toLocaleString()}</span>
-                          <span className="text-white/40 text-sm ml-1">/month</span>
+                          <span className="text-white/40 text-sm ml-1">{t("marketing.pricing.perMonth")}</span>
                         </>
                       )}
                       {billing === "yearly" && price > 0 && (
-                        <p className="text-xs text-emerald-400 mt-1">৳{plan.yearlyPrice.toLocaleString()}/year</p>
+                        <p className="text-xs text-emerald-400 mt-1">৳{plan.yearlyPrice.toLocaleString()}{t("marketing.pricing.perYear")}</p>
                       )}
                     </div>
                     <Separator className="bg-white/8" />
@@ -136,7 +136,7 @@ const Pricing = () => {
                       {plan.features.slice(0, 5).map((f) => (
                         <li key={f} className="flex items-start gap-2 text-xs"><Check className="h-3.5 w-3.5 text-emerald-400 mt-0.5 shrink-0" /><span className="text-white/60">{f}</span></li>
                       ))}
-                      {plan.features.length > 5 && <li className="text-xs text-white/35">+{plan.features.length - 5} more</li>}
+                      {plan.features.length > 5 && <li className="text-xs text-white/35">+{plan.features.length - 5} {t("marketing.pricing.more")}</li>}
                     </ul>
                     {plan.restrictions.length > 0 && (
                       <ul className="space-y-1 pt-1 border-t border-white/5">
@@ -146,7 +146,7 @@ const Pricing = () => {
                       </ul>
                     )}
                     <Button className={`w-full h-10 text-sm ${isHighlighted ? "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg shadow-amber-500/20" : "bg-white/8 hover:bg-white/12 text-white"}`} onClick={() => handleSelectPlan(plan.id)}>
-                      {price === -1 ? "Contact Us for Price" : "Subscribe Now"}<ArrowRight className="ml-2 h-4 w-4" />
+                      {price === -1 ? t("marketing.pricing.contactPrice") : t("marketing.pricing.subscribeNow")}<ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </CardContent>
                 </Card>
