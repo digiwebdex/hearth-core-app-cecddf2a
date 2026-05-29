@@ -422,36 +422,36 @@ const QuotationBuilder = () => {
               <CardContent className="pt-6">
                 <div className="max-w-sm ml-auto space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Total Cost</span>
+                    <span className="text-muted-foreground">{t("quotationBuilder.pricing.totals.totalCost")}</span>
                     <span>৳{totals.totalCost.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Total Selling</span>
+                    <span className="text-muted-foreground">{t("quotationBuilder.pricing.totals.totalSelling")}</span>
                     <span>৳{totals.totalSelling.toLocaleString()}</span>
                   </div>
                   {totals.discountAmount > 0 && (
                     <div className="flex justify-between text-sm text-red-600">
-                      <span>Discount</span>
+                      <span>{t("quotationBuilder.pricing.totals.discount")}</span>
                       <span>-৳{totals.discountAmount.toLocaleString()}</span>
                     </div>
                   )}
                   {totals.taxAmount > 0 && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Tax</span>
+                      <span className="text-muted-foreground">{t("quotationBuilder.pricing.totals.tax")}</span>
                       <span>+৳{totals.taxAmount.toLocaleString()}</span>
                     </div>
                   )}
                   <Separator />
                   <div className="flex justify-between font-bold text-lg">
-                    <span>Grand Total</span>
+                    <span>{t("quotationBuilder.pricing.totals.grandTotal")}</span>
                     <span>৳{totals.grandTotal.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm text-green-600 font-medium">
-                    <span>Estimated Profit</span>
+                    <span>{t("quotationBuilder.pricing.totals.estProfit")}</span>
                     <span>৳{totals.totalProfit.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Profit Margin</span>
+                    <span>{t("quotationBuilder.pricing.totals.profitMargin")}</span>
                     <span>{totals.totalSelling > 0 ? ((totals.totalProfit / totals.totalSelling) * 100).toFixed(1) : 0}%</span>
                   </div>
                 </div>
@@ -462,15 +462,15 @@ const QuotationBuilder = () => {
           {/* ── NOTES TAB ── */}
           <TabsContent value="notes" className="space-y-4">
             <Card>
-              <CardHeader><CardTitle className="text-sm">Internal Notes</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="text-sm">{t("quotationBuilder.notes.internal")}</CardTitle></CardHeader>
               <CardContent>
-                <Textarea rows={4} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Internal notes (not visible to client)..." />
+                <Textarea rows={4} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder={t("quotationBuilder.notes.internalPh")} />
               </CardContent>
             </Card>
             <Card>
-              <CardHeader><CardTitle className="text-sm">Terms & Conditions</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="text-sm">{t("quotationBuilder.notes.terms")}</CardTitle></CardHeader>
               <CardContent>
-                <Textarea rows={8} value={terms} onChange={(e) => setTerms(e.target.value)} placeholder="Enter terms and conditions..." />
+                <Textarea rows={8} value={terms} onChange={(e) => setTerms(e.target.value)} placeholder={t("quotationBuilder.notes.termsPh")} />
               </CardContent>
             </Card>
           </TabsContent>
