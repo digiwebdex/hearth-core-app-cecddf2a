@@ -37,7 +37,7 @@ const AdminAuditLog = () => {
       const data = await auditLogApi.list();
       setLogs(data);
     } catch (err: any) {
-      toast({ title: "Failed to load audit logs", description: err.message, variant: "destructive" });
+      toast({ title: t("adminAuditLog.loadFailed"), description: err.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
