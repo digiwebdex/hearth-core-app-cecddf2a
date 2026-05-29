@@ -651,7 +651,7 @@ const AdminSubscriptions = () => {
                 <Select value={editStatus} onValueChange={(v) => setEditStatus(v as SubscriptionStatus)}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    {STATUS_META.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
+                    {STATUS_META.map((s) => <SelectItem key={s.value} value={s.value}>{statusLabel(s.value)}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
