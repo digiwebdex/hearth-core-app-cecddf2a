@@ -125,6 +125,7 @@ const defaultSms: SmsSettings = {
 };
 
 const AdminSettings = () => {
+  const { t } = useTranslation();
   const [general, setGeneral] = useState<GeneralSettings>(defaultGeneral);
   const [email, setEmail] = useState<EmailSettings>(defaultEmail);
   const [payment, setPayment] = useState<PaymentSettings>(defaultPayment);
@@ -140,15 +141,14 @@ const AdminSettings = () => {
 
   const handleSave = async (section: string) => {
     setSaving(true);
-    // Simulated API call
     await new Promise((r) => setTimeout(r, 800));
     setSaving(false);
-    toast({ title: `${section} settings saved`, description: "Changes will take effect immediately." });
+    toast({ title: t("adminSettings.toast.saved", { section }), description: t("adminSettings.toast.savedDesc") });
   };
 
   const handleTestEmail = async () => {
     if (!testEmail) return;
-    toast({ title: "Test email sent", description: `Sent to ${testEmail}` });
+    toast({ title: t("adminSettings.toast.testEmailSent"), description: t("adminSettings.toast.testEmailDesc", { email: testEmail }) });
     setTestEmail("");
   };
 
