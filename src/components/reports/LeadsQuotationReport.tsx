@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -19,13 +20,13 @@ interface Props {
 }
 
 export default function LeadsQuotationReport({ leads, quotations }: Props) {
+  const { t } = useTranslation();
   const leadData = useMemo(() => {
     const total = leads.length;
     const won = leads.filter((l) => l.status === "won").length;
     const lost = leads.filter((l) => l.status === "lost").length;
     const conversionRate = total > 0 ? ((won / total) * 100).toFixed(1) : "0";
 
-    // By source
     const sources: Record<string, { total: number; won: number }> = {};
     leads.forEach((l) => {
       const src = l.source || "Unknown";
@@ -35,14 +36,12 @@ export default function LeadsQuotationReport({ leads, quotations }: Props) {
     });
     const bySource = Object.entries(sources).map(([name, v]) => ({ name, ...v }));
 
-    // By stage
     const stages = ["new", "contacted", "qualified", "quoted", "won", "lost"];
     const byStage = stages.map((s) => ({
       name: s.charAt(0).toUpperCase() + s.slice(1),
       value: leads.filter((l) => l.status === s).length,
     })).filter((s) => s.value > 0);
 
-    // By destination
     const dests: Record<string, number> = {};
     leads.forEach((l) => { if (l.destination) dests[l.destination] = (dests[l.destination] || 0) + 1; });
     const byDest = Object.entries(dests).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([name, value]) => ({ name, value }));
@@ -78,24 +77,23 @@ export default function LeadsQuotationReport({ leads, quotations }: Props) {
 
   return (
     <div className="space-y-6">
-      {/* Lead Stats */}
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Lead Analytics</h3>
+        <h3 className="text-lg font-semibold">{t("reportComponents.leadsQuote.leadAnalytics")}</h3>
         <PermissionGate module="reports" action="export">
-          <Button variant="outline" size="sm" onClick={exportCsv}><Download className="mr-2 h-4 w-4" />Export Leads</Button>
+          <Button variant="outline" size="sm" onClick={exportCsv}><Download className="mr-2 h-4 w-4" />{t("reportComponents.leadsQuote.exportLeads")}</Button>
         </PermissionGate>
       </div>
 
       <div className="grid gap-4 md:grid-cols-4">
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Total Leads</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{leadData.total}</p></CardContent></Card>
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Won</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-green-600">{leadData.won}</p></CardContent></Card>
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Lost</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-destructive">{leadData.lost}</p></CardContent></Card>
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Conversion Rate</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{leadData.conversionRate}%</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.leadsQuote.totalLeads")}</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{leadData.total}</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.leadsQuote.won")}</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-green-600">{leadData.won}</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.leadsQuote.lost")}</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-destructive">{leadData.lost}</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.leadsQuote.conversionRate")}</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{leadData.conversionRate}%</p></CardContent></Card>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
-          <CardHeader><CardTitle className="text-base">Leads by Stage</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-base">{t("reportComponents.leadsQuote.leadsByStage")}</CardTitle></CardHeader>
           <CardContent>
             {leadData.byStage.length > 0 ? (
               <ResponsiveContainer width="100%" height={260}>
@@ -106,11 +104,11 @@ export default function LeadsQuotationReport({ leads, quotations }: Props) {
                   <Tooltip />
                 </PieChart>
               </ResponsiveContainer>
-            ) : <p className="text-center text-muted-foreground py-12">No lead data</p>}
+            ) : <p className="text-center text-muted-foreground py-12">{t("reportComponents.leadsQuote.noLeadData")}</p>}
           </CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-base">Conversion by Source</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-base">{t("reportComponents.leadsQuote.convBySource")}</CardTitle></CardHeader>
           <CardContent>
             {leadData.bySource.length > 0 ? (
               <ResponsiveContainer width="100%" height={260}>
@@ -119,32 +117,31 @@ export default function LeadsQuotationReport({ leads, quotations }: Props) {
                   <XAxis dataKey="name" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }} />
                   <YAxis tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }} />
                   <Tooltip />
-                  <Bar dataKey="total" name="Total Leads" fill="hsl(var(--primary))" radius={[4,4,0,0]} />
-                  <Bar dataKey="won" name="Converted" fill="#10b981" radius={[4,4,0,0]} />
+                  <Bar dataKey="total" name={t("reportComponents.leadsQuote.totalLeadsBar")} fill="hsl(var(--primary))" radius={[4,4,0,0]} />
+                  <Bar dataKey="won" name={t("reportComponents.leadsQuote.converted")} fill="#10b981" radius={[4,4,0,0]} />
                 </BarChart>
               </ResponsiveContainer>
-            ) : <p className="text-center text-muted-foreground py-12">No source data</p>}
+            ) : <p className="text-center text-muted-foreground py-12">{t("reportComponents.leadsQuote.noSourceData")}</p>}
           </CardContent>
         </Card>
       </div>
 
-      {/* Quotation Stats */}
-      <h3 className="text-lg font-semibold mt-6">Quotation Analytics</h3>
+      <h3 className="text-lg font-semibold mt-6">{t("reportComponents.leadsQuote.quoteAnalytics")}</h3>
       <div className="grid gap-4 md:grid-cols-4">
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Total Quotations</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{quoteData.total}</p></CardContent></Card>
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Approved</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-green-600">{quoteData.approved}</p></CardContent></Card>
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Total Value</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">৳{quoteData.totalValue.toLocaleString()}</p></CardContent></Card>
-        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Approval Rate</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{quoteData.convRate}%</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.leadsQuote.totalQuotations")}</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{quoteData.total}</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.leadsQuote.approved")}</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold text-green-600">{quoteData.approved}</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.leadsQuote.totalValue")}</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">৳{quoteData.totalValue.toLocaleString()}</p></CardContent></Card>
+        <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.leadsQuote.approvalRate")}</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{quoteData.convRate}%</p></CardContent></Card>
       </div>
 
       <Card>
-        <CardHeader><CardTitle className="text-base">Quotation Status Breakdown</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-base">{t("reportComponents.leadsQuote.statusBreakdown")}</CardTitle></CardHeader>
         <CardContent className="p-0">
           <Table>
-            <TableHeader><TableRow><TableHead>Status</TableHead><TableHead className="text-right">Count</TableHead><TableHead className="text-right">Total Value</TableHead><TableHead className="text-right">% of Total</TableHead></TableRow></TableHeader>
+            <TableHeader><TableRow><TableHead>{t("reportComponents.leadsQuote.th.status")}</TableHead><TableHead className="text-right">{t("reportComponents.leadsQuote.th.count")}</TableHead><TableHead className="text-right">{t("reportComponents.leadsQuote.th.totalValue")}</TableHead><TableHead className="text-right">{t("reportComponents.leadsQuote.th.pct")}</TableHead></TableRow></TableHeader>
             <TableBody>
               {quoteData.byStatus.length === 0 ? (
-                <TableRow><TableCell colSpan={4} className="text-center text-muted-foreground py-8">No quotation data</TableCell></TableRow>
+                <TableRow><TableCell colSpan={4} className="text-center text-muted-foreground py-8">{t("reportComponents.leadsQuote.noQuoteData")}</TableCell></TableRow>
               ) : quoteData.byStatus.map((s) => (
                 <TableRow key={s.name}>
                   <TableCell><Badge variant="secondary" className="capitalize">{s.name}</Badge></TableCell>
