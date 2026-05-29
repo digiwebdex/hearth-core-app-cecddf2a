@@ -13,6 +13,7 @@ import { PLANS } from "@/lib/plans";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Register = () => {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const planParam = (searchParams.get("plan") || "pro").toLowerCase();
   const selectedPlan = useMemo(
@@ -37,17 +38,12 @@ const Register = () => {
     try {
       const result = await register({ name, email, password, tenantName, plan: selectedPlan.id });
       if (result.pendingApproval) {
-        toast({
-          title: "Account submitted",
-          description: result.message || "Pending admin approval.",
-        });
+        toast({ title: "Account submitted", description: result.message || "Pending admin approval." });
         navigate("/login");
       } else {
         toast({
-          title: isFree ? "Welcome!" : "🎉 3-day Pro Trial Started!",
-          description: isFree
-            ? "Your free account is ready."
-            : "Explore all Pro features for the next 3 days.",
+          title: isFree ? t("common.welcome") : "🎉 3-day Pro Trial Started!",
+          description: isFree ? "Your free account is ready." : "Explore all Pro features for the next 3 days.",
         });
         navigate("/onboarding");
       }
@@ -62,21 +58,20 @@ const Register = () => {
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-8">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
+          <div className="flex justify-end mb-2"><LanguageSwitcher /></div>
           <div className="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
             <Sparkles className="h-7 w-7 text-primary" />
           </div>
-          <CardTitle className="text-2xl">Create your account</CardTitle>
-          <CardDescription>
-            Start your travel agency in minutes — no credit card required.
-          </CardDescription>
+          <CardTitle className="text-2xl">{t("auth.registerTitle")}</CardTitle>
+          <CardDescription>{t("auth.registerSubtitle")}</CardDescription>
           <div className="mt-3 flex flex-col items-center gap-2">
             <Badge variant="secondary" className="text-xs">
-              Selected plan: <span className="ml-1 font-semibold">{selectedPlan.name}</span>
+              {t("common.selectedPlan")}: <span className="ml-1 font-semibold">{selectedPlan.name}</span>
             </Badge>
             {!isFree && (
               <div className="flex items-center gap-1.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 px-3 py-1 text-xs font-medium">
                 <Clock className="h-3.5 w-3.5" />
-                3-day Pro trial · full access
+                {t("auth.trialBadge")}
               </div>
             )}
           </div>
@@ -84,32 +79,32 @@ const Register = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">{t("common.fullName")}</Label>
               <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("common.email")}</Label>
               <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t("common.password")}</Label>
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="tenantName">Agency / Organization Name</Label>
+              <Label htmlFor="tenantName">{t("common.agencyName")}</Label>
               <Input id="tenantName" value={tenantName} onChange={(e) => setTenantName(e.target.value)} required />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Creating account…" : isFree ? "Create Free Account" : "Start 3-Day Free Trial"}
+              {loading ? t("common.creating") : isFree ? t("common.createAccount") : t("common.startFreeTrial")}
             </Button>
             <div className="space-y-1.5 pt-2 text-xs text-muted-foreground">
-              <p className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-primary" /> No credit card required</p>
-              <p className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-primary" /> Instant access — no waiting for approval</p>
-              <p className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-primary" /> Cancel anytime</p>
+              <p className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-primary" /> {t("common.noCreditCard")}</p>
+              <p className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-primary" /> {t("common.instantAccess")}</p>
+              <p className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-primary" /> {t("common.cancelAnytime")}</p>
             </div>
           </form>
           <p className="mt-4 text-center text-sm text-muted-foreground">
-            Already have an account? <Link to="/login" className="text-primary underline">Sign in</Link>
+            {t("common.alreadyHaveAccount")} <Link to="/login" className="text-primary underline">{t("common.signIn")}</Link>
           </p>
         </CardContent>
       </Card>
