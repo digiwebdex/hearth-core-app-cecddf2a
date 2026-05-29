@@ -208,9 +208,34 @@ async function testSmtpConnection(config) {
   }
 }
 
+async function sendEmailVerification(email, name, token) {
+  const verifyUrl = `${getFrontendUrl()}/verify-email?token=${token}`;
+  return sendEmail({
+    to: email,
+    subject: "Verify your email — Travel Agency Web",
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
+        <h2 style="color:#0f172a;">Welcome${name ? `, ${name}` : ""}!</h2>
+        <p>Please confirm your email address to activate full access to your 3-day Pro trial.</p>
+        <p style="margin:30px 0;">
+          <a href="${verifyUrl}" style="background:#3b82f6;color:white;padding:12px 30px;text-decoration:none;border-radius:6px;display:inline-block;">
+            Verify Email
+          </a>
+        </p>
+        <p style="color:#666;font-size:14px;">Or copy this link: <br/><span style="color:#3b82f6">${verifyUrl}</span></p>
+        <p style="color:#666;font-size:13px;">This link expires in 24 hours.</p>
+        <hr style="margin-top:30px;border:none;border-top:1px solid #eee;" />
+        <p style="color:#999;font-size:12px;">Travel Agency Website & Software Solution</p>
+      </div>
+    `,
+    text: `Verify your email: ${verifyUrl} (expires in 24 hours)`,
+  });
+}
+
 module.exports = {
   sendEmail,
   sendPasswordReset,
+  sendEmailVerification,
   sendDemoRequestConfirmation,
   sendDemoRequestNotification,
   sendContactConfirmation,
