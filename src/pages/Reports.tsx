@@ -129,21 +129,21 @@ const Reports = () => {
             <div className="rounded-full bg-muted p-6 mb-6">
               <BarChart3 className="h-12 w-12 text-muted-foreground" />
             </div>
-            <h2 className="text-2xl font-bold mb-2">Advanced Reports & Analytics</h2>
+            <h2 className="text-2xl font-bold mb-2">{t("reports.gate.title")}</h2>
             <p className="text-muted-foreground max-w-md mb-2">
-              Gain deep insights into your agency's sales, payments, vendors, staff performance, and profitability.
+              {t("reports.gate.desc")}
             </p>
             <ul className="text-sm text-muted-foreground mb-6 space-y-1 text-left">
-              <li>• Sales and booking analytics with charts</li>
-              <li>• Lead-to-booking conversion tracking</li>
-              <li>• Payment collection vs outstanding reports</li>
-              <li>• Vendor payable summaries</li>
-              <li>• Staff performance comparison</li>
-              <li>• Booking-level profitability margins</li>
-              <li>• Export all reports to CSV</li>
+              <li>• {t("reports.gate.features.f1")}</li>
+              <li>• {t("reports.gate.features.f2")}</li>
+              <li>• {t("reports.gate.features.f3")}</li>
+              <li>• {t("reports.gate.features.f4")}</li>
+              <li>• {t("reports.gate.features.f5")}</li>
+              <li>• {t("reports.gate.features.f6")}</li>
+              <li>• {t("reports.gate.features.f7")}</li>
             </ul>
             <Button onClick={() => window.location.href = "/subscription"}>
-              Upgrade to Business Plan
+              {t("reports.gate.upgrade")}
             </Button>
           </div>
         }
