@@ -306,29 +306,29 @@ const AdminSubscriptions = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Subscription Management</h1>
-            <p className="text-muted-foreground">Manage tenant subscriptions, trials, and billing</p>
+            <h1 className="text-3xl font-bold tracking-tight">{tt("adminSubscriptions.title")}</h1>
+            <p className="text-muted-foreground">{tt("adminSubscriptions.subtitle")}</p>
           </div>
-          <Button variant="outline" size="sm" onClick={handleExport}><Download className="mr-1 h-4 w-4" /> Export</Button>
+          <Button variant="outline" size="sm" onClick={handleExport}><Download className="mr-1 h-4 w-4" /> {tt("adminSubscriptions.export")}</Button>
         </div>
 
         {/* Stats */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8">
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">MRR</p><p className="text-xl font-bold">৳{stats.mrr.toLocaleString()}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">ARR</p><p className="text-xl font-bold">৳{stats.arr.toLocaleString()}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Active</p><p className="text-xl font-bold text-green-600">{stats.active}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Trial</p><p className="text-xl font-bold text-blue-600">{stats.trial}</p></CardContent></Card>
-          <Card className={stats.overdue > 0 ? "border-orange-300 dark:border-orange-600" : ""}><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Overdue</p><p className="text-xl font-bold text-orange-600">{stats.overdue}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Expired</p><p className="text-xl font-bold">{stats.expired}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Suspended</p><p className="text-xl font-bold text-destructive">{stats.suspended}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Cancelled</p><p className="text-xl font-bold">{stats.cancelled}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.mrr")}</p><p className="text-xl font-bold">৳{stats.mrr.toLocaleString()}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.arr")}</p><p className="text-xl font-bold">৳{stats.arr.toLocaleString()}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.active")}</p><p className="text-xl font-bold text-green-600">{stats.active}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.trial")}</p><p className="text-xl font-bold text-blue-600">{stats.trial}</p></CardContent></Card>
+          <Card className={stats.overdue > 0 ? "border-orange-300 dark:border-orange-600" : ""}><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.overdue")}</p><p className="text-xl font-bold text-orange-600">{stats.overdue}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.expired")}</p><p className="text-xl font-bold">{stats.expired}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.suspended")}</p><p className="text-xl font-bold text-destructive">{stats.suspended}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.cancelled")}</p><p className="text-xl font-bold">{stats.cancelled}</p></CardContent></Card>
         </div>
 
         {/* Filters */}
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
             <Button variant={statusFilter === "all" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("all")}>
-              All ({statusCounts.all})
+              {tt("adminSubscriptions.status.all")} ({statusCounts.all})
             </Button>
             {STATUS_META.map((s) => (
               <Button key={s.value} variant={statusFilter === s.value ? "default" : "outline"} size="sm" onClick={() => setStatusFilter(s.value)}>
@@ -339,12 +339,12 @@ const AdminSubscriptions = () => {
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-2 flex-1 min-w-[200px] max-w-sm">
               <Search className="h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search company or email…" value={search} onChange={(e) => setSearch(e.target.value)} />
+              <Input placeholder={tt("adminSubscriptions.filters.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
             <Select value={planFilter} onValueChange={setPlanFilter}>
-              <SelectTrigger className="w-[150px]"><SelectValue placeholder="Plan" /></SelectTrigger>
+              <SelectTrigger className="w-[150px]"><SelectValue placeholder={tt("adminSubscriptions.filters.plan")} /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Plans</SelectItem>
+                <SelectItem value="all">{tt("adminSubscriptions.filters.allPlans")}</SelectItem>
                 {PLANS.map((p) => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
               </SelectContent>
             </Select>
