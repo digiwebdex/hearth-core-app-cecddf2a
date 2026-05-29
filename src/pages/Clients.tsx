@@ -171,17 +171,17 @@ const Clients = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Contact</TableHead>
-                    <TableHead>Passport</TableHead>
-                    <TableHead>Nationality</TableHead>
-                    <TableHead>Tags</TableHead>
-                    <TableHead className="w-[120px]">Actions</TableHead>
+                    <TableHead>{t("clientsForm.name")}</TableHead>
+                    <TableHead>{t("clientsForm.contact")}</TableHead>
+                    <TableHead>{t("clientsForm.passport")}</TableHead>
+                    <TableHead>{t("clientsForm.nationality")}</TableHead>
+                    <TableHead>{t("clientsForm.tags")}</TableHead>
+                    <TableHead className="w-[120px]">{t("clientsForm.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filtered.length === 0 ? (
-                    <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground">No clients found.</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground">{t("clientsForm.noClientsFound")}</TableCell></TableRow>
                   ) : (
                     filtered.map((c) => (
                       <TableRow key={c.id} className="cursor-pointer" onClick={() => navigate(`/clients/${c.id}`)}>
