@@ -195,7 +195,7 @@ const Leads = () => {
     try {
       await leadApi.updateStatus(id, status);
       setLeads((p) => p.map((l) => (l.id === id ? { ...l, status } : l)));
-      toast({ title: `Status updated to ${getStatusMeta(status).label}` });
+      toast({ title: t("leadsForm.statusUpdated", { status: t(`leadsForm.statuses.${status}`) }) });
     } catch {
       setLeads((p) => p.map((l) => (l.id === id ? { ...l, status } : l)));
     }
