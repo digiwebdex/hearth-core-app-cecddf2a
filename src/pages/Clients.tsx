@@ -102,15 +102,15 @@ const Clients = () => {
       if (editingId) {
         const updated = await clientApi.update(editingId, payload);
         setClients((p) => p.map((c) => (c.id === editingId ? { ...c, ...updated } : c)));
-        toast({ title: "Client updated" });
+        toast({ title: t("clientsForm.clientUpdated") });
       } else {
         const created = await clientApi.create(payload as any);
         setClients((p) => [created, ...p]);
-        toast({ title: "Client created" });
+        toast({ title: t("clientsForm.clientCreated") });
       }
       setDialogOpen(false);
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("clientsForm.error"), description: err.message });
     }
   };
 
@@ -118,9 +118,9 @@ const Clients = () => {
     try {
       await clientApi.delete(id);
       setClients((p) => p.filter((c) => c.id !== id));
-      toast({ title: "Client deleted" });
+      toast({ title: t("clientsForm.clientDeleted") });
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("clientsForm.error"), description: err.message });
     }
   };
 
