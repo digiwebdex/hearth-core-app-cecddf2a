@@ -128,11 +128,11 @@ const AdminSubscriptions = () => {
       const payload: any = { subscriptionPlan: editPlan, subscriptionStatus: editStatus };
       if (editExpiry) payload.subscriptionExpiry = editExpiry;
       await adminApi.updateTenant(editSub.tenantId, payload);
-      toast({ title: "Subscription updated", description: editSub.tenantName });
+      toast({ title: tt("adminSubscriptions.toast.updated"), description: editSub.tenantName });
       setEditSub(null);
       await fetchSubs();
     } catch (err: any) {
-      toast({ title: "Update failed", description: err.message, variant: "destructive" });
+      toast({ title: tt("adminSubscriptions.toast.updateFailed"), description: err.message, variant: "destructive" });
     } finally {
       setSavingEdit(false);
     }
@@ -143,11 +143,11 @@ const AdminSubscriptions = () => {
     setDeleting(true);
     try {
       await adminApi.deleteTenant(deleteSub.tenantId);
-      toast({ title: "Subscription deleted", description: deleteSub.tenantName, variant: "destructive" });
+      toast({ title: tt("adminSubscriptions.toast.deleted"), description: deleteSub.tenantName, variant: "destructive" });
       setDeleteSub(null);
       await fetchSubs();
     } catch (err: any) {
-      toast({ title: "Delete failed", description: err.message, variant: "destructive" });
+      toast({ title: tt("adminSubscriptions.toast.deleteFailed"), description: err.message, variant: "destructive" });
     } finally {
       setDeleting(false);
     }
