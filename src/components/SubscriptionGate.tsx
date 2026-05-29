@@ -39,7 +39,7 @@ const SubscriptionGate: React.FC<SubscriptionGateProps> = ({ children }) => {
           </h2>
           <p className="text-muted-foreground mb-2">
             {trialExpired ? (
-              <>Your <strong>14-day Pro trial</strong> has ended. Subscribe to a plan to continue using all features.</>
+              <>Your <strong>3-day Pro trial</strong> has ended. Subscribe to a plan to continue using all features.</>
             ) : (
               <>Your <strong className="capitalize">{currentPlan}</strong> plan expired on{" "}
               <strong>{expiryDate}</strong>.</>
