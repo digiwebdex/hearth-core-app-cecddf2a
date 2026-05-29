@@ -60,6 +60,7 @@ const calcSellingPrice = (cost: number, markup: number) => Math.round(cost * (1 
 const calcSubtotal = (price: number, qty: number) => price * qty;
 
 const QuotationBuilder = () => {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isEdit = !!id;
