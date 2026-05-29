@@ -151,11 +151,11 @@ const AdminTenants = () => {
         await adminApi.updateTenantOwner(editTenant.id, ownerPayload);
       }
 
-      toast({ title: "Agency updated", description: editForm.name });
+      toast({ title: tt("adminTenants.toast.agencyUpdated"), description: editForm.name });
       setEditTenant(null);
       fetchTenants();
     } catch (err: any) {
-      toast({ title: "Update failed", description: err.message, variant: "destructive" });
+      toast({ title: tt("adminTenants.toast.updateFailed"), description: err.message, variant: "destructive" });
     } finally {
       setSavingEdit(false);
     }
