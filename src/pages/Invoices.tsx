@@ -36,23 +36,16 @@ import ErrorState from "@/components/ErrorState";
 import DataExport from "@/components/DataExport";
 import { isAfter, isBefore, parseISO } from "date-fns";
 
-const STATUS_META: { value: InvoiceStatus; label: string; color: string; icon: any }[] = [
-  { value: "unpaid", label: "Unpaid", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200", icon: XCircle },
-  { value: "partial", label: "Partially Paid", color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200", icon: Clock },
-  { value: "paid", label: "Paid", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200", icon: CheckCircle2 },
-  { value: "overdue", label: "Overdue", color: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200", icon: AlertTriangle },
-  { value: "refunded", label: "Refunded", color: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200", icon: RotateCcw },
-  { value: "cancelled", label: "Cancelled", color: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200", icon: Ban },
+const STATUS_META: { value: InvoiceStatus; color: string; icon: any }[] = [
+  { value: "unpaid", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200", icon: XCircle },
+  { value: "partial", color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200", icon: Clock },
+  { value: "paid", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200", icon: CheckCircle2 },
+  { value: "overdue", color: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200", icon: AlertTriangle },
+  { value: "refunded", color: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200", icon: RotateCcw },
+  { value: "cancelled", color: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200", icon: Ban },
 ];
 
-const PAYMENT_METHODS: { value: PaymentMethod; label: string }[] = [
-  { value: "cash", label: "Cash" },
-  { value: "bank", label: "Bank Transfer" },
-  { value: "card", label: "Credit/Debit Card" },
-  { value: "mobile_banking", label: "Mobile Banking (bKash/Nagad)" },
-  { value: "cheque", label: "Cheque" },
-  { value: "online", label: "Online Payment" },
-];
+const PAYMENT_METHOD_VALUES: PaymentMethod[] = ["cash", "bank", "card", "mobile_banking", "cheque", "online"];
 
 const getStatusMeta = (s: InvoiceStatus) => STATUS_META.find((x) => x.value === s) || STATUS_META[0];
 
@@ -160,14 +153,14 @@ const Invoices = () => {
       setInvoices((prev) => [...prev, created as Invoice]);
       setInvoiceForm({ bookingId: "", bookingTitle: "", clientName: "", totalAmount: 0, bookingCost: 0, dueDate: "", notes: "" });
       setCreateDialogOpen(false);
-      toast({ title: "Invoice created" });
+      toast({ title: t("invoicesForm.toast.created") });
       sendPaymentSms({
         invoiceId: (created as any).id, bookingId: invoiceForm.bookingId,
         paymentAmount: invoiceForm.totalAmount, balance: invoiceForm.totalAmount,
         clientName: invoiceForm.clientName, clientPhone: "", company: "Travel Agency",
-      }).then((res) => { if (res.sent) toast({ title: "SMS sent to client" }); }).catch(() => {});
+      }).then((res) => { if (res.sent) toast({ title: t("invoicesForm.toast.smsSent") }); }).catch(() => {});
     } catch (err: any) {
-      toast({ title: "Failed", description: err.message, variant: "destructive" });
+      toast({ title: t("invoicesForm.toast.failed"), description: err.message, variant: "destructive" });
     }
   };
 
@@ -177,7 +170,7 @@ const Invoices = () => {
     if (!selectedInvoice) return;
     const payAmount = Math.min(paymentForm.amount, selectedInvoice.dueAmount);
     if (payAmount <= 0) {
-      toast({ title: "Invalid amount", variant: "destructive" });
+      toast({ title: t("invoicesForm.toast.invalidAmount"), variant: "destructive" });
       return;
     }
     try {
@@ -204,14 +197,14 @@ const Invoices = () => {
       }));
       setPaymentForm({ amount: 0, method: "cash", transactionRef: "", date: new Date().toISOString().split("T")[0], notes: "", receivedBy: "" });
       setPayDialogOpen(false);
-      toast({ title: "Payment recorded", description: `৳${payAmount.toLocaleString()} via ${paymentForm.method}` });
+      toast({ title: t("invoicesForm.toast.paymentRecorded"), description: `৳${payAmount.toLocaleString()} · ${t(`invoicesForm.methods.${paymentForm.method}`)}` });
       sendPaymentSms({
         paymentAmount: payAmount, paymentMethod: paymentForm.method,
         invoiceId: selectedInvoice.id, balance: Math.max(0, selectedInvoice.dueAmount - payAmount),
         clientName: selectedInvoice.clientName || "", clientPhone: "", company: "Travel Agency",
-      }).then((res) => { if (res.sent) toast({ title: "Payment SMS sent" }); }).catch(() => {});
+      }).then((res) => { if (res.sent) toast({ title: t("invoicesForm.toast.paymentSmsSent") }); }).catch(() => {});
     } catch (err: any) {
-      toast({ title: "Failed", description: err.message, variant: "destructive" });
+      toast({ title: t("invoicesForm.toast.failed"), description: err.message, variant: "destructive" });
     }
   };
 
@@ -231,9 +224,9 @@ const Invoices = () => {
       }));
       setRefundForm({ amount: 0, reason: "", method: "" });
       setRefundDialogOpen(false);
-      toast({ title: "Refund processed" });
+      toast({ title: t("invoicesForm.toast.refundProcessed") });
     } catch (err: any) {
-      toast({ title: "Refund failed", description: err.message, variant: "destructive" });
+      toast({ title: t("invoicesForm.toast.refundFailed"), description: err.message, variant: "destructive" });
     }
   };
 
@@ -247,9 +240,9 @@ const Invoices = () => {
       ));
       setCancelReason("");
       setCancelDialogOpen(false);
-      toast({ title: "Invoice cancelled" });
+      toast({ title: t("invoicesForm.toast.cancelled") });
     } catch (err: any) {
-      toast({ title: "Failed", description: err.message, variant: "destructive" });
+      toast({ title: t("invoicesForm.toast.failed"), description: err.message, variant: "destructive" });
     }
   };
 
@@ -303,7 +296,7 @@ const Invoices = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a"); a.href = url; a.download = "invoices.csv";
     document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-    toast({ title: "Exported invoices" });
+    toast({ title: t("invoicesForm.toast.exported") });
   };
 
   return (
@@ -342,51 +335,51 @@ const Invoices = () => {
                   <Button><Plus className="mr-2 h-4 w-4" />{t("pages.newInvoice")}</Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-lg">
-                  <DialogHeader><DialogTitle>Create Invoice</DialogTitle></DialogHeader>
+                  <DialogHeader><DialogTitle>{t("invoicesForm.createTitle")}</DialogTitle></DialogHeader>
                   <form onSubmit={handleCreateInvoice} className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label>Booking ID</Label>
-                        <Input value={invoiceForm.bookingId} onChange={(e) => setInvoiceForm((f) => ({ ...f, bookingId: e.target.value }))} placeholder="Booking reference" required />
+                        <Label>{t("invoicesForm.bookingId")}</Label>
+                        <Input value={invoiceForm.bookingId} onChange={(e) => setInvoiceForm((f) => ({ ...f, bookingId: e.target.value }))} placeholder={t("invoicesForm.bookingIdPh")} required />
                       </div>
                       <div className="space-y-2">
-                        <Label>Booking Title</Label>
-                        <Input value={invoiceForm.bookingTitle} onChange={(e) => setInvoiceForm((f) => ({ ...f, bookingTitle: e.target.value }))} placeholder="e.g. Thailand Tour — 5N/6D" />
+                        <Label>{t("invoicesForm.bookingTitle")}</Label>
+                        <Input value={invoiceForm.bookingTitle} onChange={(e) => setInvoiceForm((f) => ({ ...f, bookingTitle: e.target.value }))} placeholder={t("invoicesForm.bookingTitlePh")} />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label>Client Name</Label>
-                      <Input value={invoiceForm.clientName} onChange={(e) => setInvoiceForm((f) => ({ ...f, clientName: e.target.value }))} placeholder="e.g. Mr. Karim Ahmed" />
+                      <Label>{t("invoicesForm.clientName")}</Label>
+                      <Input value={invoiceForm.clientName} onChange={(e) => setInvoiceForm((f) => ({ ...f, clientName: e.target.value }))} placeholder={t("invoicesForm.clientNamePh")} />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label>Invoice Amount (৳)</Label>
+                        <Label>{t("invoicesForm.invoiceAmount")}</Label>
                         <Input type="number" min={0.01} step={0.01} value={invoiceForm.totalAmount || ""} onChange={(e) => setInvoiceForm((f) => ({ ...f, totalAmount: parseFloat(e.target.value) || 0 }))} required />
                       </div>
                       <div className="space-y-2">
-                        <Label>Cost (৳)</Label>
+                        <Label>{t("invoicesForm.cost")}</Label>
                         <Input type="number" min={0} step={0.01} value={invoiceForm.bookingCost || ""} onChange={(e) => setInvoiceForm((f) => ({ ...f, bookingCost: parseFloat(e.target.value) || 0 }))} />
                       </div>
                     </div>
                     {invoiceForm.totalAmount > 0 && (
                       <div className="rounded-md border p-3 flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground flex items-center gap-1"><TrendingUp className="h-3.5 w-3.5" /> Profit</span>
+                        <span className="text-muted-foreground flex items-center gap-1"><TrendingUp className="h-3.5 w-3.5" /> {t("invoicesForm.profit")}</span>
                         <span className={`font-semibold ${invoiceForm.totalAmount - invoiceForm.bookingCost >= 0 ? "text-green-600" : "text-destructive"}`}>
                           ৳{(invoiceForm.totalAmount - invoiceForm.bookingCost).toLocaleString()}
                         </span>
                       </div>
                     )}
                     <div className="space-y-2">
-                      <Label>Due Date</Label>
+                      <Label>{t("invoicesForm.dueDate")}</Label>
                       <Input type="date" value={invoiceForm.dueDate} onChange={(e) => setInvoiceForm((f) => ({ ...f, dueDate: e.target.value }))} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Notes</Label>
-                      <Textarea value={invoiceForm.notes} onChange={(e) => setInvoiceForm((f) => ({ ...f, notes: e.target.value }))} placeholder="Internal notes..." rows={2} />
+                      <Label>{t("invoicesForm.notes")}</Label>
+                      <Textarea value={invoiceForm.notes} onChange={(e) => setInvoiceForm((f) => ({ ...f, notes: e.target.value }))} placeholder={t("invoicesForm.notesPh")} rows={2} />
                     </div>
                     <div className="flex gap-2">
-                      <Button type="submit" className="flex-1">Create Invoice</Button>
-                      <DialogClose asChild><Button type="button" variant="outline">Cancel</Button></DialogClose>
+                      <Button type="submit" className="flex-1">{t("invoicesForm.createBtn")}</Button>
+                      <DialogClose asChild><Button type="button" variant="outline">{t("invoicesForm.cancel")}</Button></DialogClose>
                     </div>
                   </form>
                 </DialogContent>
@@ -400,7 +393,7 @@ const Invoices = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Total Invoiced</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.totalInvoiced")}</div>
                 <Receipt className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold">৳{totals.total.toLocaleString()}</p>
@@ -409,7 +402,7 @@ const Invoices = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Collected</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.collected")}</div>
                 <CheckCircle2 className="h-4 w-4 text-green-600" />
               </div>
               <p className="text-2xl font-bold text-green-600">৳{totals.paid.toLocaleString()}</p>
@@ -418,7 +411,7 @@ const Invoices = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Outstanding</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.outstanding")}</div>
                 <DollarSign className="h-4 w-4 text-destructive" />
               </div>
               <p className="text-2xl font-bold text-destructive">৳{totals.due.toLocaleString()}</p>
@@ -427,7 +420,7 @@ const Invoices = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Profit</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.profit")}</div>
                 <TrendingUp className="h-4 w-4 text-green-600" />
               </div>
               <p className="text-2xl font-bold text-green-600">৳{totals.profit.toLocaleString()}</p>
@@ -436,7 +429,7 @@ const Invoices = () => {
           <Card className={totals.overdueCount > 0 ? "border-orange-300 dark:border-orange-600" : ""}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Overdue</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.overdue")}</div>
                 <AlertTriangle className={`h-4 w-4 ${totals.overdueCount > 0 ? "text-orange-500" : "text-muted-foreground"}`} />
               </div>
               <p className="text-2xl font-bold">{totals.overdueCount}</p>
@@ -445,7 +438,7 @@ const Invoices = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Refunded</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.refunded")}</div>
                 <RotateCcw className="h-4 w-4 text-purple-500" />
               </div>
               <p className="text-2xl font-bold">৳{totals.refunded.toLocaleString()}</p>
@@ -457,19 +450,20 @@ const Invoices = () => {
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
             <Button variant={statusFilter === "all" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("all")}>
-              All ({statusCounts.all})
+              {t("invoicesForm.all")} ({statusCounts.all})
             </Button>
             {STATUS_META.map((s) => (
               <Button key={s.value} variant={statusFilter === s.value ? "default" : "outline"} size="sm" onClick={() => setStatusFilter(s.value)}>
-                {s.label} ({statusCounts[s.value] || 0})
+                {t(`invoicesForm.statuses.${s.value}`)} ({statusCounts[s.value] || 0})
               </Button>
             ))}
           </div>
           <div className="flex items-center gap-2 max-w-sm">
             <Search className="h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search invoice, client, booking..." value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Input placeholder={t("invoicesForm.searchPh")} value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
         </div>
+
 
         {/* Invoice Table */}
         {loading ? (
@@ -477,28 +471,28 @@ const Invoices = () => {
         ) : error ? (
           <ErrorState message={error} onRetry={fetchInvoices} />
         ) : invoices.length === 0 ? (
-          <EmptyState icon={Receipt} title="No invoices yet" description="Create your first invoice from a booking to start tracking payments." actionLabel="New Invoice" onAction={() => setCreateDialogOpen(true)} />
+          <EmptyState icon={Receipt} title={t("invoicesForm.empty.title")} description={t("invoicesForm.empty.desc")} actionLabel={t("invoicesForm.empty.action")} onAction={() => setCreateDialogOpen(true)} />
         ) : (
           <Card>
             <CardContent className="p-0">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Invoice</TableHead>
-                    <TableHead>Booking</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead className="text-right">Total</TableHead>
-                    <TableHead className="text-right">Paid</TableHead>
-                    <TableHead className="text-right">Due</TableHead>
-                    <TableHead>Progress</TableHead>
-                    <TableHead>Due Date</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[160px]">Actions</TableHead>
+                    <TableHead>{t("invoicesForm.table.invoice")}</TableHead>
+                    <TableHead>{t("invoicesForm.table.booking")}</TableHead>
+                    <TableHead>{t("invoicesForm.table.client")}</TableHead>
+                    <TableHead className="text-right">{t("invoicesForm.table.total")}</TableHead>
+                    <TableHead className="text-right">{t("invoicesForm.table.paid")}</TableHead>
+                    <TableHead className="text-right">{t("invoicesForm.table.due")}</TableHead>
+                    <TableHead>{t("invoicesForm.table.progress")}</TableHead>
+                    <TableHead>{t("invoicesForm.table.dueDate")}</TableHead>
+                    <TableHead>{t("invoicesForm.table.status")}</TableHead>
+                    <TableHead className="w-[160px]">{t("invoicesForm.table.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filtered.length === 0 ? (
-                    <TableRow><TableCell colSpan={10} className="text-center py-8 text-muted-foreground">No invoices match your filters.</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={10} className="text-center py-8 text-muted-foreground">{t("invoicesForm.table.noMatch")}</TableCell></TableRow>
                   ) : (
                     filtered.map((inv) => {
                       const meta = getStatusMeta(inv.status);
@@ -528,31 +522,31 @@ const Invoices = () => {
                             ) : "—"}
                           </TableCell>
                           <TableCell>
-                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{meta.label}</span>
+                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{t(`invoicesForm.statuses.${inv.status}`)}</span>
                           </TableCell>
                           <TableCell>
                             <div className="flex gap-1">
-                              <Button variant="ghost" size="icon" title="View Details" onClick={() => { loadInvoiceDetails(inv.id); setDetailDialogOpen(true); }}>
+                              <Button variant="ghost" size="icon" title={t("invoicesForm.actions.viewDetails")} onClick={() => { loadInvoiceDetails(inv.id); setDetailDialogOpen(true); }}>
                                 <Eye className="h-4 w-4" />
                               </Button>
-                              <Button variant="ghost" size="icon" title="View Receipt" onClick={() => navigate(`/invoices/${inv.id}/receipt`)}>
+                              <Button variant="ghost" size="icon" title={t("invoicesForm.actions.viewReceipt")} onClick={() => navigate(`/invoices/${inv.id}/receipt`)}>
                                 <FileText className="h-4 w-4" />
                               </Button>
                               {inv.status !== "paid" && inv.status !== "cancelled" && inv.status !== "refunded" && (
                                 <PermissionGate module="invoices" action="edit">
-                                  <Button variant="ghost" size="icon" title="Add Payment" onClick={() => { setSelectedInvoiceId(inv.id); setPayDialogOpen(true); }}>
+                                  <Button variant="ghost" size="icon" title={t("invoicesForm.actions.addPayment")} onClick={() => { setSelectedInvoiceId(inv.id); setPayDialogOpen(true); }}>
                                     <CreditCard className="h-4 w-4" />
                                   </Button>
                                 </PermissionGate>
                               )}
-                              <Button variant="ghost" size="icon" title="Send Invoice Email" onClick={async () => {
-                                try { await emailApi.sendInvoice(inv.id); toast({ title: "Invoice email sent" }); }
-                                catch (err: any) { toast({ title: "Email failed", description: err.message, variant: "destructive" }); }
+                              <Button variant="ghost" size="icon" title={t("invoicesForm.actions.sendEmail")} onClick={async () => {
+                                try { await emailApi.sendInvoice(inv.id); toast({ title: t("invoicesForm.toast.emailSent") }); }
+                                catch (err: any) { toast({ title: t("invoicesForm.toast.emailFailed"), description: err.message, variant: "destructive" }); }
                               }}>
                                 <Mail className="h-4 w-4 text-primary" />
                               </Button>
                               {inv.status !== "paid" && inv.status !== "cancelled" && inv.status !== "refunded" && (
-                                <Button variant="ghost" size="icon" title="Pay Online" onClick={() => { setPayGatewayInvoice({ id: inv.id, amount: inv.dueAmount }); setPayGatewayOpen(true); }}>
+                                <Button variant="ghost" size="icon" title={t("invoicesForm.actions.payOnline")} onClick={() => { setPayGatewayInvoice({ id: inv.id, amount: inv.dueAmount }); setPayGatewayOpen(true); }}>
                                   <Wallet className="h-4 w-4 text-primary" />
                                 </Button>
                               )}
@@ -568,10 +562,11 @@ const Invoices = () => {
           </Card>
         )}
 
+
         {/* ═══════ DETAIL DIALOG ═══════ */}
         <Dialog open={detailDialogOpen} onOpenChange={(open) => { setDetailDialogOpen(open); if (!open) setSelectedInvoiceId(null); }}>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader><DialogTitle>Invoice Details</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{t("invoicesForm.detail.title")}</DialogTitle></DialogHeader>
             {selectedInvoice && (
               <div className="space-y-4">
                 {/* Summary */}
@@ -579,31 +574,31 @@ const Invoices = () => {
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-sm font-medium">{selectedInvoice.invoiceNumber || `INV-${selectedInvoice.id.slice(0, 6).toUpperCase()}`}</span>
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${getStatusMeta(selectedInvoice.status).color}`}>
-                      {getStatusMeta(selectedInvoice.status).label}
+                      {t(`invoicesForm.statuses.${selectedInvoice.status}`)}
                     </span>
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div><span className="text-muted-foreground">Client:</span> {selectedInvoice.clientName || "—"}</div>
-                    <div><span className="text-muted-foreground">Booking:</span> {selectedInvoice.bookingTitle || selectedInvoice.bookingId?.slice(0, 8)}</div>
-                    <div><span className="text-muted-foreground">Due Date:</span> {selectedInvoice.dueDate || "Not set"}</div>
-                    <div><span className="text-muted-foreground">Created:</span> {selectedInvoice.createdAt?.slice(0, 10)}</div>
+                    <div><span className="text-muted-foreground">{t("invoicesForm.detail.client")}:</span> {selectedInvoice.clientName || "—"}</div>
+                    <div><span className="text-muted-foreground">{t("invoicesForm.detail.booking")}:</span> {selectedInvoice.bookingTitle || selectedInvoice.bookingId?.slice(0, 8)}</div>
+                    <div><span className="text-muted-foreground">{t("invoicesForm.detail.dueDate")}:</span> {selectedInvoice.dueDate || t("invoicesForm.detail.notSet")}</div>
+                    <div><span className="text-muted-foreground">{t("invoicesForm.detail.created")}:</span> {selectedInvoice.createdAt?.slice(0, 10)}</div>
                   </div>
                   <Separator />
                   <div className="grid grid-cols-4 gap-2 text-sm">
                     <div className="text-center">
-                      <p className="text-muted-foreground text-xs">Total</p>
+                      <p className="text-muted-foreground text-xs">{t("invoicesForm.detail.total")}</p>
                       <p className="font-bold">৳{selectedInvoice.totalAmount.toLocaleString()}</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-muted-foreground text-xs">Paid</p>
+                      <p className="text-muted-foreground text-xs">{t("invoicesForm.detail.paid")}</p>
                       <p className="font-bold text-green-600">৳{selectedInvoice.paidAmount.toLocaleString()}</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-muted-foreground text-xs">Due</p>
+                      <p className="text-muted-foreground text-xs">{t("invoicesForm.detail.due")}</p>
                       <p className="font-bold text-destructive">৳{selectedInvoice.dueAmount.toLocaleString()}</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-muted-foreground text-xs">Profit</p>
+                      <p className="text-muted-foreground text-xs">{t("invoicesForm.detail.profit")}</p>
                       <p className={`font-bold ${(selectedInvoice.bookingProfit || 0) >= 0 ? "text-green-600" : "text-destructive"}`}>
                         ৳{(selectedInvoice.bookingProfit || 0).toLocaleString()}
                       </p>
@@ -618,28 +613,28 @@ const Invoices = () => {
                     <>
                       <PermissionGate module="invoices" action="edit">
                         <Button size="sm" onClick={() => setPayDialogOpen(true)}>
-                          <CreditCard className="mr-1 h-3.5 w-3.5" /> Record Payment
+                          <CreditCard className="mr-1 h-3.5 w-3.5" /> {t("invoicesForm.detail.recordPayment")}
                         </Button>
                       </PermissionGate>
                       <Button size="sm" variant="outline" onClick={async () => {
-                        try { await emailApi.sendInvoice(selectedInvoice.id); toast({ title: "Reminder sent" }); }
-                        catch (err: any) { toast({ title: "Failed", description: err.message, variant: "destructive" }); }
+                        try { await emailApi.sendInvoice(selectedInvoice.id); toast({ title: t("invoicesForm.toast.reminderSent") }); }
+                        catch (err: any) { toast({ title: t("invoicesForm.toast.failed"), description: err.message, variant: "destructive" }); }
                       }}>
-                        <Send className="mr-1 h-3.5 w-3.5" /> Send Reminder
+                        <Send className="mr-1 h-3.5 w-3.5" /> {t("invoicesForm.detail.sendReminder")}
                       </Button>
                     </>
                   )}
                   {selectedInvoice.paidAmount > 0 && selectedInvoice.status !== "refunded" && (
                     <PermissionGate module="invoices" action="approve">
                       <Button size="sm" variant="outline" onClick={() => setRefundDialogOpen(true)}>
-                        <RotateCcw className="mr-1 h-3.5 w-3.5" /> Refund
+                        <RotateCcw className="mr-1 h-3.5 w-3.5" /> {t("invoicesForm.detail.refund")}
                       </Button>
                     </PermissionGate>
                   )}
                   {selectedInvoice.status !== "cancelled" && selectedInvoice.status !== "refunded" && (
                     <PermissionGate module="invoices" action="delete">
                       <Button size="sm" variant="destructive" onClick={() => setCancelDialogOpen(true)}>
-                        <Ban className="mr-1 h-3.5 w-3.5" /> Cancel
+                        <Ban className="mr-1 h-3.5 w-3.5" /> {t("invoicesForm.detail.cancel")}
                       </Button>
                     </PermissionGate>
                   )}
@@ -648,23 +643,24 @@ const Invoices = () => {
                 {/* Tabs: Payments / Refunds / Audit Trail */}
                 <Tabs defaultValue="payments">
                   <TabsList>
-                    <TabsTrigger value="payments">Payments ({invoicePayments.length})</TabsTrigger>
-                    <TabsTrigger value="refunds">Refunds ({invoiceRefunds.length})</TabsTrigger>
-                    <TabsTrigger value="audit">Audit Trail ({invoiceAudit.length})</TabsTrigger>
+                    <TabsTrigger value="payments">{t("invoicesForm.detail.payments")} ({invoicePayments.length})</TabsTrigger>
+                    <TabsTrigger value="refunds">{t("invoicesForm.detail.refunds")} ({invoiceRefunds.length})</TabsTrigger>
+                    <TabsTrigger value="audit">{t("invoicesForm.detail.audit")} ({invoiceAudit.length})</TabsTrigger>
                   </TabsList>
+
 
                   <TabsContent value="payments" className="mt-3">
                     {invoicePayments.length === 0 ? (
-                      <p className="text-sm text-muted-foreground text-center py-4">No payments recorded yet.</p>
+                      <p className="text-sm text-muted-foreground text-center py-4">{t("invoicesForm.detail.noPayments")}</p>
                     ) : (
                       <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead>Date</TableHead>
-                            <TableHead className="text-right">Amount</TableHead>
-                            <TableHead>Method</TableHead>
-                            <TableHead>Reference</TableHead>
-                            <TableHead>Notes</TableHead>
+                            <TableHead>{t("invoicesForm.detail.date")}</TableHead>
+                            <TableHead className="text-right">{t("invoicesForm.detail.amount")}</TableHead>
+                            <TableHead>{t("invoicesForm.detail.method")}</TableHead>
+                            <TableHead>{t("invoicesForm.detail.reference")}</TableHead>
+                            <TableHead>{t("invoicesForm.detail.notes")}</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -672,7 +668,7 @@ const Invoices = () => {
                             <TableRow key={p.id}>
                               <TableCell className="text-sm">{p.date}</TableCell>
                               <TableCell className="text-right font-medium text-green-600">৳{p.amount.toLocaleString()}</TableCell>
-                              <TableCell className="capitalize text-sm">{p.method?.replace("_", " ")}</TableCell>
+                              <TableCell className="text-sm">{p.method ? t(`invoicesForm.methods.${p.method}`) : "—"}</TableCell>
                               <TableCell className="text-xs text-muted-foreground">{p.transactionRef || "—"}</TableCell>
                               <TableCell className="text-xs text-muted-foreground truncate max-w-[120px]">{p.notes || "—"}</TableCell>
                             </TableRow>
@@ -684,7 +680,7 @@ const Invoices = () => {
 
                   <TabsContent value="refunds" className="mt-3">
                     {invoiceRefunds.length === 0 ? (
-                      <p className="text-sm text-muted-foreground text-center py-4">No refunds processed.</p>
+                      <p className="text-sm text-muted-foreground text-center py-4">{t("invoicesForm.detail.noRefunds")}</p>
                     ) : (
                       <div className="space-y-2">
                         {invoiceRefunds.map((r) => (
@@ -693,9 +689,9 @@ const Invoices = () => {
                               <span className="text-sm font-medium text-purple-600">-৳{r.amount.toLocaleString()}</span>
                               <span className="text-xs text-muted-foreground">{r.createdAt?.slice(0, 10)}</span>
                             </div>
-                            <p className="text-xs text-muted-foreground">Reason: {r.reason}</p>
-                            {r.method && <p className="text-xs text-muted-foreground">Method: {r.method}</p>}
-                            {r.processedByName && <p className="text-xs text-muted-foreground">By: {r.processedByName}</p>}
+                            <p className="text-xs text-muted-foreground">{t("invoicesForm.detail.reason")}: {r.reason}</p>
+                            {r.method && <p className="text-xs text-muted-foreground">{t("invoicesForm.detail.method")}: {r.method}</p>}
+                            {r.processedByName && <p className="text-xs text-muted-foreground">{t("invoicesForm.detail.by")}: {r.processedByName}</p>}
                           </div>
                         ))}
                       </div>
@@ -704,7 +700,7 @@ const Invoices = () => {
 
                   <TabsContent value="audit" className="mt-3">
                     {invoiceAudit.length === 0 ? (
-                      <p className="text-sm text-muted-foreground text-center py-4">No audit events.</p>
+                      <p className="text-sm text-muted-foreground text-center py-4">{t("invoicesForm.detail.noAudit")}</p>
                     ) : (
                       <div className="space-y-2">
                         {invoiceAudit.map((evt) => (
@@ -728,6 +724,7 @@ const Invoices = () => {
                       </div>
                     )}
                   </TabsContent>
+
                 </Tabs>
               </div>
             )}
@@ -737,90 +734,91 @@ const Invoices = () => {
         {/* ═══════ ADD PAYMENT DIALOG ═══════ */}
         <Dialog open={payDialogOpen} onOpenChange={(open) => { setPayDialogOpen(open); if (!open && !detailDialogOpen) setSelectedInvoiceId(null); }}>
           <DialogContent>
-            <DialogHeader><DialogTitle>Record Payment</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{t("invoicesForm.payDialog.title")}</DialogTitle></DialogHeader>
             {selectedInvoice && (
               <div className="mb-3 rounded-md border p-3 space-y-1 text-sm">
-                <div className="flex justify-between"><span className="text-muted-foreground">Total:</span><span className="font-medium">৳{selectedInvoice.totalAmount.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Paid so far:</span><span className="text-green-600 font-medium">৳{selectedInvoice.paidAmount.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Remaining:</span><span className="text-destructive font-semibold">৳{selectedInvoice.dueAmount.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.payDialog.totalLabel")}</span><span className="font-medium">৳{selectedInvoice.totalAmount.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.payDialog.paidLabel")}</span><span className="text-green-600 font-medium">৳{selectedInvoice.paidAmount.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.payDialog.remainingLabel")}</span><span className="text-destructive font-semibold">৳{selectedInvoice.dueAmount.toLocaleString()}</span></div>
               </div>
             )}
             <form onSubmit={handleAddPayment} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Amount (৳)</Label>
+                  <Label>{t("invoicesForm.payDialog.amount")}</Label>
                   <Input type="number" min={0.01} step={0.01} max={selectedInvoice?.dueAmount} value={paymentForm.amount || ""} onChange={(e) => setPaymentForm((f) => ({ ...f, amount: parseFloat(e.target.value) || 0 }))} required />
                 </div>
                 <div className="space-y-2">
-                  <Label>Method</Label>
+                  <Label>{t("invoicesForm.payDialog.method")}</Label>
                   <Select value={paymentForm.method} onValueChange={(v) => setPaymentForm((f) => ({ ...f, method: v as PaymentMethod }))}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      {PAYMENT_METHODS.map((m) => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}
+                      {PAYMENT_METHOD_VALUES.map((m) => <SelectItem key={m} value={m}>{t(`invoicesForm.methods.${m}`)}</SelectItem>)}
                     </SelectContent>
                   </Select>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Payment Date</Label>
+                  <Label>{t("invoicesForm.payDialog.date")}</Label>
                   <Input type="date" value={paymentForm.date} onChange={(e) => setPaymentForm((f) => ({ ...f, date: e.target.value }))} required />
                 </div>
                 <div className="space-y-2">
-                  <Label>Transaction Ref</Label>
-                  <Input value={paymentForm.transactionRef} onChange={(e) => setPaymentForm((f) => ({ ...f, transactionRef: e.target.value }))} placeholder="e.g. TXN-12345" />
+                  <Label>{t("invoicesForm.payDialog.ref")}</Label>
+                  <Input value={paymentForm.transactionRef} onChange={(e) => setPaymentForm((f) => ({ ...f, transactionRef: e.target.value }))} placeholder={t("invoicesForm.payDialog.refPh")} />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Received By</Label>
-                  <Input value={paymentForm.receivedBy} onChange={(e) => setPaymentForm((f) => ({ ...f, receivedBy: e.target.value }))} placeholder={user?.name || "Staff name"} />
+                  <Label>{t("invoicesForm.payDialog.receivedBy")}</Label>
+                  <Input value={paymentForm.receivedBy} onChange={(e) => setPaymentForm((f) => ({ ...f, receivedBy: e.target.value }))} placeholder={user?.name || t("invoicesForm.payDialog.receivedByPh")} />
                 </div>
                 <div className="space-y-2">
-                  <Label>Notes</Label>
-                  <Input value={paymentForm.notes} onChange={(e) => setPaymentForm((f) => ({ ...f, notes: e.target.value }))} placeholder="Optional payment notes..." />
+                  <Label>{t("invoicesForm.payDialog.notes")}</Label>
+                  <Input value={paymentForm.notes} onChange={(e) => setPaymentForm((f) => ({ ...f, notes: e.target.value }))} placeholder={t("invoicesForm.payDialog.notesPh")} />
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button type="submit" className="flex-1">Record Payment</Button>
-                <DialogClose asChild><Button type="button" variant="outline">Cancel</Button></DialogClose>
+                <Button type="submit" className="flex-1">{t("invoicesForm.payDialog.submit")}</Button>
+                <DialogClose asChild><Button type="button" variant="outline">{t("invoicesForm.cancel")}</Button></DialogClose>
               </div>
             </form>
           </DialogContent>
         </Dialog>
 
+
         {/* ═══════ REFUND DIALOG ═══════ */}
         <Dialog open={refundDialogOpen} onOpenChange={setRefundDialogOpen}>
           <DialogContent>
-            <DialogHeader><DialogTitle>Process Refund</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{t("invoicesForm.refundDialog.title")}</DialogTitle></DialogHeader>
             {selectedInvoice && (
               <div className="mb-3 rounded-md border p-3 text-sm">
-                <div className="flex justify-between"><span className="text-muted-foreground">Paid amount:</span><span className="font-medium text-green-600">৳{selectedInvoice.paidAmount.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Already refunded:</span><span className="font-medium text-purple-600">৳{(selectedInvoice.refundedAmount || 0).toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Max refundable:</span><span className="font-semibold">৳{(selectedInvoice.paidAmount - (selectedInvoice.refundedAmount || 0)).toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.refundDialog.paidAmount")}</span><span className="font-medium text-green-600">৳{selectedInvoice.paidAmount.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.refundDialog.alreadyRefunded")}</span><span className="font-medium text-purple-600">৳{(selectedInvoice.refundedAmount || 0).toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.refundDialog.maxRefundable")}</span><span className="font-semibold">৳{(selectedInvoice.paidAmount - (selectedInvoice.refundedAmount || 0)).toLocaleString()}</span></div>
               </div>
             )}
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label>Refund Amount (৳)</Label>
+                <Label>{t("invoicesForm.refundDialog.amount")}</Label>
                 <Input type="number" min={0.01} step={0.01} max={selectedInvoice ? selectedInvoice.paidAmount - (selectedInvoice.refundedAmount || 0) : 0} value={refundForm.amount || ""} onChange={(e) => setRefundForm((f) => ({ ...f, amount: parseFloat(e.target.value) || 0 }))} />
               </div>
               <div className="space-y-2">
-                <Label>Reason *</Label>
-                <Textarea value={refundForm.reason} onChange={(e) => setRefundForm((f) => ({ ...f, reason: e.target.value }))} placeholder="Reason for refund..." rows={2} />
+                <Label>{t("invoicesForm.refundDialog.reason")}</Label>
+                <Textarea value={refundForm.reason} onChange={(e) => setRefundForm((f) => ({ ...f, reason: e.target.value }))} placeholder={t("invoicesForm.refundDialog.reasonPh")} rows={2} />
               </div>
               <div className="space-y-2">
-                <Label>Refund Method</Label>
+                <Label>{t("invoicesForm.refundDialog.method")}</Label>
                 <Select value={refundForm.method} onValueChange={(v) => setRefundForm((f) => ({ ...f, method: v }))}>
-                  <SelectTrigger><SelectValue placeholder="Same as payment" /></SelectTrigger>
+                  <SelectTrigger><SelectValue placeholder={t("invoicesForm.refundDialog.methodPh")} /></SelectTrigger>
                   <SelectContent>
-                    {PAYMENT_METHODS.map((m) => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}
+                    {PAYMENT_METHOD_VALUES.map((m) => <SelectItem key={m} value={m}>{t(`invoicesForm.methods.${m}`)}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
               <div className="flex gap-2">
-                <Button onClick={handleRefund} disabled={!refundForm.amount || !refundForm.reason} className="flex-1">Process Refund</Button>
-                <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
+                <Button onClick={handleRefund} disabled={!refundForm.amount || !refundForm.reason} className="flex-1">{t("invoicesForm.refundDialog.submit")}</Button>
+                <DialogClose asChild><Button variant="outline">{t("invoicesForm.cancel")}</Button></DialogClose>
               </div>
             </div>
           </DialogContent>
@@ -829,16 +827,16 @@ const Invoices = () => {
         {/* ═══════ CANCEL DIALOG ═══════ */}
         <Dialog open={cancelDialogOpen} onOpenChange={setCancelDialogOpen}>
           <DialogContent>
-            <DialogHeader><DialogTitle>Cancel Invoice</DialogTitle></DialogHeader>
-            <p className="text-sm text-muted-foreground">This action cannot be undone. The invoice will be marked as cancelled.</p>
+            <DialogHeader><DialogTitle>{t("invoicesForm.cancelDialog.title")}</DialogTitle></DialogHeader>
+            <p className="text-sm text-muted-foreground">{t("invoicesForm.cancelDialog.warning")}</p>
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label>Cancellation Reason *</Label>
-                <Textarea value={cancelReason} onChange={(e) => setCancelReason(e.target.value)} placeholder="Reason for cancellation..." rows={3} />
+                <Label>{t("invoicesForm.cancelDialog.reason")}</Label>
+                <Textarea value={cancelReason} onChange={(e) => setCancelReason(e.target.value)} placeholder={t("invoicesForm.cancelDialog.reasonPh")} rows={3} />
               </div>
               <div className="flex gap-2">
-                <Button variant="destructive" onClick={handleCancel} disabled={!cancelReason.trim()} className="flex-1">Confirm Cancellation</Button>
-                <DialogClose asChild><Button variant="outline">Keep Invoice</Button></DialogClose>
+                <Button variant="destructive" onClick={handleCancel} disabled={!cancelReason.trim()} className="flex-1">{t("invoicesForm.cancelDialog.confirm")}</Button>
+                <DialogClose asChild><Button variant="outline">{t("invoicesForm.cancelDialog.keep")}</Button></DialogClose>
               </div>
             </div>
           </DialogContent>
@@ -847,11 +845,11 @@ const Invoices = () => {
         {/* ═══════ FROM BOOKING DIALOG ═══════ */}
         <Dialog open={fromBookingOpen} onOpenChange={setFromBookingOpen}>
           <DialogContent className="max-w-lg">
-            <DialogHeader><DialogTitle>Create Invoice from Booking</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{t("invoicesForm.fromBooking.title")}</DialogTitle></DialogHeader>
             {bookingsLoading ? (
-              <div className="py-8 text-center text-muted-foreground">Loading bookings...</div>
+              <div className="py-8 text-center text-muted-foreground">{t("invoicesForm.fromBooking.loading")}</div>
             ) : bookingsList.length === 0 ? (
-              <div className="py-8 text-center text-muted-foreground">No bookings found.</div>
+              <div className="py-8 text-center text-muted-foreground">{t("invoicesForm.fromBooking.none")}</div>
             ) : (
               <div className="max-h-[400px] overflow-y-auto space-y-2">
                 {bookingsList.map((bk) => (
@@ -874,7 +872,7 @@ const Invoices = () => {
                   >
                     <div>
                       <p className="text-sm font-medium">{bk.title || `${bk.type} — ${bk.destination || "Trip"}`}</p>
-                      <p className="text-xs text-muted-foreground">{bk.clientName || "No client"} · {bk.status}</p>
+                      <p className="text-xs text-muted-foreground">{bk.clientName || t("invoicesForm.fromBooking.noClient")} · {bk.status}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-sm font-semibold">৳{(bk.amount || 0).toLocaleString()}</p>
@@ -886,6 +884,7 @@ const Invoices = () => {
             )}
           </DialogContent>
         </Dialog>
+
 
         {/* Online Payment Gateway */}
         {payGatewayInvoice && (
