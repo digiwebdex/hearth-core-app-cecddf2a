@@ -130,7 +130,7 @@ const Quotations = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Total Quotes</div>
+                <div className="text-sm text-muted-foreground">{t("quotationsForm.widgets.totalQuotes")}</div>
                 <FileText className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold">{quotations.length}</p>
@@ -139,7 +139,7 @@ const Quotations = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Approved</div>
+                <div className="text-sm text-muted-foreground">{t("quotationsForm.widgets.approved")}</div>
                 <Badge variant="secondary">{approvedCount}</Badge>
               </div>
               <p className="text-2xl font-bold text-green-600">{approvedCount}</p>
@@ -148,7 +148,7 @@ const Quotations = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Total Value</div>
+                <div className="text-sm text-muted-foreground">{t("quotationsForm.widgets.totalValue")}</div>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold">৳{totalValue.toLocaleString()}</p>
@@ -157,7 +157,7 @@ const Quotations = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Est. Profit</div>
+                <div className="text-sm text-muted-foreground">{t("quotationsForm.widgets.estProfit")}</div>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold">৳{totalProfit.toLocaleString()}</p>
@@ -168,18 +168,18 @@ const Quotations = () => {
         {/* Filters */}
         <div className="flex flex-wrap gap-2">
           <Button variant={statusFilter === "all" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("all")}>
-            All ({statusCounts.all})
+            {t("quotationsForm.all")} ({statusCounts.all})
           </Button>
           {STATUS_META.map((s) => (
             <Button key={s.value} variant={statusFilter === s.value ? "default" : "outline"} size="sm" onClick={() => setStatusFilter(s.value)}>
-              {s.label} ({statusCounts[s.value] || 0})
+              {t(`quotationsForm.statuses.${s.value}`)} ({statusCounts[s.value] || 0})
             </Button>
           ))}
         </div>
 
         <div className="flex items-center gap-2 max-w-sm">
           <Search className="h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Search by title, client, destination..." value={search} onChange={(e) => setSearch(e.target.value)} />
+          <Input placeholder={t("quotationsForm.searchPh")} value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
 
         {loading ? (
@@ -187,29 +187,30 @@ const Quotations = () => {
         ) : error ? (
           <ErrorState message={error} onRetry={fetchData} />
         ) : quotations.length === 0 ? (
-          <EmptyState icon={FileText} title="No quotations yet" description="Create your first travel quotation" actionLabel="New Quotation" onAction={() => navigate("/quotations/new")} />
+          <EmptyState icon={FileText} title={t("quotationsForm.empty.title")} description={t("quotationsForm.empty.desc")} actionLabel={t("quotationsForm.empty.action")} onAction={() => navigate("/quotations/new")} />
         ) : (
           <Card>
             <CardContent className="p-0">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Destination</TableHead>
-                    <TableHead>Travelers</TableHead>
-                    <TableHead>Grand Total</TableHead>
-                    <TableHead>Profit</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Version</TableHead>
-                    <TableHead>Valid Until</TableHead>
-                    <TableHead className="w-[140px]">Actions</TableHead>
+                    <TableHead>{t("quotationsForm.table.title")}</TableHead>
+                    <TableHead>{t("quotationsForm.table.client")}</TableHead>
+                    <TableHead>{t("quotationsForm.table.destination")}</TableHead>
+                    <TableHead>{t("quotationsForm.table.travelers")}</TableHead>
+                    <TableHead>{t("quotationsForm.table.grandTotal")}</TableHead>
+                    <TableHead>{t("quotationsForm.table.profit")}</TableHead>
+                    <TableHead>{t("quotationsForm.table.status")}</TableHead>
+                    <TableHead>{t("quotationsForm.table.version")}</TableHead>
+                    <TableHead>{t("quotationsForm.table.validUntil")}</TableHead>
+                    <TableHead className="w-[140px]">{t("quotationsForm.table.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filtered.length === 0 ? (
-                    <TableRow><TableCell colSpan={10} className="text-center py-8 text-muted-foreground">No quotations found.</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={10} className="text-center py-8 text-muted-foreground">{t("quotationsForm.table.noMatch")}</TableCell></TableRow>
                   ) : (
+
                     filtered.map((q) => {
                       const meta = getStatusMeta(q.status);
                       return (
