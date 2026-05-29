@@ -555,22 +555,22 @@ const AdminSettings = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5 text-primary" /> SMS Gateway Settings
+                  <MessageSquare className="h-5 w-5 text-primary" /> {t("adminSettings.sms.title")}
                 </CardTitle>
-                <CardDescription>Configure SMS provider for sending notifications and OTPs</CardDescription>
+                <CardDescription>{t("adminSettings.sms.desc")}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-center justify-between rounded-lg border p-4">
                   <div>
-                    <p className="font-medium">Enable SMS System</p>
-                    <p className="text-sm text-muted-foreground">Allow sending SMS from the platform</p>
+                    <p className="font-medium">{t("adminSettings.sms.enable")}</p>
+                    <p className="text-sm text-muted-foreground">{t("adminSettings.sms.enableDesc")}</p>
                   </div>
                   <Switch checked={sms.enabled} onCheckedChange={(v) => setSms({ ...sms, enabled: v })} />
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>SMS Provider</Label>
+                    <Label>{t("adminSettings.sms.provider")}</Label>
                     <Select value={sms.provider} onValueChange={(v: "sslwireless" | "bulksms") => setSms({ ...sms, provider: v })}>
                       <SelectTrigger><SelectValue /></SelectTrigger>
                       <SelectContent>
@@ -580,19 +580,19 @@ const AdminSettings = () => {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label>Sender ID</Label>
+                    <Label>{t("adminSettings.sms.senderId")}</Label>
                     <Input
                       placeholder="e.g. TAWSS"
                       value={sms.senderId}
                       onChange={(e) => setSms({ ...sms, senderId: e.target.value })}
                     />
-                    <p className="text-xs text-muted-foreground">Approved sender ID from your provider</p>
+                    <p className="text-xs text-muted-foreground">{t("adminSettings.sms.senderIdHelp")}</p>
                   </div>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>API Key</Label>
+                    <Label>{t("adminSettings.sms.apiKey")}</Label>
                     <div className="relative">
                       <Input
                         type={showPasswords.smsApi ? "text" : "password"}
@@ -606,27 +606,27 @@ const AdminSettings = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label>Base URL</Label>
+                    <Label>{t("adminSettings.sms.baseUrl")}</Label>
                     <Input
                       placeholder={sms.provider === "sslwireless" ? "https://smsplus.sslwireless.com/api/v3" : "https://bulksmsbd.net/api"}
                       value={sms.baseUrl}
                       onChange={(e) => setSms({ ...sms, baseUrl: e.target.value })}
                     />
-                    <p className="text-xs text-muted-foreground">Provider API endpoint URL</p>
+                    <p className="text-xs text-muted-foreground">{t("adminSettings.sms.baseUrlHelp")}</p>
                   </div>
                 </div>
 
-                <Button onClick={() => handleSave("SMS")} disabled={saving}>
+                <Button onClick={() => handleSave(t("adminSettings.tabs.sms"))} disabled={saving}>
                   {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-                  Save SMS Settings
+                  {t("adminSettings.sms.saveBtn")}
                 </Button>
 
                 {/* Test SMS */}
                 <div className="pt-4 border-t">
-                  <h4 className="text-sm font-semibold mb-3">Send Test SMS</h4>
+                  <h4 className="text-sm font-semibold mb-3">{t("adminSettings.sms.testTitle")}</h4>
                   <div className="flex gap-2">
                     <Input
-                      placeholder="01XXXXXXXXX"
+                      placeholder={t("adminSettings.sms.testPlaceholder")}
                       type="tel"
                       value={testPhone}
                       onChange={(e) => setTestPhone(e.target.value)}
@@ -636,13 +636,13 @@ const AdminSettings = () => {
                       if (!testPhone) return;
                       try {
                         const res = await smsApi.testSms(testPhone);
-                        toast({ title: "Test SMS sent!", description: res.success ? "Delivered" : res.error });
+                        toast({ title: t("adminSettings.toast.testSmsSent"), description: res.success ? t("adminSettings.toast.testSmsDelivered") : res.error });
                         setTestPhone("");
                       } catch (err: any) {
-                        toast({ title: "Test failed", description: err.message, variant: "destructive" });
+                        toast({ title: t("adminSettings.toast.testFailed"), description: err.message, variant: "destructive" });
                       }
                     }} disabled={!testPhone}>
-                      <Send className="mr-2 h-4 w-4" /> Send Test
+                      <Send className="mr-2 h-4 w-4" /> {t("adminSettings.common.sendTest")}
                     </Button>
                   </div>
                 </div>
