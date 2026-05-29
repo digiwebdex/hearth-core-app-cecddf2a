@@ -121,7 +121,7 @@ const QuotationBuilder = () => {
       if (q.itinerary?.length) setItinerary(q.itinerary);
       setLoading(false);
     }).catch(() => {
-      toast({ variant: "destructive", title: "Error loading quotation" });
+      toast({ variant: "destructive", title: t("quotationBuilder.errorLoading") });
       setLoading(false);
     });
   }, [id]);
