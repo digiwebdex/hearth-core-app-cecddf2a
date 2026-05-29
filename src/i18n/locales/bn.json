@@ -1892,5 +1892,103 @@
       "updated": "প্ল্যান আপডেট হয়েছে",
       "created": "প্ল্যান তৈরি হয়েছে"
     }
+  },
+  "adminTenants": {
+    "title": "সকল এজেন্সি",
+    "subtitle": "সমস্ত নিবন্ধিত কোম্পানি দেখুন ও পরিচালনা করুন",
+    "createAgency": "নতুন এজেন্সি",
+    "refresh": "রিফ্রেশ",
+    "searchPlaceholder": "নাম বা ইমেইল দিয়ে খুঁজুন…",
+    "companies": "কোম্পানি ({{count}})",
+    "noAgencies": "কোনো এজেন্সি পাওয়া যায়নি।",
+    "creating": "তৈরি হচ্ছে…",
+    "saving": "সংরক্ষণ হচ্ছে…",
+    "deleting": "মুছে ফেলা হচ্ছে…",
+    "saveChanges": "পরিবর্তন সংরক্ষণ",
+    "deletePermanently": "স্থায়ীভাবে মুছুন",
+    "sections": {
+      "company": "কোম্পানি",
+      "ownerAccount": "মালিকের অ্যাকাউন্ট",
+      "subscription": "সাবস্ক্রিপশন"
+    },
+    "dialog": {
+      "createTitle": "নতুন এজেন্সি তৈরি করুন",
+      "createDesc": "ম্যানুয়ালি একটি কোম্পানি ও তার মালিকের অ্যাকাউন্ট এবং সাবস্ক্রিপশন তৈরি করুন।",
+      "editTitle": "এজেন্সি সম্পাদনা",
+      "editDesc": "কোম্পানির তথ্য ও সাবস্ক্রিপশন আপডেট করুন।",
+      "deleteTitle": "এজেন্সি মুছবেন?",
+      "deleteDesc": "এটি স্থায়ীভাবে <1>{{name}}</1> এবং এর সমস্ত ব্যবহারকারী, বুকিং, ক্লায়েন্ট, ইনভয়েস ও সম্পর্কিত ডেটা মুছে ফেলবে। এই ক্রিয়াটি ফেরানো যাবে না।"
+    },
+    "fields": {
+      "companyName": "কোম্পানির নাম",
+      "companyPhone": "কোম্পানির ফোন",
+      "companyWhatsapp": "কোম্পানির হোয়াটসঅ্যাপ",
+      "address": "ঠিকানা",
+      "city": "শহর",
+      "country": "দেশ",
+      "website": "ওয়েবসাইট",
+      "ownerName": "মালিকের নাম",
+      "ownerEmail": "মালিকের ইমেইল",
+      "ownerMobile": "মালিকের মোবাইল",
+      "ownerWhatsapp": "মালিকের হোয়াটসঅ্যাপ",
+      "tempPassword": "অস্থায়ী পাসওয়ার্ড",
+      "resetPassword": "পাসওয়ার্ড রিসেট",
+      "plan": "প্ল্যান",
+      "status": "স্ট্যাটাস",
+      "months": "মাস",
+      "expiry": "মেয়াদ শেষ",
+      "phone": "ফোন",
+      "whatsapp": "হোয়াটসঅ্যাপ",
+      "notes": "নোট",
+      "notesInternal": "নোট (অভ্যন্তরীণ)",
+      "passwordPlaceholder": "ন্যূনতম ৬ অক্ষর",
+      "resetPasswordPlaceholder": "বর্তমান পাসওয়ার্ড রাখতে ফাঁকা রাখুন (ন্যূনতম ৬ অক্ষর)",
+      "notesPlaceholder": "ঐচ্ছিক অভ্যন্তরীণ নোট",
+      "websitePlaceholder": "example.com"
+    },
+    "table": {
+      "company": "কোম্পানি",
+      "owner": "মালিক",
+      "plan": "প্ল্যান",
+      "users": "ব্যবহারকারী",
+      "bookings": "বুকিং",
+      "status": "স্ট্যাটাস",
+      "created": "তৈরির তারিখ",
+      "actions": "কর্ম"
+    },
+    "plans": {
+      "basic": "বেসিক",
+      "pro": "প্রো",
+      "business": "বিজনেস",
+      "enterprise": "আনলিমিটেড",
+      "free": "ফ্রি"
+    },
+    "status": {
+      "active": "সক্রিয়",
+      "trial": "ট্রায়াল",
+      "suspended": "স্থগিত"
+    },
+    "actions": {
+      "viewDetails": "বিস্তারিত দেখুন",
+      "edit": "সম্পাদনা",
+      "suspend": "স্থগিত",
+      "reactivate": "পুনরায় সক্রিয়",
+      "delete": "মুছুন",
+      "cancel": "বাতিল"
+    },
+    "toast": {
+      "missingFields": "প্রয়োজনীয় ফিল্ড নেই",
+      "missingFieldsDesc": "সব ফিল্ড পূরণ করা আবশ্যক",
+      "agencyCreated": "এজেন্সি তৈরি হয়েছে",
+      "agencyUpdated": "এজেন্সি আপডেট হয়েছে",
+      "agencyDeleted": "এজেন্সি মুছে ফেলা হয়েছে",
+      "companySuspended": "কোম্পানি স্থগিত",
+      "companyReactivated": "কোম্পানি পুনরায় সক্রিয়",
+      "loadFailed": "এজেন্সি লোড করতে ব্যর্থ",
+      "createFailed": "এজেন্সি তৈরি ব্যর্থ",
+      "updateFailed": "আপডেট ব্যর্থ",
+      "deleteFailed": "মুছে ফেলা ব্যর্থ",
+      "actionFailed": "ক্রিয়া ব্যর্থ"
+    }
   }
 }
