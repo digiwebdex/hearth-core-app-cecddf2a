@@ -285,24 +285,24 @@ const Leads = () => {
           <TableHeader>
             <TableRow>
               <TableHead className="cursor-pointer" onClick={() => toggleSort("name")}>
-                Name {sortField === "name" && <SortIcon className="inline h-3 w-3 ml-1" />}
+                {t("leadsForm.name")} {sortField === "name" && <SortIcon className="inline h-3 w-3 ml-1" />}
               </TableHead>
-              <TableHead>Contact</TableHead>
-              <TableHead>Destination</TableHead>
+              <TableHead>{t("leadsForm.contact")}</TableHead>
+              <TableHead>{t("leadsForm.destination")}</TableHead>
               <TableHead className="cursor-pointer" onClick={() => toggleSort("budget")}>
-                Budget {sortField === "budget" && <SortIcon className="inline h-3 w-3 ml-1" />}
+                {t("leadsForm.budget")} {sortField === "budget" && <SortIcon className="inline h-3 w-3 ml-1" />}
               </TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Follow-up</TableHead>
+              <TableHead>{t("leadsForm.status")}</TableHead>
+              <TableHead>{t("leadsForm.followUp")}</TableHead>
               <TableHead className="cursor-pointer" onClick={() => toggleSort("createdAt")}>
-                Created {sortField === "createdAt" && <SortIcon className="inline h-3 w-3 ml-1" />}
+                {t("leadsForm.created")} {sortField === "createdAt" && <SortIcon className="inline h-3 w-3 ml-1" />}
               </TableHead>
-              <TableHead className="w-[140px]">Actions</TableHead>
+              <TableHead className="w-[140px]">{t("leadsForm.actions")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filtered.length === 0 ? (
-              <TableRow><TableCell colSpan={8} className="text-center py-8 text-muted-foreground">No leads found.</TableCell></TableRow>
+              <TableRow><TableCell colSpan={8} className="text-center py-8 text-muted-foreground">{t("leadsForm.noLeadsFound")}</TableCell></TableRow>
             ) : (
               filtered.map((lead) => {
                 const meta = getStatusMeta(lead.status);
