@@ -34,8 +34,11 @@
     "noCreditCard": "No credit card required",
     "instantAccess": "Instant access — no waiting",
     "cancelAnytime": "Cancel anytime",
+    "welcome": "Welcome",
     "welcomeBack": "Welcome back",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "or": "or",
+    "trial": "Trial"
   },
   "nav": {
     "home": "Home", "features": "Features", "pricing": "Pricing",
@@ -51,19 +54,80 @@
     "statAgencies": "Travel Agencies",
     "statBookings": "Bookings Managed",
     "statUptime": "Uptime",
-    "statSupport": "Support"
+    "statSupport": "Support",
+    "workflowBadge": "How It Works",
+    "workflowTitle": "From Inquiry to Trip — Simplified",
+    "workflowSubtitle": "A complete workflow that mirrors how travel agencies actually operate.",
+    "stepLead": "Capture Lead", "stepLeadSub": "From any source",
+    "stepQuote": "Send Quote", "stepQuoteSub": "Professional PDF",
+    "stepWin": "Win Client", "stepWinSub": "Auto-convert",
+    "stepBook": "Book Trip", "stepBookSub": "All travel types",
+    "stepPay": "Collect Payment", "stepPaySub": "Multiple methods",
+    "stepTrip": "Manage Trip", "stepTripSub": "Docs & operations",
+    "featuresBadge": "Features",
+    "featuresTitle": "Built for Travel Professionals",
+    "featuresSubtitle": "Every module is designed around how travel agencies actually work — not generic business software.",
+    "seeAllFeatures": "See All Features",
+    "pricingBadge": "Pricing",
+    "pricingTitle": "Plans for Every Agency Size",
+    "pricingSubtitle": "Pick the plan that fits your team. Upgrade or downgrade anytime.",
+    "compareAll": "Compare All Plans",
+    "testimonialsBadge": "Testimonials",
+    "testimonialsTitle": "Trusted by Travel Agencies",
+    "testimonialsSubtitle": "Hear from agencies already using our platform",
+    "faqBadge": "FAQ",
+    "faqTitle": "Common Questions",
+    "seeAllFaq": "See All FAQs",
+    "finalCtaTitle": "Ready to Modernize Your Travel Agency?",
+    "finalCtaSubtitle": "Join hundreds of travel agencies already using our platform.",
+    "scheduleDemo": "Schedule a Demo",
+    "trustedBadge": "100% Secure & Trusted",
+    "facebookHint": "📣 Get customers directly from Facebook ads"
   },
-  "auth": {
-    "registerTitle": "Create your account",
-    "registerSubtitle": "Start your travel agency in minutes — no credit card required.",
-    "trialBadge": "3-day Pro trial · full access",
-    "welcomeBack": "Welcome back",
-    "signInSubtitle": "Sign in to your account"
+  "feat": {
+    "leads_t": "Leads & CRM", "leads_d": "Capture inquiries from any source and convert them into clients",
+    "quotes_t": "Quotations", "quotes_d": "Build professional travel quotations with PDF export",
+    "bookings_t": "Booking Management", "bookings_d": "Tours, flights, hotels, and visa bookings",
+    "invoices_t": "Invoices & Payments", "invoices_d": "Collect installments via bKash, SSLCommerz or bank",
+    "vendors_t": "Vendor Management", "vendors_d": "Track vendor costs, payables and profitability",
+    "team_t": "Team & Permissions", "team_d": "Role-based access for your whole team",
+    "reports_t": "Reports & Analytics", "reports_d": "Sales, leads, payments, vendor and staff reports",
+    "hajj_t": "Hajj & Umrah", "hajj_d": "Pilgrim management, rooms and installment plans"
+  },
+  "faq": {
+    "q1": "Who is this platform for?",
+    "a1": "Travel agencies, tour operators, ticketing offices and Hajj/Umrah service providers.",
+    "q2": "What plans do you offer?",
+    "a2": "Four simple plans — Basic, Pro, Business and Unlimited.",
+    "q3": "Do I need technical skills?",
+    "a3": "No. If you can use WhatsApp, you can use our platform.",
+    "q4": "Can I change my plan later?",
+    "a4": "Yes — upgrade or downgrade anytime from your dashboard."
   },
   "footer": {
     "product": "Product", "company": "Company", "contact": "Contact",
     "privacy": "Privacy", "terms": "Terms", "support": "Support",
     "tagline": "Leads, quotations, bookings, invoices and vendors in one place.",
     "rights": "All rights reserved."
+  },
+  "auth": {
+    "welcomeBack": "Welcome back", "signInSubtitle": "Sign in to your account",
+    "registerTitle": "Create your account",
+    "registerSubtitle": "Start your travel agency in minutes — no credit card required.",
+    "trialBadge": "3-day Pro trial · full access",
+    "verifyTitle": "Verify your email",
+    "verifySubtitle": "We've sent a verification link to your inbox."
+  },
+  "register": {
+    "companyName": "Company Name",
+    "ownerName": "Owner Name",
+    "phone": "Phone",
+    "yourAgency": "Your Travel Agency",
+    "minChars": "Min 8 characters",
+    "creating": "Creating Account...",
+    "subscribeTo": "Subscribe to",
+    "planSuffix": "Plan",
+    "fillDetails": "Fill in your details to get started.",
+    "contactForPrice": "Contact Us for Price"
   }
 }
