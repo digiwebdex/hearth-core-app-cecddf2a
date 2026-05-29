@@ -335,51 +335,51 @@ const Invoices = () => {
                   <Button><Plus className="mr-2 h-4 w-4" />{t("pages.newInvoice")}</Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-lg">
-                  <DialogHeader><DialogTitle>Create Invoice</DialogTitle></DialogHeader>
+                  <DialogHeader><DialogTitle>{t("invoicesForm.createTitle")}</DialogTitle></DialogHeader>
                   <form onSubmit={handleCreateInvoice} className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label>Booking ID</Label>
-                        <Input value={invoiceForm.bookingId} onChange={(e) => setInvoiceForm((f) => ({ ...f, bookingId: e.target.value }))} placeholder="Booking reference" required />
+                        <Label>{t("invoicesForm.bookingId")}</Label>
+                        <Input value={invoiceForm.bookingId} onChange={(e) => setInvoiceForm((f) => ({ ...f, bookingId: e.target.value }))} placeholder={t("invoicesForm.bookingIdPh")} required />
                       </div>
                       <div className="space-y-2">
-                        <Label>Booking Title</Label>
-                        <Input value={invoiceForm.bookingTitle} onChange={(e) => setInvoiceForm((f) => ({ ...f, bookingTitle: e.target.value }))} placeholder="e.g. Thailand Tour — 5N/6D" />
+                        <Label>{t("invoicesForm.bookingTitle")}</Label>
+                        <Input value={invoiceForm.bookingTitle} onChange={(e) => setInvoiceForm((f) => ({ ...f, bookingTitle: e.target.value }))} placeholder={t("invoicesForm.bookingTitlePh")} />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label>Client Name</Label>
-                      <Input value={invoiceForm.clientName} onChange={(e) => setInvoiceForm((f) => ({ ...f, clientName: e.target.value }))} placeholder="e.g. Mr. Karim Ahmed" />
+                      <Label>{t("invoicesForm.clientName")}</Label>
+                      <Input value={invoiceForm.clientName} onChange={(e) => setInvoiceForm((f) => ({ ...f, clientName: e.target.value }))} placeholder={t("invoicesForm.clientNamePh")} />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label>Invoice Amount (৳)</Label>
+                        <Label>{t("invoicesForm.invoiceAmount")}</Label>
                         <Input type="number" min={0.01} step={0.01} value={invoiceForm.totalAmount || ""} onChange={(e) => setInvoiceForm((f) => ({ ...f, totalAmount: parseFloat(e.target.value) || 0 }))} required />
                       </div>
                       <div className="space-y-2">
-                        <Label>Cost (৳)</Label>
+                        <Label>{t("invoicesForm.cost")}</Label>
                         <Input type="number" min={0} step={0.01} value={invoiceForm.bookingCost || ""} onChange={(e) => setInvoiceForm((f) => ({ ...f, bookingCost: parseFloat(e.target.value) || 0 }))} />
                       </div>
                     </div>
                     {invoiceForm.totalAmount > 0 && (
                       <div className="rounded-md border p-3 flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground flex items-center gap-1"><TrendingUp className="h-3.5 w-3.5" /> Profit</span>
+                        <span className="text-muted-foreground flex items-center gap-1"><TrendingUp className="h-3.5 w-3.5" /> {t("invoicesForm.profit")}</span>
                         <span className={`font-semibold ${invoiceForm.totalAmount - invoiceForm.bookingCost >= 0 ? "text-green-600" : "text-destructive"}`}>
                           ৳{(invoiceForm.totalAmount - invoiceForm.bookingCost).toLocaleString()}
                         </span>
                       </div>
                     )}
                     <div className="space-y-2">
-                      <Label>Due Date</Label>
+                      <Label>{t("invoicesForm.dueDate")}</Label>
                       <Input type="date" value={invoiceForm.dueDate} onChange={(e) => setInvoiceForm((f) => ({ ...f, dueDate: e.target.value }))} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Notes</Label>
-                      <Textarea value={invoiceForm.notes} onChange={(e) => setInvoiceForm((f) => ({ ...f, notes: e.target.value }))} placeholder="Internal notes..." rows={2} />
+                      <Label>{t("invoicesForm.notes")}</Label>
+                      <Textarea value={invoiceForm.notes} onChange={(e) => setInvoiceForm((f) => ({ ...f, notes: e.target.value }))} placeholder={t("invoicesForm.notesPh")} rows={2} />
                     </div>
                     <div className="flex gap-2">
-                      <Button type="submit" className="flex-1">Create Invoice</Button>
-                      <DialogClose asChild><Button type="button" variant="outline">Cancel</Button></DialogClose>
+                      <Button type="submit" className="flex-1">{t("invoicesForm.createBtn")}</Button>
+                      <DialogClose asChild><Button type="button" variant="outline">{t("invoicesForm.cancel")}</Button></DialogClose>
                     </div>
                   </form>
                 </DialogContent>
@@ -393,7 +393,7 @@ const Invoices = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Total Invoiced</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.totalInvoiced")}</div>
                 <Receipt className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold">৳{totals.total.toLocaleString()}</p>
@@ -402,7 +402,7 @@ const Invoices = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Collected</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.collected")}</div>
                 <CheckCircle2 className="h-4 w-4 text-green-600" />
               </div>
               <p className="text-2xl font-bold text-green-600">৳{totals.paid.toLocaleString()}</p>
@@ -411,7 +411,7 @@ const Invoices = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Outstanding</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.outstanding")}</div>
                 <DollarSign className="h-4 w-4 text-destructive" />
               </div>
               <p className="text-2xl font-bold text-destructive">৳{totals.due.toLocaleString()}</p>
@@ -420,7 +420,7 @@ const Invoices = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Profit</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.profit")}</div>
                 <TrendingUp className="h-4 w-4 text-green-600" />
               </div>
               <p className="text-2xl font-bold text-green-600">৳{totals.profit.toLocaleString()}</p>
@@ -429,7 +429,7 @@ const Invoices = () => {
           <Card className={totals.overdueCount > 0 ? "border-orange-300 dark:border-orange-600" : ""}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Overdue</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.overdue")}</div>
                 <AlertTriangle className={`h-4 w-4 ${totals.overdueCount > 0 ? "text-orange-500" : "text-muted-foreground"}`} />
               </div>
               <p className="text-2xl font-bold">{totals.overdueCount}</p>
@@ -438,7 +438,7 @@ const Invoices = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Refunded</div>
+                <div className="text-sm text-muted-foreground">{t("invoicesForm.widgets.refunded")}</div>
                 <RotateCcw className="h-4 w-4 text-purple-500" />
               </div>
               <p className="text-2xl font-bold">৳{totals.refunded.toLocaleString()}</p>
@@ -450,19 +450,20 @@ const Invoices = () => {
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
             <Button variant={statusFilter === "all" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("all")}>
-              All ({statusCounts.all})
+              {t("invoicesForm.all")} ({statusCounts.all})
             </Button>
             {STATUS_META.map((s) => (
               <Button key={s.value} variant={statusFilter === s.value ? "default" : "outline"} size="sm" onClick={() => setStatusFilter(s.value)}>
-                {s.label} ({statusCounts[s.value] || 0})
+                {t(`invoicesForm.statuses.${s.value}`)} ({statusCounts[s.value] || 0})
               </Button>
             ))}
           </div>
           <div className="flex items-center gap-2 max-w-sm">
             <Search className="h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search invoice, client, booking..." value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Input placeholder={t("invoicesForm.searchPh")} value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
         </div>
+
 
         {/* Invoice Table */}
         {loading ? (
