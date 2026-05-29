@@ -353,24 +353,24 @@ const AdminSubscriptions = () => {
 
         {/* Table */}
         <Card>
-          <CardHeader><CardTitle>Subscriptions ({filtered.length})</CardTitle></CardHeader>
+          <CardHeader><CardTitle>{tt("adminSubscriptions.table.title", { count: filtered.length })}</CardTitle></CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Company</TableHead>
-                  <TableHead>Plan</TableHead>
-                  <TableHead>Cycle</TableHead>
-                  <TableHead className="text-right">Price</TableHead>
-                  <TableHead>Period</TableHead>
-                  <TableHead>Usage</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="w-[200px]">Actions</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.company")}</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.plan")}</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.cycle")}</TableHead>
+                  <TableHead className="text-right">{tt("adminSubscriptions.table.price")}</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.period")}</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.usage")}</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.status")}</TableHead>
+                  <TableHead className="w-[200px]">{tt("adminSubscriptions.table.actions")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filtered.length === 0 ? (
-                  <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">{loading ? "Loading subscriptions…" : "No subscriptions found."}</TableCell></TableRow>
+                  <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">{loading ? tt("adminSubscriptions.table.loading") : tt("adminSubscriptions.table.empty")}</TableCell></TableRow>
                 ) : (
                   filtered.map((sub) => {
                     const meta = getStatusMeta(sub.status);
@@ -387,10 +387,10 @@ const AdminSubscriptions = () => {
                             <p className="text-xs text-muted-foreground">{sub.ownerEmail}</p>
                           </div>
                         </TableCell>
-                        <TableCell><Badge variant="secondary" className="capitalize">{sub.plan}</Badge></TableCell>
-                        <TableCell className="text-sm capitalize">{sub.billingCycle}</TableCell>
+                        <TableCell><Badge variant="secondary">{planLabel(sub.plan)}</Badge></TableCell>
+                        <TableCell className="text-sm">{tt(`adminSubscriptions.cycle.${sub.billingCycle}`)}</TableCell>
                         <TableCell className="text-right font-semibold text-sm">
-                          {sub.price === 0 ? "Free" : `৳${sub.price.toLocaleString()}`}
+                          {sub.price === 0 ? tt("adminSubscriptions.table.free") : `৳${sub.price.toLocaleString()}`}
                         </TableCell>
                         <TableCell className="text-xs text-muted-foreground">
                           <div>{sub.startDate}</div>
@@ -399,16 +399,16 @@ const AdminSubscriptions = () => {
                             {expiringSoon && <AlertTriangle className="h-3 w-3 text-yellow-500" />}
                           </div>
                           {sub.status === "trial" && sub.trialEndDate && (
-                            <div className="text-blue-600 text-[10px]">Trial ends: {sub.trialEndDate}</div>
+                            <div className="text-blue-600 text-[10px]">{tt("adminSubscriptions.table.trialEnds", { date: sub.trialEndDate })}</div>
                           )}
                         </TableCell>
                         <TableCell>
                           {atLimitCount > 0 ? (
-                            <Badge variant="destructive" className="text-[10px]">{atLimitCount} at limit</Badge>
+                            <Badge variant="destructive" className="text-[10px]">{tt("adminSubscriptions.table.atLimit", { count: atLimitCount })}</Badge>
                           ) : nearLimitCount > 0 ? (
-                            <Badge className="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200 text-[10px]">{nearLimitCount} near limit</Badge>
+                            <Badge className="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200 text-[10px]">{tt("adminSubscriptions.table.nearLimit", { count: nearLimitCount })}</Badge>
                           ) : (
-                            <span className="text-xs text-muted-foreground">OK</span>
+                            <span className="text-xs text-muted-foreground">{tt("adminSubscriptions.table.ok")}</span>
                           )}
                         </TableCell>
                         <TableCell>
@@ -417,27 +417,27 @@ const AdminSubscriptions = () => {
                         </TableCell>
                         <TableCell>
                           <div className="flex gap-1 flex-wrap">
-                            <Button variant="ghost" size="icon" className="h-7 w-7" title="View" onClick={() => openAction(sub, "view")}><Eye className="h-3.5 w-3.5" /></Button>
-                            <Button variant="ghost" size="icon" className="h-7 w-7" title="Edit" onClick={() => openEdit(sub)}><Pencil className="h-3.5 w-3.5" /></Button>
-                            <Button variant="ghost" size="icon" className="h-7 w-7" title="Delete" onClick={() => setDeleteSub(sub)}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
+                            <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.view")} onClick={() => openAction(sub, "view")}><Eye className="h-3.5 w-3.5" /></Button>
+                            <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.edit")} onClick={() => openEdit(sub)}><Pencil className="h-3.5 w-3.5" /></Button>
+                            <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.delete")} onClick={() => setDeleteSub(sub)}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
                             {(sub.status === "active" || sub.status === "trial") && (
                               <>
                                 {getUpgradePlans(sub.plan).length > 0 && (
-                                  <Button variant="ghost" size="icon" className="h-7 w-7" title="Upgrade" onClick={() => openAction(sub, "upgrade")}><ArrowUpCircle className="h-3.5 w-3.5 text-green-600" /></Button>
+                                  <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.upgrade")} onClick={() => openAction(sub, "upgrade")}><ArrowUpCircle className="h-3.5 w-3.5 text-green-600" /></Button>
                                 )}
                                 {getDowngradePlans(sub.plan).length > 0 && (
-                                  <Button variant="ghost" size="icon" className="h-7 w-7" title="Downgrade" onClick={() => openAction(sub, "downgrade")}><ArrowDownCircle className="h-3.5 w-3.5 text-yellow-600" /></Button>
+                                  <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.downgrade")} onClick={() => openAction(sub, "downgrade")}><ArrowDownCircle className="h-3.5 w-3.5 text-yellow-600" /></Button>
                                 )}
-                                <Button variant="ghost" size="icon" className="h-7 w-7" title="Extend" onClick={() => openAction(sub, "extend")}><CalendarPlus className="h-3.5 w-3.5 text-blue-600" /></Button>
-                                <Button variant="ghost" size="icon" className="h-7 w-7" title="Suspend" onClick={() => openAction(sub, "suspend")}><Pause className="h-3.5 w-3.5 text-orange-600" /></Button>
-                                <Button variant="ghost" size="icon" className="h-7 w-7" title="Cancel" onClick={() => openAction(sub, "cancel")}><XCircle className="h-3.5 w-3.5 text-destructive" /></Button>
+                                <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.extend")} onClick={() => openAction(sub, "extend")}><CalendarPlus className="h-3.5 w-3.5 text-blue-600" /></Button>
+                                <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.suspend")} onClick={() => openAction(sub, "suspend")}><Pause className="h-3.5 w-3.5 text-orange-600" /></Button>
+                                <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.cancel")} onClick={() => openAction(sub, "cancel")}><XCircle className="h-3.5 w-3.5 text-destructive" /></Button>
                               </>
                             )}
                             {(sub.status === "expired" || sub.status === "overdue") && (
-                              <Button variant="ghost" size="icon" className="h-7 w-7" title="Renew" onClick={() => openAction(sub, "renew")}><RefreshCcw className="h-3.5 w-3.5 text-green-600" /></Button>
+                              <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.renew")} onClick={() => openAction(sub, "renew")}><RefreshCcw className="h-3.5 w-3.5 text-green-600" /></Button>
                             )}
                             {sub.status === "suspended" && (
-                              <Button variant="ghost" size="icon" className="h-7 w-7" title="Reactivate" onClick={() => openAction(sub, "reactivate")}><Play className="h-3.5 w-3.5 text-green-600" /></Button>
+                              <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.reactivate")} onClick={() => openAction(sub, "reactivate")}><Play className="h-3.5 w-3.5 text-green-600" /></Button>
                             )}
                           </div>
                         </TableCell>
