@@ -1387,7 +1387,13 @@
       "noPeriod": "No booking data for this period",
       "noDestination": "No destination data",
       "noBookingsPeriod": "No bookings in this period",
-      "th": { "client": "Client", "type": "Type", "destination": "Destination", "amount": "Amount", "status": "Status" }
+      "th": {
+        "client": "Client",
+        "type": "Type",
+        "destination": "Destination",
+        "amount": "Amount",
+        "status": "Status"
+      }
     },
     "leadsQuote": {
       "leadAnalytics": "Lead Analytics",
@@ -1409,7 +1415,12 @@
       "noQuoteData": "No quotation data",
       "totalLeadsBar": "Total Leads",
       "converted": "Converted",
-      "th": { "status": "Status", "count": "Count", "totalValue": "Total Value", "pct": "% of Total" }
+      "th": {
+        "status": "Status",
+        "count": "Count",
+        "totalValue": "Total Value",
+        "pct": "% of Total"
+      }
     },
     "payments": {
       "totalInvoiced": "Total Invoiced",
@@ -1423,7 +1434,14 @@
       "noMethodData": "No payment method data",
       "noOverdue": "No overdue invoices — great job!",
       "amount": "Amount",
-      "th": { "invoice": "Invoice", "client": "Client", "total": "Total", "paid": "Paid", "due": "Due", "dueDate": "Due Date" }
+      "th": {
+        "invoice": "Invoice",
+        "client": "Client",
+        "total": "Total",
+        "paid": "Paid",
+        "due": "Due",
+        "dueDate": "Due Date"
+      }
     },
     "vendors": {
       "totalBills": "Total Vendor Bills",
@@ -1435,7 +1453,15 @@
       "noVendorData": "No vendor bill data",
       "noBills": "No vendor bills recorded",
       "paid": "Paid",
-      "th": { "vendor": "Vendor", "description": "Description", "total": "Total", "paid": "Paid", "due": "Due", "status": "Status", "dueDate": "Due Date" }
+      "th": {
+        "vendor": "Vendor",
+        "description": "Description",
+        "total": "Total",
+        "paid": "Paid",
+        "due": "Due",
+        "status": "Status",
+        "dueDate": "Due Date"
+      }
     },
     "staff": {
       "title": "Staff Performance",
@@ -1445,7 +1471,16 @@
       "noStaff": "No staff data available. Assign leads and bookings to team members.",
       "leads": "Leads",
       "bookings": "Bookings",
-      "th": { "staff": "Staff Member", "leads": "Leads", "won": "Won", "conv": "Conv. %", "quotations": "Quotations", "approved": "Approved", "bookings": "Bookings", "revenue": "Revenue" }
+      "th": {
+        "staff": "Staff Member",
+        "leads": "Leads",
+        "won": "Won",
+        "conv": "Conv. %",
+        "quotations": "Quotations",
+        "approved": "Approved",
+        "bookings": "Bookings",
+        "revenue": "Revenue"
+      }
     },
     "profit": {
       "revenue": "Revenue",
@@ -1459,7 +1494,231 @@
       "noProfitData": "No booking profitability data. Add vendor costs to bookings to see margins.",
       "totalCosts": "Total Costs",
       "profit": "Profit",
-      "th": { "booking": "Booking", "client": "Client", "type": "Type", "revenue": "Revenue", "cost": "Cost", "profit": "Profit", "margin": "Margin", "status": "Status" }
+      "th": {
+        "booking": "Booking",
+        "client": "Client",
+        "type": "Type",
+        "revenue": "Revenue",
+        "cost": "Cost",
+        "profit": "Profit",
+        "margin": "Margin",
+        "status": "Status"
+      }
+    }
+  },
+  "userGuide": {
+    "title": "User Guide",
+    "subtitle": "Complete guide to using your travel agency software.",
+    "badge": "User Guide",
+    "quickNav": "Quick Navigation",
+    "steps": "Steps",
+    "tips": "Tips",
+    "help": "Need Help?",
+    "helpIntro": "If you face any issue, contact our support team:",
+    "helpEmail": "Email: support@travelagencyweb.com",
+    "helpWeb": "Website: travelagencyweb.com/contact-us",
+    "sections": {
+      "getting-started": {
+        "title": "Getting Started",
+        "intro": "This guide is a complete reference for using your travel agency account. Each module's purpose and usage is detailed below.",
+        "steps": [
+          "Log in on your subdomain (e.g., yourname.travelagencyweb.com or app.travelagencyweb.com).",
+          "After first login, complete the Onboarding steps: company name, logo, address, currency.",
+          "Add your staff from the Team module and assign roles.",
+          "Configure SMTP, SMS and payment gateways from Settings."
+        ],
+        "tips": [
+          "Complete Organization info first — it's used in invoices and quotations."
+        ]
+      },
+      "dashboard": {
+        "title": "Dashboard",
+        "intro": "See a snapshot of your business at a glance.",
+        "steps": [
+          "Total leads, bookings, invoices and income/expense graphs are shown.",
+          "Track recent activity and upcoming tasks.",
+          "Click any card to jump to that module."
+        ]
+      },
+      "clients": {
+        "title": "Clients",
+        "intro": "Store and manage all your client information.",
+        "steps": [
+          "Open Clients page and click \"Add Client\".",
+          "Fill in name, phone, email, passport number, address etc.",
+          "Save to add the client to the list.",
+          "Click any client name to see full profile, bookings & payment history.",
+          "Use Edit/Delete icons to update or remove."
+        ],
+        "tips": [
+          "Use the search bar to find clients fast.",
+          "Use Export to download all clients as CSV/Excel."
+        ]
+      },
+      "agents": {
+        "title": "Agents",
+        "intro": "Manage sub-agents or commission-based salespeople.",
+        "steps": [
+          "Add a new agent from the Agents page.",
+          "Set commission rate for each agent.",
+          "View bookings and commission reports per agent."
+        ]
+      },
+      "vendors": {
+        "title": "Vendors / Suppliers",
+        "intro": "Maintain supplier records — airlines, hotels, transport companies etc.",
+        "steps": [
+          "Use Add Vendor to add supplier information.",
+          "Track payables with each vendor.",
+          "View all purchase & payment history from Vendor Details."
+        ]
+      },
+      "leads": {
+        "title": "Leads",
+        "intro": "Capture and follow up potential customer enquiries.",
+        "steps": [
+          "Add a new enquiry from Add Lead (name, phone, destination, budget).",
+          "Update lead status: New → Contacted → Qualified → Converted/Lost.",
+          "Add notes and follow-up dates on each lead.",
+          "Create a quotation directly from a lead."
+        ],
+        "tips": [
+          "Check Pending Follow-up leads every day."
+        ]
+      },
+      "tasks": {
+        "title": "Tasks",
+        "intro": "Assign and track tasks for your team.",
+        "steps": [
+          "Create new task with Add Task.",
+          "Set deadline, priority and assignee.",
+          "Mark Completed when done."
+        ]
+      },
+      "quotations": {
+        "title": "Quotations",
+        "intro": "Send professional quotations/proposals to clients.",
+        "steps": [
+          "Go to Quotations → New Quotation.",
+          "Select client and add service items (flight, hotel, visa etc.).",
+          "Set price, tax and discount.",
+          "Save then Print/PDF download or email.",
+          "Convert to Booking in one click when accepted."
+        ]
+      },
+      "bookings": {
+        "title": "Bookings",
+        "intro": "Manage confirmed bookings.",
+        "steps": [
+          "Add a new booking from Add Booking (or auto-generate from a quotation).",
+          "Fill PNR, travel date, passenger info, vendor cost.",
+          "Add payments, invoices and documents from booking details.",
+          "Keep status updated: Pending / Confirmed / Cancelled."
+        ]
+      },
+      "invoices": {
+        "title": "Invoices",
+        "intro": "Create invoices and issue payment receipts for clients.",
+        "steps": [
+          "Invoice generates automatically from booking, or add manually.",
+          "Print, Download PDF, or email it.",
+          "Record received payments with \"Add Payment\".",
+          "Print receipts from the Receipt page."
+        ]
+      },
+      "accounts": {
+        "title": "Accounts",
+        "intro": "Cash, bank, receivables, payables and expenses — complete accounting.",
+        "steps": [
+          "Add bank/cash accounts from the Cash & Bank Accounts tab.",
+          "Payments Received: track client payments.",
+          "Vendor Payables: see and pay vendor dues.",
+          "Add office expenses in the Expenses tab.",
+          "View all transactions in the Ledger tab.",
+          "Profit & loss summary in Profitability tab."
+        ]
+      },
+      "reports": {
+        "title": "Reports",
+        "intro": "View detailed analytical reports of your business.",
+        "steps": [
+          "Sales Report: sales breakdown.",
+          "Payment Report: payment collection.",
+          "Profitability Report: P&L.",
+          "Vendor Report: vendor-wise spend.",
+          "Staff Performance: per-staff performance.",
+          "Leads & Quotation Report: conversion rate.",
+          "Filter by custom date range and Export."
+        ]
+      },
+      "notifications": {
+        "title": "Notifications",
+        "intro": "Log of all email/SMS notifications sent by the system.",
+        "steps": [
+          "View delivery status of each notification.",
+          "Check reason on failure and re-send."
+        ]
+      },
+      "hajj": {
+        "title": "Hajj / Umrah",
+        "intro": "Hajj & Umrah package and pilgrim management.",
+        "steps": [
+          "Create packages (with Muallim, hotel, flight, transport).",
+          "Keep each pilgrim's passport, visa, mahram info.",
+          "Manage group-wise bookings."
+        ]
+      },
+      "team": {
+        "title": "Team & Roles",
+        "intro": "Add staff and set their access levels.",
+        "steps": [
+          "Use Invite Member on Team page to add new staff.",
+          "An invitation email is sent — they set their password.",
+          "Create custom roles (e.g. Sales, Accountant, Manager) in Roles.",
+          "Set View/Create/Edit/Delete permissions per module."
+        ],
+        "tips": [
+          "Owner role has full access — assign carefully."
+        ]
+      },
+      "organization": {
+        "title": "Organization",
+        "intro": "Your company info — shown on invoices, quotations and website.",
+        "steps": [
+          "Fill company name, logo, address, phone, email, website.",
+          "Add Trade License / TIN number.",
+          "Set default currency and tax rate."
+        ]
+      },
+      "website": {
+        "title": "Website Customizer",
+        "intro": "Launch a professional travel agency website on your subdomain.",
+        "steps": [
+          "Choose a template (Travel Agency / Tour Packages / Hajj-Umrah).",
+          "Customize hero section, colors, logo, content.",
+          "Add packages to display on the website.",
+          "Connect a custom domain from Admin → Domains."
+        ]
+      },
+      "subscription": {
+        "title": "Subscription",
+        "intro": "Your subscription plan, billing and upgrade.",
+        "steps": [
+          "View current plan and expiry.",
+          "Click Upgrade to move to a higher plan (Basic / Pro / Business / Enterprise).",
+          "Choose payment method (bKash / SSLCommerz / Card).",
+          "Download payment history and invoices."
+        ]
+      },
+      "settings": {
+        "title": "Settings",
+        "intro": "Your account and configuration.",
+        "steps": [
+          "Profile: update your name and password.",
+          "SMTP Settings: send client emails via your own email server.",
+          "Data Export: download full data backup."
+        ]
+      }
     }
   }
 }
