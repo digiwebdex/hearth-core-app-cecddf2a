@@ -276,6 +276,25 @@
     "convertedTitle": "Booking created from quotation",
     "convertedDesc": "{{name}} converted successfully."
   },
+  "clientsForm": {
+    "searchPlaceholder": "Search name, email, phone, passport...",
+    "name": "Name", "contact": "Contact", "passport": "Passport",
+    "nationality": "Nationality", "tags": "Tags", "actions": "Actions",
+    "noClientsFound": "No clients found.",
+    "view": "View", "edit": "Edit", "delete": "Delete",
+    "editClient": "Edit Client", "newClient": "New Client",
+    "contactInfo": "Contact Info", "identityDocs": "Identity & Documents",
+    "emergencyContact": "Emergency Contact",
+    "phone": "Phone", "email": "Email", "alternatePhone": "Alternate Phone",
+    "address": "Address", "dateOfBirth": "Date of Birth",
+    "passportNumber": "Passport Number", "passportExpiry": "Passport Expiry",
+    "nidNumber": "NID Number", "contactName": "Contact Name",
+    "contactPhone": "Contact Phone", "notes": "Notes",
+    "pickDate": "Pick a date",
+    "updateClient": "Update Client", "createClient": "Create Client", "cancel": "Cancel",
+    "clientCreated": "Client created", "clientUpdated": "Client updated",
+    "clientDeleted": "Client deleted", "error": "Error"
+  },
   "trial": {
     "proTrial": "Pro Trial",
     "daysLeft": "left",
