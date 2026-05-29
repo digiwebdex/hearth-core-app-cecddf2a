@@ -212,7 +212,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, plan: newPlan, billingCycle: newCycle, price, status: "active" } : s
     ));
-    toast({ title: "Plan Upgraded", description: `${selectedSub.tenantName} → ${newPlan.toUpperCase()} (${newCycle})` });
+    toast({ title: tt("adminSubscriptions.toast.upgraded"), description: `${selectedSub.tenantName} → ${planLabel(newPlan)} (${tt(`adminSubscriptions.cycle.${newCycle}`)})` });
     setDialogOpen(false);
   };
 
