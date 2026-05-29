@@ -255,7 +255,7 @@ const Leads = () => {
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="sm" className="h-6 w-full text-xs" onClick={(e) => e.stopPropagation()}>
-                            Move <ChevronDown className="ml-1 h-3 w-3" />
+                            {t("leadsForm.move")} <ChevronDown className="ml-1 h-3 w-3" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
