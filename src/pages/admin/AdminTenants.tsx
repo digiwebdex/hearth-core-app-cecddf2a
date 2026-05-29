@@ -166,11 +166,11 @@ const AdminTenants = () => {
     setDeleting(true);
     try {
       await adminApi.deleteTenant(deleteTarget.id);
-      toast({ title: "Agency deleted", description: deleteTarget.name, variant: "destructive" });
+      toast({ title: tt("adminTenants.toast.agencyDeleted"), description: deleteTarget.name, variant: "destructive" });
       setDeleteTarget(null);
       fetchTenants();
     } catch (err: any) {
-      toast({ title: "Delete failed", description: err.message, variant: "destructive" });
+      toast({ title: tt("adminTenants.toast.deleteFailed"), description: err.message, variant: "destructive" });
     } finally {
       setDeleting(false);
     }
