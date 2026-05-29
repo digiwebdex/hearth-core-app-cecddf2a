@@ -505,128 +505,128 @@ const AdminSubscriptions = () => {
 
             {selectedSub && actionType === "upgrade" && (
               <>
-                <DialogHeader><DialogTitle>Upgrade — {selectedSub.tenantName}</DialogTitle></DialogHeader>
-                <p className="text-sm text-muted-foreground">Current: <Badge variant="secondary" className="capitalize ml-1">{selectedSub.plan}</Badge> ({selectedSub.billingCycle})</p>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.upgradeTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
+                <p className="text-sm text-muted-foreground">{tt("adminSubscriptions.dialog.current")} <Badge variant="secondary" className="ml-1">{planLabel(selectedSub.plan)}</Badge> ({tt(`adminSubscriptions.cycle.${selectedSub.billingCycle}`)})</p>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>New Plan</Label>
+                      <Label>{tt("adminSubscriptions.fields.newPlan")}</Label>
                       <Select value={newPlan} onValueChange={(v) => setNewPlan(v as PlanType)}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
                           {getUpgradePlans(selectedSub.plan).map((p) => {
                             const plan = PLANS.find((x) => x.id === p);
-                            return <SelectItem key={p} value={p}>{plan?.name} (৳{plan?.price}/mo)</SelectItem>;
+                            return <SelectItem key={p} value={p}>{plan?.name} (৳{plan?.price}/{tt("adminSubscriptions.cycle.mo")})</SelectItem>;
                           })}
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label>Billing Cycle</Label>
+                      <Label>{tt("adminSubscriptions.fields.billingCycle")}</Label>
                       <Select value={newCycle} onValueChange={(v) => setNewCycle(v as BillingCycle)}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="monthly">Monthly</SelectItem>
-                          <SelectItem value="yearly">Yearly (save 20%)</SelectItem>
+                          <SelectItem value="monthly">{tt("adminSubscriptions.cycle.monthly")}</SelectItem>
+                          <SelectItem value="yearly">{tt("adminSubscriptions.cycle.yearlySave")}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
-                  <Button onClick={handleUpgrade} className="w-full">Confirm Upgrade</Button>
+                  <Button onClick={handleUpgrade} className="w-full">{tt("adminSubscriptions.actions.confirmUpgrade")}</Button>
                 </div>
               </>
             )}
 
             {selectedSub && actionType === "downgrade" && (
               <>
-                <DialogHeader><DialogTitle>Downgrade — {selectedSub.tenantName}</DialogTitle></DialogHeader>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.downgradeTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>New Plan</Label>
+                      <Label>{tt("adminSubscriptions.fields.newPlan")}</Label>
                       <Select value={newPlan} onValueChange={(v) => setNewPlan(v as PlanType)}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
                           {getDowngradePlans(selectedSub.plan).map((p) => {
                             const plan = PLANS.find((x) => x.id === p);
-                            return <SelectItem key={p} value={p}>{plan?.name} (৳{plan?.price}/mo)</SelectItem>;
+                            return <SelectItem key={p} value={p}>{plan?.name} (৳{plan?.price}/{tt("adminSubscriptions.cycle.mo")})</SelectItem>;
                           })}
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label>Billing Cycle</Label>
+                      <Label>{tt("adminSubscriptions.fields.billingCycle")}</Label>
                       <Select value={newCycle} onValueChange={(v) => setNewCycle(v as BillingCycle)}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="monthly">Monthly</SelectItem>
-                          <SelectItem value="yearly">Yearly</SelectItem>
+                          <SelectItem value="monthly">{tt("adminSubscriptions.cycle.monthly")}</SelectItem>
+                          <SelectItem value="yearly">{tt("adminSubscriptions.cycle.yearly")}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
-                  <Button onClick={handleDowngrade} variant="secondary" className="w-full">Confirm Downgrade</Button>
+                  <Button onClick={handleDowngrade} variant="secondary" className="w-full">{tt("adminSubscriptions.actions.confirmDowngrade")}</Button>
                 </div>
               </>
             )}
 
             {selectedSub && actionType === "extend" && (
               <>
-                <DialogHeader><DialogTitle>Extend — {selectedSub.tenantName}</DialogTitle></DialogHeader>
-                <p className="text-sm text-muted-foreground">Current expiry: {selectedSub.endDate || "N/A"}</p>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.extendTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
+                <p className="text-sm text-muted-foreground">{tt("adminSubscriptions.dialog.currentExpiry", { date: selectedSub.endDate || "N/A" })}</p>
                 <div className="flex gap-4 mt-2">
                   <Input type="number" min={1} value={extendValue} onChange={(e) => setExtendValue(e.target.value)} className="w-24" />
                   <Select value={extendUnit} onValueChange={(v) => setExtendUnit(v as "days" | "months")}>
                     <SelectTrigger className="w-32"><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="days">Days</SelectItem>
-                      <SelectItem value="months">Months</SelectItem>
+                      <SelectItem value="days">{tt("adminSubscriptions.fields.days")}</SelectItem>
+                      <SelectItem value="months">{tt("adminSubscriptions.fields.months")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                <Button onClick={handleExtend} className="w-full mt-4">Extend Subscription</Button>
+                <Button onClick={handleExtend} className="w-full mt-4">{tt("adminSubscriptions.actions.extendSubscription")}</Button>
               </>
             )}
 
             {selectedSub && actionType === "renew" && (
               <>
-                <DialogHeader><DialogTitle>Renew — {selectedSub.tenantName}</DialogTitle></DialogHeader>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.renewTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
                 <p className="text-sm text-muted-foreground">
-                  Renew {selectedSub.plan} plan ({selectedSub.billingCycle}) for ৳{selectedSub.price.toLocaleString()}
+                  {tt("adminSubscriptions.dialog.renewMsg", { plan: planLabel(selectedSub.plan), cycle: tt(`adminSubscriptions.cycle.${selectedSub.billingCycle}`), price: selectedSub.price.toLocaleString() })}
                 </p>
-                <Button onClick={handleRenew} className="w-full mt-4">Confirm Renewal</Button>
+                <Button onClick={handleRenew} className="w-full mt-4">{tt("adminSubscriptions.actions.confirmRenewal")}</Button>
               </>
             )}
 
             {selectedSub && actionType === "suspend" && (
               <>
-                <DialogHeader><DialogTitle>Suspend — {selectedSub.tenantName}</DialogTitle></DialogHeader>
-                <p className="text-sm text-muted-foreground">The tenant will lose access until reactivated.</p>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.suspendTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
+                <p className="text-sm text-muted-foreground">{tt("adminSubscriptions.dialog.suspendMsg")}</p>
                 <div className="space-y-2 mt-2">
-                  <Label>Reason</Label>
-                  <Textarea value={actionReason} onChange={(e) => setActionReason(e.target.value)} placeholder="Reason for suspension..." rows={3} />
+                  <Label>{tt("adminSubscriptions.fields.reason")}</Label>
+                  <Textarea value={actionReason} onChange={(e) => setActionReason(e.target.value)} placeholder={tt("adminSubscriptions.fields.reasonPlaceholder")} rows={3} />
                 </div>
-                <Button onClick={handleSuspend} variant="destructive" className="w-full mt-4" disabled={!actionReason.trim()}>Suspend</Button>
+                <Button onClick={handleSuspend} variant="destructive" className="w-full mt-4" disabled={!actionReason.trim()}>{tt("adminSubscriptions.actions.suspend")}</Button>
               </>
             )}
 
             {selectedSub && actionType === "reactivate" && (
               <>
-                <DialogHeader><DialogTitle>Reactivate — {selectedSub.tenantName}</DialogTitle></DialogHeader>
-                <p className="text-sm text-muted-foreground">This will reactivate the subscription with 1 month added.</p>
-                <Button onClick={handleReactivate} className="w-full mt-4">Reactivate</Button>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.reactivateTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
+                <p className="text-sm text-muted-foreground">{tt("adminSubscriptions.dialog.reactivateMsg")}</p>
+                <Button onClick={handleReactivate} className="w-full mt-4">{tt("adminSubscriptions.actions.reactivate")}</Button>
               </>
             )}
 
             {selectedSub && actionType === "cancel" && (
               <>
-                <DialogHeader><DialogTitle>Cancel — {selectedSub.tenantName}</DialogTitle></DialogHeader>
-                <p className="text-sm text-muted-foreground">This action cannot be undone easily.</p>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.cancelTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
+                <p className="text-sm text-muted-foreground">{tt("adminSubscriptions.dialog.cancelMsg")}</p>
                 <div className="space-y-2 mt-2">
-                  <Label>Cancellation Reason</Label>
-                  <Textarea value={actionReason} onChange={(e) => setActionReason(e.target.value)} placeholder="Why is this being cancelled?" rows={3} />
+                  <Label>{tt("adminSubscriptions.fields.cancelReason")}</Label>
+                  <Textarea value={actionReason} onChange={(e) => setActionReason(e.target.value)} placeholder={tt("adminSubscriptions.fields.cancelReasonPlaceholder")} rows={3} />
                 </div>
-                <Button onClick={handleCancel} variant="destructive" className="w-full mt-4" disabled={!actionReason.trim()}>Confirm Cancellation</Button>
+                <Button onClick={handleCancel} variant="destructive" className="w-full mt-4" disabled={!actionReason.trim()}>{tt("adminSubscriptions.actions.confirmCancellation")}</Button>
               </>
             )}
           </DialogContent>
@@ -635,10 +635,10 @@ const AdminSubscriptions = () => {
         {/* Edit subscription */}
         <Dialog open={!!editSub} onOpenChange={(o) => !o && setEditSub(null)}>
           <DialogContent className="max-w-md">
-            <DialogHeader><DialogTitle>Edit Subscription — {editSub?.tenantName}</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.editTitle", { name: editSub?.tenantName || "" })}</DialogTitle></DialogHeader>
             <div className="grid gap-4 py-2">
               <div className="grid gap-2">
-                <Label>Plan</Label>
+                <Label>{tt("adminSubscriptions.fields.plan")}</Label>
                 <Select value={editPlan} onValueChange={(v) => setEditPlan(v as PlanType)}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -647,7 +647,7 @@ const AdminSubscriptions = () => {
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label>Status</Label>
+                <Label>{tt("adminSubscriptions.fields.status")}</Label>
                 <Select value={editStatus} onValueChange={(v) => setEditStatus(v as SubscriptionStatus)}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -656,13 +656,13 @@ const AdminSubscriptions = () => {
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label>Expiry Date</Label>
+                <Label>{tt("adminSubscriptions.fields.expiryDate")}</Label>
                 <Input type="date" value={editExpiry} onChange={(e) => setEditExpiry(e.target.value)} />
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setEditSub(null)} disabled={savingEdit}>Cancel</Button>
-              <Button onClick={saveEdit} disabled={savingEdit}>{savingEdit ? "Saving…" : "Save changes"}</Button>
+              <Button variant="outline" onClick={() => setEditSub(null)} disabled={savingEdit}>{tt("adminSubscriptions.actions.cancel")}</Button>
+              <Button onClick={saveEdit} disabled={savingEdit}>{savingEdit ? tt("adminSubscriptions.actions.saving") : tt("adminSubscriptions.actions.saveChanges")}</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -671,15 +671,19 @@ const AdminSubscriptions = () => {
         <AlertDialog open={!!deleteSub} onOpenChange={(o) => !o && setDeleteSub(null)}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Delete subscription?</AlertDialogTitle>
+              <AlertDialogTitle>{tt("adminSubscriptions.dialog.deleteTitle")}</AlertDialogTitle>
               <AlertDialogDescription>
-                This permanently deletes <strong>{deleteSub?.tenantName}</strong> along with its users, bookings, clients, invoices, and all related data. This cannot be undone.
+                <Trans
+                  i18nKey="adminSubscriptions.dialog.deleteDesc"
+                  values={{ name: deleteSub?.tenantName || "" }}
+                  components={{ 1: <strong /> }}
+                />
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel disabled={deleting}>Cancel</AlertDialogCancel>
+              <AlertDialogCancel disabled={deleting}>{tt("adminSubscriptions.actions.cancel")}</AlertDialogCancel>
               <AlertDialogAction onClick={confirmDelete} disabled={deleting} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                {deleting ? "Deleting…" : "Delete permanently"}
+                {deleting ? tt("adminSubscriptions.actions.deleting") : tt("adminSubscriptions.actions.deletePermanently")}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
