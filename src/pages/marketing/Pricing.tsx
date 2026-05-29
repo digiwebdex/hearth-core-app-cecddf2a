@@ -160,25 +160,25 @@ const Pricing = () => {
       <section className="py-12">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/8">
+              <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/8">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-lg bg-amber-400/10 flex items-center justify-center"><Receipt className="h-5 w-5 text-amber-400" /></div>
                 <div>
-                  <h3 className="font-semibold">Accounts & Finance</h3>
-                  <Badge variant="secondary" className="text-[10px] bg-amber-400/10 text-amber-400 border-0">Basic Plan & Above</Badge>
+                  <h3 className="font-semibold">{t("marketing.pricing.accountsTitle")}</h3>
+                  <Badge variant="secondary" className="text-[10px] bg-amber-400/10 text-amber-400 border-0">{t("marketing.pricing.accountsBadge")}</Badge>
                 </div>
               </div>
-              <p className="text-sm text-white/45">Receivables, vendor payables, expenses, cash/bank accounts, ledger, and profitability tracking. Upgrade from Free to unlock operational finance tools.</p>
+              <p className="text-sm text-white/45">{t("marketing.pricing.accountsDesc")}</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/8">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-lg bg-violet-400/10 flex items-center justify-center"><BarChart3 className="h-5 w-5 text-violet-400" /></div>
                 <div>
-                  <h3 className="font-semibold">Reports & Analytics</h3>
-                  <Badge variant="secondary" className="text-[10px] bg-violet-400/10 text-violet-400 border-0">Business Plan & Above</Badge>
+                  <h3 className="font-semibold">{t("marketing.pricing.reportsTitle")}</h3>
+                  <Badge variant="secondary" className="text-[10px] bg-violet-400/10 text-violet-400 border-0">{t("marketing.pricing.reportsBadge")}</Badge>
                 </div>
               </div>
-              <p className="text-sm text-white/45">Sales analytics, lead conversion, payment reports, vendor summaries, staff performance, and booking-level profitability with export.</p>
+              <p className="text-sm text-white/45">{t("marketing.pricing.reportsDesc")}</p>
             </div>
           </div>
         </div>
