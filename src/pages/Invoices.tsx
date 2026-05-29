@@ -651,16 +651,16 @@ const Invoices = () => {
 
                   <TabsContent value="payments" className="mt-3">
                     {invoicePayments.length === 0 ? (
-                      <p className="text-sm text-muted-foreground text-center py-4">No payments recorded yet.</p>
+                      <p className="text-sm text-muted-foreground text-center py-4">{t("invoicesForm.detail.noPayments")}</p>
                     ) : (
                       <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead>Date</TableHead>
-                            <TableHead className="text-right">Amount</TableHead>
-                            <TableHead>Method</TableHead>
-                            <TableHead>Reference</TableHead>
-                            <TableHead>Notes</TableHead>
+                            <TableHead>{t("invoicesForm.detail.date")}</TableHead>
+                            <TableHead className="text-right">{t("invoicesForm.detail.amount")}</TableHead>
+                            <TableHead>{t("invoicesForm.detail.method")}</TableHead>
+                            <TableHead>{t("invoicesForm.detail.reference")}</TableHead>
+                            <TableHead>{t("invoicesForm.detail.notes")}</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -668,7 +668,7 @@ const Invoices = () => {
                             <TableRow key={p.id}>
                               <TableCell className="text-sm">{p.date}</TableCell>
                               <TableCell className="text-right font-medium text-green-600">৳{p.amount.toLocaleString()}</TableCell>
-                              <TableCell className="capitalize text-sm">{p.method?.replace("_", " ")}</TableCell>
+                              <TableCell className="text-sm">{p.method ? t(`invoicesForm.methods.${p.method}`) : "—"}</TableCell>
                               <TableCell className="text-xs text-muted-foreground">{p.transactionRef || "—"}</TableCell>
                               <TableCell className="text-xs text-muted-foreground truncate max-w-[120px]">{p.notes || "—"}</TableCell>
                             </TableRow>
@@ -680,7 +680,7 @@ const Invoices = () => {
 
                   <TabsContent value="refunds" className="mt-3">
                     {invoiceRefunds.length === 0 ? (
-                      <p className="text-sm text-muted-foreground text-center py-4">No refunds processed.</p>
+                      <p className="text-sm text-muted-foreground text-center py-4">{t("invoicesForm.detail.noRefunds")}</p>
                     ) : (
                       <div className="space-y-2">
                         {invoiceRefunds.map((r) => (
@@ -689,9 +689,9 @@ const Invoices = () => {
                               <span className="text-sm font-medium text-purple-600">-৳{r.amount.toLocaleString()}</span>
                               <span className="text-xs text-muted-foreground">{r.createdAt?.slice(0, 10)}</span>
                             </div>
-                            <p className="text-xs text-muted-foreground">Reason: {r.reason}</p>
-                            {r.method && <p className="text-xs text-muted-foreground">Method: {r.method}</p>}
-                            {r.processedByName && <p className="text-xs text-muted-foreground">By: {r.processedByName}</p>}
+                            <p className="text-xs text-muted-foreground">{t("invoicesForm.detail.reason")}: {r.reason}</p>
+                            {r.method && <p className="text-xs text-muted-foreground">{t("invoicesForm.detail.method")}: {r.method}</p>}
+                            {r.processedByName && <p className="text-xs text-muted-foreground">{t("invoicesForm.detail.by")}: {r.processedByName}</p>}
                           </div>
                         ))}
                       </div>
@@ -700,7 +700,7 @@ const Invoices = () => {
 
                   <TabsContent value="audit" className="mt-3">
                     {invoiceAudit.length === 0 ? (
-                      <p className="text-sm text-muted-foreground text-center py-4">No audit events.</p>
+                      <p className="text-sm text-muted-foreground text-center py-4">{t("invoicesForm.detail.noAudit")}</p>
                     ) : (
                       <div className="space-y-2">
                         {invoiceAudit.map((evt) => (
@@ -724,6 +724,7 @@ const Invoices = () => {
                       </div>
                     )}
                   </TabsContent>
+
                 </Tabs>
               </div>
             )}
