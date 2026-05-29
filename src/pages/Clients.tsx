@@ -232,33 +232,33 @@ const Clients = () => {
         {/* Client Form Dialog */}
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
-            <DialogHeader><DialogTitle>{editingId ? "Edit Client" : "New Client"}</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{editingId ? t("clientsForm.editClient") : t("clientsForm.newClient")}</DialogTitle></DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Contact Info</p>
+              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{t("clientsForm.contactInfo")}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2"><Label>Name *</Label><Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required /></div>
-                <div className="space-y-2"><Label>Phone</Label><Input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} /></div>
-                <div className="space-y-2"><Label>Email</Label><Input type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} /></div>
-                <div className="space-y-2"><Label>Alternate Phone</Label><Input value={form.alternatePhone} onChange={(e) => setForm((f) => ({ ...f, alternatePhone: e.target.value }))} /></div>
-                <div className="md:col-span-2 space-y-2"><Label>Address</Label><Input value={form.address} onChange={(e) => setForm((f) => ({ ...f, address: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.name")} *</Label><Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.phone")}</Label><Input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.email")}</Label><Input type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.alternatePhone")}</Label><Input value={form.alternatePhone} onChange={(e) => setForm((f) => ({ ...f, alternatePhone: e.target.value }))} /></div>
+                <div className="md:col-span-2 space-y-2"><Label>{t("clientsForm.address")}</Label><Input value={form.address} onChange={(e) => setForm((f) => ({ ...f, address: e.target.value }))} /></div>
               </div>
-              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider pt-2">Identity & Documents</p>
+              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider pt-2">{t("clientsForm.identityDocs")}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <DatePick label="Date of Birth" date={dobDate} onChange={setDobDate} />
-                <div className="space-y-2"><Label>Nationality</Label><Input value={form.nationality} onChange={(e) => setForm((f) => ({ ...f, nationality: e.target.value }))} /></div>
-                <div className="space-y-2"><Label>Passport Number</Label><Input value={form.passportNumber} onChange={(e) => setForm((f) => ({ ...f, passportNumber: e.target.value }))} /></div>
-                <DatePick label="Passport Expiry" date={passportExpiry} onChange={setPassportExpiry} />
-                <div className="space-y-2"><Label>NID Number</Label><Input value={form.nidNumber} onChange={(e) => setForm((f) => ({ ...f, nidNumber: e.target.value }))} /></div>
+                <DatePick label={t("clientsForm.dateOfBirth")} date={dobDate} onChange={setDobDate} />
+                <div className="space-y-2"><Label>{t("clientsForm.nationality")}</Label><Input value={form.nationality} onChange={(e) => setForm((f) => ({ ...f, nationality: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.passportNumber")}</Label><Input value={form.passportNumber} onChange={(e) => setForm((f) => ({ ...f, passportNumber: e.target.value }))} /></div>
+                <DatePick label={t("clientsForm.passportExpiry")} date={passportExpiry} onChange={setPassportExpiry} />
+                <div className="space-y-2"><Label>{t("clientsForm.nidNumber")}</Label><Input value={form.nidNumber} onChange={(e) => setForm((f) => ({ ...f, nidNumber: e.target.value }))} /></div>
               </div>
-              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider pt-2">Emergency Contact</p>
+              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider pt-2">{t("clientsForm.emergencyContact")}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2"><Label>Contact Name</Label><Input value={form.emergencyContact} onChange={(e) => setForm((f) => ({ ...f, emergencyContact: e.target.value }))} /></div>
-                <div className="space-y-2"><Label>Contact Phone</Label><Input value={form.emergencyPhone} onChange={(e) => setForm((f) => ({ ...f, emergencyPhone: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.contactName")}</Label><Input value={form.emergencyContact} onChange={(e) => setForm((f) => ({ ...f, emergencyContact: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.contactPhone")}</Label><Input value={form.emergencyPhone} onChange={(e) => setForm((f) => ({ ...f, emergencyPhone: e.target.value }))} /></div>
               </div>
-              <div className="space-y-2"><Label>Notes</Label><Textarea rows={3} value={form.notes} onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))} /></div>
+              <div className="space-y-2"><Label>{t("clientsForm.notes")}</Label><Textarea rows={3} value={form.notes} onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))} /></div>
               <div className="flex gap-2">
-                <Button type="submit" className="flex-1">{editingId ? "Update" : "Create"} Client</Button>
-                <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
+                <Button type="submit" className="flex-1">{editingId ? t("clientsForm.updateClient") : t("clientsForm.createClient")}</Button>
+                <DialogClose asChild><Button variant="outline">{t("clientsForm.cancel")}</Button></DialogClose>
               </div>
             </form>
           </DialogContent>
