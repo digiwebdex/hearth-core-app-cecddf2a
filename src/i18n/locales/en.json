@@ -2389,8 +2389,58 @@
       "rejected": "rejected",
       "pending": "pending"
     }
+  },
+  "adminAuditLog": {
+    "title": "Audit Log",
+    "subtitle": "Track all important actions across the platform — server-side logs",
+    "refresh": "Refresh",
+    "export": "Export",
+    "loadFailed": "Failed to load audit logs",
+    "stats": {
+      "total": "Total Events",
+      "today": "Today",
+      "auth": "Auth Events",
+      "modules": "Active Modules"
+    },
+    "filters": {
+      "searchPlaceholder": "Search actor, target, action…",
+      "module": "Module",
+      "allModules": "All Modules",
+      "tenant": "Tenant",
+      "allTenants": "All Tenants"
+    },
+    "table": {
+      "title": "Events ({{count}})",
+      "timestamp": "Timestamp",
+      "actor": "Actor",
+      "tenant": "Tenant",
+      "module": "Module",
+      "action": "Action",
+      "target": "Target",
+      "changes": "Changes",
+      "empty": "No audit events found."
+    },
+    "detail": {
+      "title": "Audit Event Details",
+      "timestamp": "Timestamp",
+      "actor": "Actor",
+      "email": "Email",
+      "role": "Role",
+      "tenant": "Tenant",
+      "module": "Module",
+      "action": "Action",
+      "target": "Target",
+      "targetType": "Target Type",
+      "targetId": "Target ID",
+      "oldValue": "Old Value",
+      "newValue": "New Value",
+      "ip": "IP Address",
+      "additional": "Additional Data",
+      "close": "Close"
+    }
   }
 }
+
 
 
 
