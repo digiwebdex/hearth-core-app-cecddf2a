@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import AdminLayout from "@/components/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ import { auditLogApi, type AuditLogEntry } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
 
 const AdminAuditLog = () => {
+  const { t } = useTranslation();
   const [logs, setLogs] = useState<AuditLogEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -35,7 +37,7 @@ const AdminAuditLog = () => {
       const data = await auditLogApi.list();
       setLogs(data);
     } catch (err: any) {
-      toast({ title: "Failed to load audit logs", description: err.message, variant: "destructive" });
+      toast({ title: t("adminAuditLog.loadFailed"), description: err.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -94,52 +96,52 @@ const AdminAuditLog = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Audit Log</h1>
-            <p className="text-muted-foreground">Track all important actions across the platform — server-side logs</p>
+            <h1 className="text-3xl font-bold tracking-tight">{t("adminAuditLog.title")}</h1>
+            <p className="text-muted-foreground">{t("adminAuditLog.subtitle")}</p>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={fetchLogs} disabled={loading}>
-              <RefreshCw className={`mr-1 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> Refresh
+              <RefreshCw className={`mr-1 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> {t("adminAuditLog.refresh")}
             </Button>
-            <Button variant="outline" size="sm" onClick={handleExport}><Download className="mr-1 h-4 w-4" /> Export</Button>
+            <Button variant="outline" size="sm" onClick={handleExport}><Download className="mr-1 h-4 w-4" /> {t("adminAuditLog.export")}</Button>
           </div>
         </div>
 
         {/* Stats */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Activity className="h-8 w-8 text-primary" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.total}</p><p className="text-xs text-muted-foreground">Total Events</p></div></div></CardContent></Card>
-          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Clock className="h-8 w-8 text-blue-500" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.today}</p><p className="text-xs text-muted-foreground">Today</p></div></div></CardContent></Card>
-          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Shield className="h-8 w-8 text-red-500" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.securityEvents}</p><p className="text-xs text-muted-foreground">Auth Events</p></div></div></CardContent></Card>
-          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><FileText className="h-8 w-8 text-green-500" /><div><p className="text-2xl font-bold">{loading ? "…" : Object.keys(stats.moduleCounts).length}</p><p className="text-xs text-muted-foreground">Active Modules</p></div></div></CardContent></Card>
+          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Activity className="h-8 w-8 text-primary" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.total}</p><p className="text-xs text-muted-foreground">{t("adminAuditLog.stats.total")}</p></div></div></CardContent></Card>
+          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Clock className="h-8 w-8 text-blue-500" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.today}</p><p className="text-xs text-muted-foreground">{t("adminAuditLog.stats.today")}</p></div></div></CardContent></Card>
+          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Shield className="h-8 w-8 text-red-500" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.securityEvents}</p><p className="text-xs text-muted-foreground">{t("adminAuditLog.stats.auth")}</p></div></div></CardContent></Card>
+          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><FileText className="h-8 w-8 text-green-500" /><div><p className="text-2xl font-bold">{loading ? "…" : Object.keys(stats.moduleCounts).length}</p><p className="text-xs text-muted-foreground">{t("adminAuditLog.stats.modules")}</p></div></div></CardContent></Card>
         </div>
 
         {/* Filters */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2 flex-1 min-w-[200px] max-w-sm">
             <Search className="h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search actor, target, action…" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Input placeholder={t("adminAuditLog.filters.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
           <Select value={moduleFilter} onValueChange={setModuleFilter}>
-            <SelectTrigger className="w-[170px]"><SelectValue placeholder="Module" /></SelectTrigger>
+            <SelectTrigger className="w-[170px]"><SelectValue placeholder={t("adminAuditLog.filters.module")} /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Modules</SelectItem>
+              <SelectItem value="all">{t("adminAuditLog.filters.allModules")}</SelectItem>
               {(Object.keys(MODULE_LABELS) as AuditModule[]).map((m) => (
                 <SelectItem key={m} value={m}>{MODULE_LABELS[m]} {stats.moduleCounts[m] ? `(${stats.moduleCounts[m]})` : ""}</SelectItem>
               ))}
             </SelectContent>
           </Select>
           <Select value={tenantFilter} onValueChange={setTenantFilter}>
-            <SelectTrigger className="w-[170px]"><SelectValue placeholder="Tenant" /></SelectTrigger>
+            <SelectTrigger className="w-[170px]"><SelectValue placeholder={t("adminAuditLog.filters.tenant")} /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Tenants</SelectItem>
-              {tenants.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+              <SelectItem value="all">{t("adminAuditLog.filters.allTenants")}</SelectItem>
+              {tenants.map((tn) => <SelectItem key={tn} value={tn}>{tn}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>
 
         {/* Log Table */}
         <Card>
-          <CardHeader><CardTitle>Events ({filtered.length})</CardTitle></CardHeader>
+          <CardHeader><CardTitle>{t("adminAuditLog.table.title", { count: filtered.length })}</CardTitle></CardHeader>
           <CardContent>
             {loading ? (
               <div className="space-y-3">{[1,2,3,4,5].map(i => <Skeleton key={i} className="h-12 w-full" />)}</div>
@@ -147,19 +149,19 @@ const AdminAuditLog = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Timestamp</TableHead>
-                    <TableHead>Actor</TableHead>
-                    <TableHead>Tenant</TableHead>
-                    <TableHead>Module</TableHead>
-                    <TableHead>Action</TableHead>
-                    <TableHead>Target</TableHead>
-                    <TableHead>Changes</TableHead>
+                    <TableHead>{t("adminAuditLog.table.timestamp")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.actor")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.tenant")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.module")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.action")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.target")}</TableHead>
+                    <TableHead>{t("adminAuditLog.table.changes")}</TableHead>
                     <TableHead className="w-[60px]"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filtered.length === 0 ? (
-                    <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">No audit events found.</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">{t("adminAuditLog.table.empty")}</TableCell></TableRow>
                   ) : (
                     filtered.map((log) => (
                       <TableRow key={log.id}>
@@ -211,70 +213,70 @@ const AdminAuditLog = () => {
         {/* Detail Dialog */}
         <Dialog open={detailOpen} onOpenChange={setDetailOpen}>
           <DialogContent className="max-w-lg">
-            <DialogHeader><DialogTitle>Audit Event Details</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{t("adminAuditLog.detail.title")}</DialogTitle></DialogHeader>
             {selectedLog && (
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-sm">
-                  <span className="text-muted-foreground">Timestamp:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.timestamp")}:</span>
                   <span>{new Date(selectedLog.createdAt).toLocaleString()}</span>
-                  <span className="text-muted-foreground">Actor:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.actor")}:</span>
                   <span className="font-medium">{selectedLog.actorName}</span>
-                  <span className="text-muted-foreground">Email:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.email")}:</span>
                   <span>{selectedLog.actorEmail}</span>
-                  <span className="text-muted-foreground">Role:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.role")}:</span>
                   <Badge variant="outline" className="capitalize w-fit">{selectedLog.actorRole}</Badge>
                   {selectedLog.tenantName && (
                     <>
-                      <span className="text-muted-foreground">Tenant:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.tenant")}:</span>
                       <span>{selectedLog.tenantName}</span>
                     </>
                   )}
-                  <span className="text-muted-foreground">Module:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.module")}:</span>
                   <Badge variant="outline" className="w-fit">{MODULE_LABELS[selectedLog.module as AuditModule] || selectedLog.module}</Badge>
-                  <span className="text-muted-foreground">Action:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.action")}:</span>
                   <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium w-fit ${getActionColor(selectedLog.action as any)}`}>
                     {ACTION_LABELS[selectedLog.action as keyof typeof ACTION_LABELS] || selectedLog.action}
                   </span>
                   {selectedLog.targetLabel && (
                     <>
-                      <span className="text-muted-foreground">Target:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.target")}:</span>
                       <span>{selectedLog.targetLabel}</span>
                     </>
                   )}
                   {selectedLog.targetType && (
                     <>
-                      <span className="text-muted-foreground">Target Type:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.targetType")}:</span>
                       <span className="capitalize">{selectedLog.targetType}</span>
                     </>
                   )}
                   {selectedLog.targetId && (
                     <>
-                      <span className="text-muted-foreground">Target ID:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.targetId")}:</span>
                       <span className="font-mono text-xs">{selectedLog.targetId}</span>
                     </>
                   )}
                   {selectedLog.oldValue && (
                     <>
-                      <span className="text-muted-foreground">Old Value:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.oldValue")}:</span>
                       <span className="line-through text-destructive">{selectedLog.oldValue}</span>
                     </>
                   )}
                   {selectedLog.newValue && (
                     <>
-                      <span className="text-muted-foreground">New Value:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.newValue")}:</span>
                       <span className="font-medium text-green-600">{selectedLog.newValue}</span>
                     </>
                   )}
                   {selectedLog.ipAddress && (
                     <>
-                      <span className="text-muted-foreground">IP Address:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.ip")}:</span>
                       <span className="font-mono text-xs">{selectedLog.ipAddress}</span>
                     </>
                   )}
                 </div>
                 {selectedLog.metadata && Object.keys(selectedLog.metadata).length > 0 && (
                   <div className="space-y-1">
-                    <p className="text-sm font-medium">Additional Data</p>
+                    <p className="text-sm font-medium">{t("adminAuditLog.detail.additional")}</p>
                     <div className="rounded-md border p-3 text-xs space-y-1">
                       {Object.entries(selectedLog.metadata).map(([k, v]) => (
                         <div key={k} className="flex gap-2">
@@ -287,7 +289,7 @@ const AdminAuditLog = () => {
                 )}
               </div>
             )}
-            <DialogClose asChild><Button variant="outline" className="w-full">Close</Button></DialogClose>
+            <DialogClose asChild><Button variant="outline" className="w-full">{t("adminAuditLog.detail.close")}</Button></DialogClose>
           </DialogContent>
         </Dialog>
       </div>
