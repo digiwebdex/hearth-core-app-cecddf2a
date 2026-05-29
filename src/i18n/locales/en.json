@@ -1805,5 +1805,92 @@
       "retryFailed": "❌ Retry failed",
       "sentOk": "Notification sent successfully"
     }
+  },
+  "adminPlans": {
+    "title": "Manage Plans",
+    "subtitle": "Configure pricing, limits, and features per plan",
+    "addPlan": "Add Plan",
+    "editPlan": "Edit Plan",
+    "createPlan": "Create Plan",
+    "fields": {
+      "name": "Plan Name",
+      "slug": "Slug",
+      "trialDays": "Trial Days",
+      "monthly": "Monthly (৳)",
+      "yearly": "Yearly (৳)",
+      "yearlySavings": "Yearly Savings",
+      "saved": "৳{{amount}} saved",
+      "pricing": "Pricing",
+      "limitsTitle": "Feature Limits (-1 = unlimited)",
+      "featuresLabel": "Features (comma-separated)",
+      "featuresPlaceholder": "Feature A, Feature B",
+      "paymentGateways": "Payment Gateways",
+      "featureAccess": "Feature Access",
+      "active": "Active"
+    },
+    "limits": {
+      "maxClients": "Clients",
+      "maxBookings": "Bookings",
+      "maxUsers": "Users",
+      "maxBranches": "Branches",
+      "maxSmsPerMonth": "SMS/month",
+      "maxStorageMB": "Storage (MB)",
+      "maxReports": "Reports",
+      "maxLeads": "Leads",
+      "maxQuotations": "Quotations"
+    },
+    "features": {
+      "hasCustomDomain": "Custom Domain",
+      "hasEmailNotifications": "Email",
+      "hasSmsIntegration": "SMS",
+      "hasWhatsApp": "WhatsApp",
+      "hasAgentCommission": "Agent Commission",
+      "hasAdvancedAnalytics": "Analytics",
+      "hasRefundSystem": "Refund System",
+      "hasApiAccess": "API Access",
+      "hasHajjUmrah": "Hajj & Umrah",
+      "hasPrioritySupport": "Priority Support"
+    },
+    "gateways": {
+      "manual": "Manual",
+      "sslcommerz": "SSLCommerz",
+      "bkash": "bKash",
+      "custom": "Custom"
+    },
+    "actions": {
+      "update": "Update",
+      "create": "Create",
+      "cancel": "Cancel"
+    },
+    "table": {
+      "plans": "Plans",
+      "name": "Name",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "trial": "Trial",
+      "users": "Users",
+      "bookings": "Bookings",
+      "sms": "SMS",
+      "storage": "Storage",
+      "features": "Features",
+      "status": "Status",
+      "actions": "Actions",
+      "trialDays": "{{days}}d",
+      "yearlySuffix": "৳{{amount}}/yr",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "badges": {
+      "domain": "Domain",
+      "sms": "SMS",
+      "whatsapp": "WA",
+      "analytics": "Analytics",
+      "api": "API",
+      "hajj": "Hajj"
+    },
+    "toast": {
+      "updated": "Plan updated",
+      "created": "Plan created"
+    }
   }
 }
