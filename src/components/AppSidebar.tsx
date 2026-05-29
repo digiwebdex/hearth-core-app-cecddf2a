@@ -1,4 +1,5 @@
 import { LayoutDashboard, Users, Settings, Building2, LogOut, UserCheck, UserCog, Store, Target, ListTodo, Plane, Receipt, Wallet, Crown, Shield, BarChart3, Moon, Globe, Lock, UserCog2, FileText, Bell, BookOpen } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePermissions } from "@/hooks/usePermissions";
@@ -23,7 +24,7 @@ import type { PlanType } from "@/lib/plans";
 import type { Module } from "@/lib/permissions";
 
 interface MenuItem {
-  title: string;
+  titleKey: string;
   url: string;
   icon: any;
   module: Module;
@@ -32,32 +33,32 @@ interface MenuItem {
 }
 
 const mainItems: MenuItem[] = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard, module: "dashboard" },
+  { titleKey: "sidebar.dashboard", url: "/dashboard", icon: LayoutDashboard, module: "dashboard" },
 ];
 
 const crmItems: MenuItem[] = [
-  { title: "Clients", url: "/clients", icon: UserCheck, module: "clients" },
-  { title: "Agents", url: "/agents", icon: UserCog, module: "agents" },
-  { title: "Vendors", url: "/vendors", icon: Store, module: "vendors" },
-  { title: "Leads", url: "/leads", icon: Target, module: "leads" },
-  { title: "Tasks", url: "/tasks", icon: ListTodo, module: "tasks" },
-  { title: "Quotations", url: "/quotations", icon: FileText, module: "quotations" },
-  { title: "Bookings", url: "/bookings", icon: Plane, module: "bookings" },
-  { title: "Invoices", url: "/invoices", icon: Receipt, module: "invoices" },
-  { title: "Accounts", url: "/accounts", icon: Wallet, module: "accounts", minPlan: "basic" },
-  { title: "Reports", url: "/reports", icon: BarChart3, module: "reports", requiredFeature: "hasAdvancedAnalytics", minPlan: "business" },
-  { title: "Notifications", url: "/notifications", icon: Bell, module: "reports" },
-  { title: "Hajj/Umrah", url: "/hajj-umrah", icon: Moon, module: "hajj_umrah" },
+  { titleKey: "sidebar.clients", url: "/clients", icon: UserCheck, module: "clients" },
+  { titleKey: "sidebar.agents", url: "/agents", icon: UserCog, module: "agents" },
+  { titleKey: "sidebar.vendors", url: "/vendors", icon: Store, module: "vendors" },
+  { titleKey: "sidebar.leads", url: "/leads", icon: Target, module: "leads" },
+  { titleKey: "sidebar.tasks", url: "/tasks", icon: ListTodo, module: "tasks" },
+  { titleKey: "sidebar.quotations", url: "/quotations", icon: FileText, module: "quotations" },
+  { titleKey: "sidebar.bookings", url: "/bookings", icon: Plane, module: "bookings" },
+  { titleKey: "sidebar.invoices", url: "/invoices", icon: Receipt, module: "invoices" },
+  { titleKey: "sidebar.accounts", url: "/accounts", icon: Wallet, module: "accounts", minPlan: "basic" },
+  { titleKey: "sidebar.reports", url: "/reports", icon: BarChart3, module: "reports", requiredFeature: "hasAdvancedAnalytics", minPlan: "business" },
+  { titleKey: "sidebar.notifications", url: "/notifications", icon: Bell, module: "reports" },
+  { titleKey: "sidebar.hajjUmrah", url: "/hajj-umrah", icon: Moon, module: "hajj_umrah" },
 ];
 
 const managementItems: MenuItem[] = [
-  { title: "Team", url: "/team", icon: Users, module: "team" },
-  { title: "Roles", url: "/roles", icon: UserCog2, module: "team" },
-  { title: "Organization", url: "/organization", icon: Building2, module: "organization" },
-  { title: "Website", url: "/website", icon: Globe, module: "website", requiredFeature: "hasWebsiteTemplates", minPlan: "pro" },
-  { title: "Subscription", url: "/subscription", icon: Crown, module: "subscription" },
-  { title: "Settings", url: "/settings", icon: Settings, module: "settings" },
-  { title: "User Guide (বাংলা)", url: "/user-guide", icon: BookOpen, module: "dashboard" },
+  { titleKey: "sidebar.team", url: "/team", icon: Users, module: "team" },
+  { titleKey: "sidebar.roles", url: "/roles", icon: UserCog2, module: "team" },
+  { titleKey: "sidebar.organization", url: "/organization", icon: Building2, module: "organization" },
+  { titleKey: "sidebar.website", url: "/website", icon: Globe, module: "website", requiredFeature: "hasWebsiteTemplates", minPlan: "pro" },
+  { titleKey: "sidebar.subscription", url: "/subscription", icon: Crown, module: "subscription" },
+  { titleKey: "sidebar.settings", url: "/settings", icon: Settings, module: "settings" },
+  { titleKey: "sidebar.userGuide", url: "/user-guide", icon: BookOpen, module: "dashboard" },
 ];
 
 const planOrder: PlanType[] = ["free", "basic", "pro", "business", "enterprise"];
