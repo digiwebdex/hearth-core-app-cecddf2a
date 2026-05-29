@@ -93,6 +93,9 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html { font-family: 'Inter', 'Hind Siliguri', system-ui, sans-serif; }
+  html[lang="bn"], html[data-lang="bn"] { font-family: 'Hind Siliguri', 'Inter', system-ui, sans-serif; }
+
   body {
     @apply bg-background text-foreground;
   }

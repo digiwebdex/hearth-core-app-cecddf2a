@@ -47,7 +47,10 @@ const faqItems = [
   { q: "Can I change my plan later?", a: "Yes — upgrade or downgrade anytime from your dashboard. Pricing is prorated." },
 ];
 
+import { useTranslation } from "react-i18next";
+
 const Index = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -88,24 +91,24 @@ const Index = () => {
         }} />
         <div className="container mx-auto px-4 text-center relative">
           <Badge className="mb-6 bg-amber-400/10 text-amber-400 border-amber-400/25 text-sm px-4 py-1.5">
-            🚀 #1 Travel Agency Software in Bangladesh
+            {t("landing.heroBadge")}
           </Badge>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
-            Run Your Entire Travel<br />
-            Agency <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400">From One Platform</span>
+            {t("landing.heroTitle1")}<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400">{t("landing.heroTitle2")}</span>
           </h1>
           <p className="text-lg md:text-xl text-white/50 max-w-3xl mx-auto mb-10">
-            From the first phone call to the final boarding pass — manage leads, send quotations, confirm bookings, collect payments, and track vendors. All in one place.
+            {t("landing.heroSubtitle")}
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link to="/pricing">
               <Button size="lg" className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 h-12 text-base shadow-lg shadow-amber-500/25">
-                <Zap className="mr-2 h-5 w-5" />View Pricing
+                <Zap className="mr-2 h-5 w-5" />{t("landing.ctaPrimary")}
               </Button>
             </Link>
             <Link to="/demo">
               <Button size="lg" variant="outline" className="border-white/15 bg-white/5 text-white hover:bg-white/10 px-8 h-12 text-base">
-                Book a Demo<ArrowRight className="ml-2 h-5 w-5" />
+                {t("landing.ctaSecondary")}<ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>

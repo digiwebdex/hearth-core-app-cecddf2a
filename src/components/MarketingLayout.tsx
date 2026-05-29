@@ -2,14 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, Mail, MapPin, ArrowUp } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import logoImg from "@/assets/logo-icon.png";
-
-const navLinks = [
-  { label: "Features", path: "/features" },
-  { label: "Pricing", path: "/pricing" },
-  { label: "FAQ", path: "/faq" },
-  { label: "Contact", path: "/contact-us" },
-];
 
 interface Props {
   children: React.ReactNode;
@@ -24,8 +19,16 @@ const PUBLISHED_DOMAIN = "travelagencyweb.com";
 
 const MarketingLayout = ({ children, title, description }: Props) => {
   const location = useLocation();
+  const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+
+  const navLinks = [
+    { label: t("nav.features"), path: "/features" },
+    { label: t("nav.pricing"), path: "/pricing" },
+    { label: t("nav.faq"), path: "/faq" },
+    { label: t("nav.contact"), path: "/contact-us" },
+  ];
 
   useEffect(() => {
     if (title) document.title = title;
@@ -91,9 +94,10 @@ const MarketingLayout = ({ children, title, description }: Props) => {
                 {link.label}
               </Link>
             ))}
+            <LanguageSwitcher className="text-white/70 hover:text-white" />
             <Link to="/demo">
               <Button size="sm" variant="outline" className="border-amber-400/30 text-amber-400 hover:bg-amber-400/10">
-                Book a Demo
+                {t("common.bookDemo")}
               </Button>
             </Link>
           </nav>
@@ -118,8 +122,9 @@ const MarketingLayout = ({ children, title, description }: Props) => {
                 {link.label}
               </Link>
             ))}
+            <div className="py-2.5"><LanguageSwitcher className="text-white/70" /></div>
             <Link to="/demo" className="block py-2.5">
-              <Button size="sm" variant="outline" className="w-full border-amber-400/30 text-amber-400">Book a Demo</Button>
+              <Button size="sm" variant="outline" className="w-full border-amber-400/30 text-amber-400">{t("common.bookDemo")}</Button>
             </Link>
           </div>
         )}
