@@ -236,90 +236,90 @@ const Bookings = () => {
                 </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
-                  <DialogTitle>{editingId ? "Edit" : "New"} Booking</DialogTitle>
+                  <DialogTitle>{editingId ? t("bookingsForm.editBooking") : t("bookingsForm.newBooking")}</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-2">
-                    <Label>Booking Title</Label>
-                    <Input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder="e.g. Thailand Family Tour — 5N/6D" />
+                    <Label>{t("bookingsForm.bookingTitle")}</Label>
+                    <Input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder={t("bookingsForm.titlePlaceholder")} />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Type</Label>
+                      <Label>{t("bookingsForm.type")}</Label>
                       <Select value={form.type} onValueChange={(v) => setForm((f) => ({ ...f, type: v as BookingType }))}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="tour">Tour</SelectItem>
-                          <SelectItem value="ticket">Ticket</SelectItem>
-                          <SelectItem value="hotel">Hotel</SelectItem>
-                          <SelectItem value="visa">Visa</SelectItem>
-                          <SelectItem value="package">Package</SelectItem>
+                          <SelectItem value="tour">{t("bookingsForm.types.tour")}</SelectItem>
+                          <SelectItem value="ticket">{t("bookingsForm.types.ticket")}</SelectItem>
+                          <SelectItem value="hotel">{t("bookingsForm.types.hotel")}</SelectItem>
+                          <SelectItem value="visa">{t("bookingsForm.types.visa")}</SelectItem>
+                          <SelectItem value="package">{t("bookingsForm.types.package")}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label>Status</Label>
+                      <Label>{t("bookingsForm.status")}</Label>
                       <Select value={form.status} onValueChange={(v) => setForm((f) => ({ ...f, status: v as BookingStatus }))}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
-                          {STATUS_META.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
+                          {STATUS_META.map((s) => <SelectItem key={s.value} value={s.value}>{t(`bookingsForm.statuses.${s.value}`)}</SelectItem>)}
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Client Name</Label>
-                      <Input value={form.clientName} onChange={(e) => setForm((f) => ({ ...f, clientName: e.target.value }))} placeholder="e.g. Mr. Karim Ahmed" required />
+                      <Label>{t("bookingsForm.clientName")}</Label>
+                      <Input value={form.clientName} onChange={(e) => setForm((f) => ({ ...f, clientName: e.target.value }))} placeholder={t("bookingsForm.clientPlaceholder")} required />
                     </div>
                     <div className="space-y-2">
-                      <Label>Agent / Staff</Label>
-                      <Input value={form.agentId} onChange={(e) => setForm((f) => ({ ...f, agentId: e.target.value }))} placeholder="Assigned agent" />
+                      <Label>{t("bookingsForm.agentStaff")}</Label>
+                      <Input value={form.agentId} onChange={(e) => setForm((f) => ({ ...f, agentId: e.target.value }))} placeholder={t("bookingsForm.agentPlaceholder")} />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Destination</Label>
-                      <Input value={form.destination} onChange={(e) => setForm((f) => ({ ...f, destination: e.target.value }))} placeholder="e.g. Bangkok, Thailand" />
+                      <Label>{t("bookingsForm.destination")}</Label>
+                      <Input value={form.destination} onChange={(e) => setForm((f) => ({ ...f, destination: e.target.value }))} placeholder={t("bookingsForm.destinationFormPlaceholder")} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Travelers</Label>
+                      <Label>{t("bookingsForm.travelers")}</Label>
                       <Input type="number" min={1} value={form.travelerCount} onChange={(e) => setForm((f) => ({ ...f, travelerCount: +e.target.value }))} />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>Travel From</Label>
+                      <Label>{t("bookingsForm.travelFrom")}</Label>
                       <Input type="date" value={form.travelDateFrom} onChange={(e) => setForm((f) => ({ ...f, travelDateFrom: e.target.value }))} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Travel To</Label>
+                      <Label>{t("bookingsForm.travelTo")}</Label>
                       <Input type="date" value={form.travelDateTo} onChange={(e) => setForm((f) => ({ ...f, travelDateTo: e.target.value }))} />
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label>Selling Amount (৳)</Label>
+                      <Label>{t("bookingsForm.sellingAmount")}</Label>
                       <Input type="number" min={0} step={0.01} value={form.amount || ""} onChange={(e) => setForm((f) => ({ ...f, amount: parseFloat(e.target.value) || 0 }))} required />
                     </div>
                     <div className="space-y-2">
-                      <Label>Cost (৳)</Label>
+                      <Label>{t("bookingsForm.cost")}</Label>
                       <Input type="number" min={0} step={0.01} value={form.cost || ""} onChange={(e) => setForm((f) => ({ ...f, cost: parseFloat(e.target.value) || 0 }))} required />
                     </div>
                     <div className="space-y-2">
-                      <Label>Profit (৳)</Label>
+                      <Label>{t("bookingsForm.profit")}</Label>
                       <div className={`flex h-10 items-center rounded-md border px-3 text-sm font-semibold ${profit >= 0 ? "text-green-600" : "text-destructive"}`}>
                         ৳{profit.toLocaleString()}
                       </div>
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label>Internal Notes</Label>
-                    <Input value={form.internalNotes} onChange={(e) => setForm((f) => ({ ...f, internalNotes: e.target.value }))} placeholder="Notes visible to staff only..." />
+                    <Label>{t("bookingsForm.internalNotes")}</Label>
+                    <Input value={form.internalNotes} onChange={(e) => setForm((f) => ({ ...f, internalNotes: e.target.value }))} placeholder={t("bookingsForm.notesPlaceholder")} />
                   </div>
                   <div className="flex gap-2">
-                    <Button type="submit" className="flex-1">{editingId ? "Update" : "Create"}</Button>
-                    <DialogClose asChild><Button type="button" variant="outline">Cancel</Button></DialogClose>
+                    <Button type="submit" className="flex-1">{editingId ? t("bookingsForm.update") : t("bookingsForm.create")}</Button>
+                    <DialogClose asChild><Button type="button" variant="outline">{t("bookingsForm.cancel")}</Button></DialogClose>
                   </div>
                 </form>
               </DialogContent>
