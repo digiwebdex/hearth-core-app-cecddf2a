@@ -19,8 +19,16 @@ const PUBLISHED_DOMAIN = "travelagencyweb.com";
 
 const MarketingLayout = ({ children, title, description }: Props) => {
   const location = useLocation();
+  const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+
+  const navLinks = [
+    { label: t("nav.features"), path: "/features" },
+    { label: t("nav.pricing"), path: "/pricing" },
+    { label: t("nav.faq"), path: "/faq" },
+    { label: t("nav.contact"), path: "/contact-us" },
+  ];
 
   useEffect(() => {
     if (title) document.title = title;
