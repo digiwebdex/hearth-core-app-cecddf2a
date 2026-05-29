@@ -70,6 +70,7 @@ function isPlanSufficient(minPlan: PlanType | undefined, currentPlan: PlanType):
 
 function NavGroup({ label, items, collapsed, currentPlan }: { label: string; items: MenuItem[]; collapsed: boolean; currentPlan: PlanType }) {
   const { canAccess } = usePermissions();
+  const { t } = useTranslation();
 
   // Filter items by permission first
   const visibleItems = items.filter((item) => canAccess(item.module));
@@ -83,10 +84,11 @@ function NavGroup({ label, items, collapsed, currentPlan }: { label: string; ite
         <SidebarMenu>
           {visibleItems.map((item) => {
             const planOk = isPlanSufficient(item.minPlan, currentPlan);
+            const title = t(item.titleKey);
 
             if (!planOk) {
               return (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.titleKey}>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -94,14 +96,14 @@ function NavGroup({ label, items, collapsed, currentPlan }: { label: string; ite
                           <item.icon className="h-4 w-4" />
                           {!collapsed && (
                             <>
-                              <span className="flex-1">{item.title}</span>
+                              <span className="flex-1">{title}</span>
                               <Lock className="h-3 w-3" />
                             </>
                           )}
                         </div>
                       </TooltipTrigger>
                       <TooltipContent side="right">
-                        <p>Upgrade to {item.minPlan?.charAt(0).toUpperCase()}{item.minPlan?.slice(1)} plan</p>
+                        <p>{t("sidebar.upgradeTo")} {item.minPlan?.charAt(0).toUpperCase()}{item.minPlan?.slice(1)}</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
@@ -110,7 +112,7 @@ function NavGroup({ label, items, collapsed, currentPlan }: { label: string; ite
             }
 
             return (
-              <SidebarMenuItem key={item.title}>
+              <SidebarMenuItem key={item.titleKey}>
                 <SidebarMenuButton asChild>
                   <NavLink
                     to={item.url}
@@ -119,7 +121,7 @@ function NavGroup({ label, items, collapsed, currentPlan }: { label: string; ite
                     activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                   >
                     <item.icon className="mr-2 h-4 w-4" />
-                    {!collapsed && <span>{item.title}</span>}
+                    {!collapsed && <span>{title}</span>}
                   </NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
