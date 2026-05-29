@@ -265,7 +265,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, status: "active" as SubscriptionStatus, endDate: end.toISOString().split("T")[0] } : s
     ));
-    toast({ title: "Reactivated" });
+    toast({ title: tt("adminSubscriptions.toast.reactivated") });
     setDialogOpen(false);
   };
 
