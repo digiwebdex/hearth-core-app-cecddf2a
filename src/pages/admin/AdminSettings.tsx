@@ -356,25 +356,25 @@ const AdminSettings = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <CreditCard className="h-5 w-5 text-primary" /> SSLCommerz Configuration
+                    <CreditCard className="h-5 w-5 text-primary" /> {t("adminSettings.payment.ssl.title")}
                   </CardTitle>
-                  <CardDescription>Accept Visa, Mastercard, Mobile Banking & Internet Banking</CardDescription>
+                  <CardDescription>{t("adminSettings.payment.ssl.desc")}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between rounded-lg border p-4">
                     <div>
-                      <p className="font-medium">Enable SSLCommerz</p>
-                      <p className="text-sm text-muted-foreground">Allow tenants to accept online payments</p>
+                      <p className="font-medium">{t("adminSettings.payment.ssl.enable")}</p>
+                      <p className="text-sm text-muted-foreground">{t("adminSettings.payment.ssl.enableDesc")}</p>
                     </div>
                     <Switch checked={payment.sslcommerzEnabled} onCheckedChange={(v) => setPayment({ ...payment, sslcommerzEnabled: v })} />
                   </div>
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label>Store ID</Label>
+                      <Label>{t("adminSettings.payment.ssl.storeId")}</Label>
                       <Input placeholder="your_store_id" value={payment.sslcommerzStoreId} onChange={(e) => setPayment({ ...payment, sslcommerzStoreId: e.target.value })} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Store Password</Label>
+                      <Label>{t("adminSettings.payment.ssl.storePass")}</Label>
                       <div className="relative">
                         <Input
                           type={showPasswords.ssl ? "text" : "password"}
@@ -390,7 +390,7 @@ const AdminSettings = () => {
                   </div>
                   <div className="flex items-center gap-3">
                     <Switch checked={payment.sslcommerzSandbox} onCheckedChange={(v) => setPayment({ ...payment, sslcommerzSandbox: v })} />
-                    <Label>Sandbox Mode (Testing)</Label>
+                    <Label>{t("adminSettings.payment.ssl.sandbox")}</Label>
                   </div>
                 </CardContent>
               </Card>
@@ -399,25 +399,25 @@ const AdminSettings = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-pink-500" /> bKash Configuration
+                    <Shield className="h-5 w-5 text-pink-500" /> {t("adminSettings.payment.bkash.title")}
                   </CardTitle>
-                  <CardDescription>Accept payments via bKash mobile wallet</CardDescription>
+                  <CardDescription>{t("adminSettings.payment.bkash.desc")}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between rounded-lg border p-4">
                     <div>
-                      <p className="font-medium">Enable bKash</p>
-                      <p className="text-sm text-muted-foreground">Allow bKash payment gateway for tenants</p>
+                      <p className="font-medium">{t("adminSettings.payment.bkash.enable")}</p>
+                      <p className="text-sm text-muted-foreground">{t("adminSettings.payment.bkash.enableDesc")}</p>
                     </div>
                     <Switch checked={payment.bkashEnabled} onCheckedChange={(v) => setPayment({ ...payment, bkashEnabled: v })} />
                   </div>
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label>App Key</Label>
+                      <Label>{t("adminSettings.payment.bkash.appKey")}</Label>
                       <Input placeholder="bKash App Key" value={payment.bkashAppKey} onChange={(e) => setPayment({ ...payment, bkashAppKey: e.target.value })} />
                     </div>
                     <div className="space-y-2">
-                      <Label>App Secret</Label>
+                      <Label>{t("adminSettings.payment.bkash.appSecret")}</Label>
                       <div className="relative">
                         <Input
                           type={showPasswords.bkashSecret ? "text" : "password"}
@@ -431,11 +431,11 @@ const AdminSettings = () => {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label>Username</Label>
+                      <Label>{t("adminSettings.payment.bkash.username")}</Label>
                       <Input placeholder="bKash Username" value={payment.bkashUsername} onChange={(e) => setPayment({ ...payment, bkashUsername: e.target.value })} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Password</Label>
+                      <Label>{t("adminSettings.payment.bkash.password")}</Label>
                       <div className="relative">
                         <Input
                           type={showPasswords.bkashPass ? "text" : "password"}
@@ -451,7 +451,7 @@ const AdminSettings = () => {
                   </div>
                   <div className="flex items-center gap-3">
                     <Switch checked={payment.bkashSandbox} onCheckedChange={(v) => setPayment({ ...payment, bkashSandbox: v })} />
-                    <Label>Sandbox Mode (Testing)</Label>
+                    <Label>{t("adminSettings.payment.bkash.sandbox")}</Label>
                   </div>
                 </CardContent>
               </Card>
@@ -459,32 +459,32 @@ const AdminSettings = () => {
               {/* Manual Payment */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Manual Payment Instructions</CardTitle>
-                  <CardDescription>Instructions shown to tenants for manual/bank payments</CardDescription>
+                  <CardTitle>{t("adminSettings.payment.manual.title")}</CardTitle>
+                  <CardDescription>{t("adminSettings.payment.manual.desc")}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between rounded-lg border p-4">
                     <div>
-                      <p className="font-medium">Enable Manual Payment</p>
-                      <p className="text-sm text-muted-foreground">Allow tenants to submit manual payment requests</p>
+                      <p className="font-medium">{t("adminSettings.payment.manual.enable")}</p>
+                      <p className="text-sm text-muted-foreground">{t("adminSettings.payment.manual.enableDesc")}</p>
                     </div>
                     <Switch checked={payment.manualPaymentEnabled} onCheckedChange={(v) => setPayment({ ...payment, manualPaymentEnabled: v })} />
                   </div>
                   <div className="space-y-2">
-                    <Label>Payment Instructions</Label>
+                    <Label>{t("adminSettings.payment.manual.instructions")}</Label>
                     <Textarea
                       value={payment.manualPaymentInstructions}
                       onChange={(e) => setPayment({ ...payment, manualPaymentInstructions: e.target.value })}
                       rows={4}
-                      placeholder="Enter payment instructions for tenants..."
+                      placeholder={t("adminSettings.payment.manual.instructionsPlaceholder")}
                     />
                   </div>
                 </CardContent>
               </Card>
 
-              <Button onClick={() => handleSave("Payment")} disabled={saving}>
+              <Button onClick={() => handleSave(t("adminSettings.tabs.payment"))} disabled={saving}>
                 {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-                Save Payment Settings
+                {t("adminSettings.payment.saveBtn")}
               </Button>
             </div>
           </TabsContent>
