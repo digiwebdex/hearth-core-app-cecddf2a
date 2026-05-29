@@ -257,35 +257,36 @@ const QuotationBuilder = () => {
           {/* ── DETAILS TAB ── */}
           <TabsContent value="details" className="space-y-4">
             <Card>
-              <CardHeader><CardTitle className="text-sm">Quotation Details</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="text-sm">{t("quotationBuilder.details.section")}</CardTitle></CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="md:col-span-2 space-y-2">
-                    <Label>Quotation Title *</Label>
-                    <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Malaysia Family Tour — 4N/5D" />
+                    <Label>{t("quotationBuilder.details.title")}</Label>
+                    <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder={t("quotationBuilder.details.titlePh")} />
                   </div>
                   <div className="space-y-2">
-                    <Label>Client Name</Label>
-                    <Input value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="e.g. Mr. Karim Ahmed" />
+                    <Label>{t("quotationBuilder.details.clientName")}</Label>
+                    <Input value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder={t("quotationBuilder.details.clientNamePh")} />
                   </div>
                   <div className="space-y-2">
-                    <Label>Lead Name (if from lead)</Label>
-                    <Input value={leadName} onChange={(e) => setLeadName(e.target.value)} placeholder="Optional — link to existing lead" />
+                    <Label>{t("quotationBuilder.details.leadName")}</Label>
+                    <Input value={leadName} onChange={(e) => setLeadName(e.target.value)} placeholder={t("quotationBuilder.details.leadNamePh")} />
                   </div>
                   <div className="space-y-2">
-                    <Label>Destination *</Label>
-                    <Input value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="e.g. Dubai & Abu Dhabi, UAE" />
+                    <Label>{t("quotationBuilder.details.destination")}</Label>
+                    <Input value={destination} onChange={(e) => setDestination(e.target.value)} placeholder={t("quotationBuilder.details.destinationPh")} />
                   </div>
                   <div className="space-y-2">
-                    <Label>Number of Travelers</Label>
+                    <Label>{t("quotationBuilder.details.travelers")}</Label>
                     <Input type="number" min={1} value={travelerCount} onChange={(e) => setTravelerCount(+e.target.value)} />
                   </div>
-                  <DatePick label="Travel From" date={travelFrom} onChange={setTravelFrom} />
-                  <DatePick label="Travel To" date={travelTo} onChange={setTravelTo} />
-                  <DatePick label="Quote Valid Until" date={validUntil} onChange={setValidUntil} />
+                  <DatePick label={t("quotationBuilder.details.travelFrom")} date={travelFrom} onChange={setTravelFrom} />
+                  <DatePick label={t("quotationBuilder.details.travelTo")} date={travelTo} onChange={setTravelTo} />
+                  <DatePick label={t("quotationBuilder.details.validUntil")} date={validUntil} onChange={setValidUntil} />
                 </div>
               </CardContent>
             </Card>
+
           </TabsContent>
 
           {/* ── ITINERARY TAB ── */}
