@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import MarketingLayout from "@/components/MarketingLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -21,6 +22,7 @@ import {
 const planIcons: Record<string, React.ElementType> = { free: Star, basic: Zap, pro: Crown, business: Rocket, enterprise: Gem };
 
 const Pricing = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -47,15 +49,15 @@ const Pricing = () => {
     try {
       const res = await register({ name: form.ownerName, email: form.email, password: form.password, tenantName: form.companyName, plan: selectedPlan || "pro" });
       if (res.pendingApproval) {
-        toast({ title: "Account Submitted", description: res.message || "Pending admin approval." });
+        toast({ title: t("marketing.pricing.submitted"), description: res.message || t("marketing.pricing.pendingApproval") });
         navigate("/login");
       } else {
-        toast({ title: "🎉 3-Day Pro Trial Started!", description: `Welcome! Explore all features. Upgrade to ${PLANS.find(p => p.id === selectedPlan)?.name} anytime.` });
+        toast({ title: `🎉 ${t("marketing.pricing.trialStarted")}`, description: t("marketing.pricing.trialDesc", { plan: PLANS.find(p => p.id === selectedPlan)?.name }) });
         setDialogOpen(false);
         navigate("/onboarding");
       }
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Registration Failed", description: err.message });
+      toast({ variant: "destructive", title: t("marketing.pricing.regFailed"), description: err.message });
     } finally { setLoading(false); }
   };
 
@@ -66,28 +68,28 @@ const Pricing = () => {
 
   return (
     <MarketingLayout
-      title="Pricing — Travel Agency Website & Software Solution"
-      description="Simple, transparent pricing for travel agencies. Choose Basic, Pro, Business, or Unlimited."
+      title={t("marketing.pricing.metaTitle")}
+      description={t("marketing.pricing.metaDesc")}
     >
       {/* Hero */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 text-center">
           <Badge className="mb-6 bg-amber-400/10 text-amber-400 border-amber-400/25 text-sm px-4 py-1.5">
-            Simple Pricing — No Hidden Fees
+            {t("marketing.pricing.badge")}
           </Badge>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-            Simple, Transparent Pricing
+            {t("marketing.pricing.title")}
           </h1>
           <p className="text-lg text-white/45 max-w-2xl mx-auto mb-8">
-            Choose the plan that fits your travel agency. All prices in BDT.
+            {t("marketing.pricing.subtitle")}
           </p>
           {/* Billing toggle */}
           <div className="inline-flex items-center gap-3 p-1.5 rounded-full bg-white/5 border border-white/8">
             <button onClick={() => setBilling("monthly")} className={`px-5 py-2 rounded-full text-sm font-medium transition ${billing === "monthly" ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md" : "text-white/45 hover:text-white"}`}>
-              Monthly
+              {t("marketing.pricing.monthly")}
             </button>
             <button onClick={() => setBilling("yearly")} className={`px-5 py-2 rounded-full text-sm font-medium transition flex items-center gap-2 ${billing === "yearly" ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md" : "text-white/45 hover:text-white"}`}>
-              Yearly <Badge variant="secondary" className="text-[10px] bg-emerald-500/20 text-emerald-400 border-0">Save 20%</Badge>
+              {t("marketing.pricing.yearly")} <Badge variant="secondary" className="text-[10px] bg-emerald-500/20 text-emerald-400 border-0">{t("marketing.pricing.save20")}</Badge>
             </button>
           </div>
         </div>
@@ -116,17 +118,17 @@ const Pricing = () => {
                   <CardContent className="space-y-4">
                     <div className="text-center">
                       {price === -1 ? (
-                        <span className="text-2xl font-extrabold text-amber-400">Custom</span>
+                        <span className="text-2xl font-extrabold text-amber-400">{t("marketing.pricing.custom")}</span>
                       ) : price === 0 ? (
-                        <span className="text-3xl font-extrabold text-amber-400">Free</span>
+                        <span className="text-3xl font-extrabold text-amber-400">{t("marketing.pricing.free")}</span>
                       ) : (
                         <>
                           <span className="text-3xl font-extrabold text-amber-400">৳{price.toLocaleString()}</span>
-                          <span className="text-white/40 text-sm ml-1">/month</span>
+                          <span className="text-white/40 text-sm ml-1">{t("marketing.pricing.perMonth")}</span>
                         </>
                       )}
                       {billing === "yearly" && price > 0 && (
-                        <p className="text-xs text-emerald-400 mt-1">৳{plan.yearlyPrice.toLocaleString()}/year</p>
+                        <p className="text-xs text-emerald-400 mt-1">৳{plan.yearlyPrice.toLocaleString()}{t("marketing.pricing.perYear")}</p>
                       )}
                     </div>
                     <Separator className="bg-white/8" />
@@ -134,7 +136,7 @@ const Pricing = () => {
                       {plan.features.slice(0, 5).map((f) => (
                         <li key={f} className="flex items-start gap-2 text-xs"><Check className="h-3.5 w-3.5 text-emerald-400 mt-0.5 shrink-0" /><span className="text-white/60">{f}</span></li>
                       ))}
-                      {plan.features.length > 5 && <li className="text-xs text-white/35">+{plan.features.length - 5} more</li>}
+                      {plan.features.length > 5 && <li className="text-xs text-white/35">+{plan.features.length - 5} {t("marketing.pricing.more")}</li>}
                     </ul>
                     {plan.restrictions.length > 0 && (
                       <ul className="space-y-1 pt-1 border-t border-white/5">
@@ -144,7 +146,7 @@ const Pricing = () => {
                       </ul>
                     )}
                     <Button className={`w-full h-10 text-sm ${isHighlighted ? "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg shadow-amber-500/20" : "bg-white/8 hover:bg-white/12 text-white"}`} onClick={() => handleSelectPlan(plan.id)}>
-                      {price === -1 ? "Contact Us for Price" : "Subscribe Now"}<ArrowRight className="ml-2 h-4 w-4" />
+                      {price === -1 ? t("marketing.pricing.contactPrice") : t("marketing.pricing.subscribeNow")}<ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </CardContent>
                 </Card>
@@ -158,25 +160,25 @@ const Pricing = () => {
       <section className="py-12">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/8">
+              <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/8">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-lg bg-amber-400/10 flex items-center justify-center"><Receipt className="h-5 w-5 text-amber-400" /></div>
                 <div>
-                  <h3 className="font-semibold">Accounts & Finance</h3>
-                  <Badge variant="secondary" className="text-[10px] bg-amber-400/10 text-amber-400 border-0">Basic Plan & Above</Badge>
+                  <h3 className="font-semibold">{t("marketing.pricing.accountsTitle")}</h3>
+                  <Badge variant="secondary" className="text-[10px] bg-amber-400/10 text-amber-400 border-0">{t("marketing.pricing.accountsBadge")}</Badge>
                 </div>
               </div>
-              <p className="text-sm text-white/45">Receivables, vendor payables, expenses, cash/bank accounts, ledger, and profitability tracking. Upgrade from Free to unlock operational finance tools.</p>
+              <p className="text-sm text-white/45">{t("marketing.pricing.accountsDesc")}</p>
             </div>
             <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/8">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-lg bg-violet-400/10 flex items-center justify-center"><BarChart3 className="h-5 w-5 text-violet-400" /></div>
                 <div>
-                  <h3 className="font-semibold">Reports & Analytics</h3>
-                  <Badge variant="secondary" className="text-[10px] bg-violet-400/10 text-violet-400 border-0">Business Plan & Above</Badge>
+                  <h3 className="font-semibold">{t("marketing.pricing.reportsTitle")}</h3>
+                  <Badge variant="secondary" className="text-[10px] bg-violet-400/10 text-violet-400 border-0">{t("marketing.pricing.reportsBadge")}</Badge>
                 </div>
               </div>
-              <p className="text-sm text-white/45">Sales analytics, lead conversion, payment reports, vendor summaries, staff performance, and booking-level profitability with export.</p>
+              <p className="text-sm text-white/45">{t("marketing.pricing.reportsDesc")}</p>
             </div>
           </div>
         </div>
@@ -185,16 +187,16 @@ const Pricing = () => {
       {/* Feature Comparison */}
       <section className="py-16 bg-[#0f1729]">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-8">Full Feature Comparison</h2>
+          <h2 className="text-2xl font-bold text-center mb-8">{t("marketing.pricing.fullCompare")}</h2>
           <div className="max-w-7xl mx-auto overflow-x-auto rounded-xl border border-white/8">
             <Table>
               <TableHeader>
                 <TableRow className="border-white/8 bg-white/[0.04]">
-                  <TableHead className="text-white/60 min-w-[200px]">Feature</TableHead>
+                  <TableHead className="text-white/60 min-w-[200px]">{t("marketing.pricing.feature")}</TableHead>
                   {PLANS.map((p) => (
                     <TableHead key={p.id} className="text-center text-white/60 min-w-[100px]">
                       <div className="font-semibold">{p.name}</div>
-                      <div className="text-xs text-amber-400 font-normal">{p.monthlyPrice === -1 ? "Custom" : p.monthlyPrice === 0 ? "Free" : `৳${p.monthlyPrice}`}</div>
+                      <div className="text-xs text-amber-400 font-normal">{p.monthlyPrice === -1 ? t("marketing.pricing.custom") : p.monthlyPrice === 0 ? t("marketing.pricing.free") : `৳${p.monthlyPrice}`}</div>
                     </TableHead>
                   ))}
                 </TableRow>
@@ -230,13 +232,13 @@ const Pricing = () => {
       <section className="py-16">
         <div className="container mx-auto px-4 text-center">
           <Gem className="h-10 w-10 text-amber-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold mb-3">Need a Custom Solution?</h2>
+          <h2 className="text-2xl font-bold mb-3">{t("marketing.pricing.needCustom")}</h2>
           <p className="text-white/45 max-w-md mx-auto mb-6">
-            Enterprise plans include custom integrations, dedicated support, API access, custom branding, and more.
+            {t("marketing.pricing.enterpriseDesc")}
           </p>
           <Link to="/demo">
             <Button size="lg" variant="outline" className="border-white/15 text-white hover:bg-white/10 px-8">
-              Contact Sales
+              {t("marketing.pricing.contactSales")}
             </Button>
           </Link>
         </div>
@@ -258,36 +260,36 @@ const Pricing = () => {
             <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto bg-[#111827] border-white/10 text-white">
               <DialogHeader>
                 <DialogTitle className="text-xl">
-                  Subscribe to <span className="text-amber-400">{selectedPlanInfo.name}</span> Plan
+                  {t("marketing.pricing.subscribeTo")} <span className="text-amber-400">{selectedPlanInfo.name}</span> {t("marketing.pricing.planSuffix")}
                 </DialogTitle>
                 <DialogDescription className="text-white/45">
-                  Fill in your details to get started.
+                  {t("marketing.pricing.fillDetails")}
                 </DialogDescription>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4 mt-4">
                 <div className="p-3 rounded-lg bg-amber-400/10 border border-amber-400/20 flex items-center justify-between">
-                  <span className="text-sm font-medium">{selectedPlanInfo.name} Plan</span>
+                  <span className="text-sm font-medium">{selectedPlanInfo.name} {t("marketing.pricing.planSuffix")}</span>
                   <span className="font-bold text-amber-400">
                     {selectedPlanInfo.monthlyPrice === -1
-                      ? "Custom"
+                      ? t("marketing.pricing.custom")
                       : selectedPlanInfo.monthlyPrice === 0
-                        ? "Free"
-                        : `৳${getPrice(selectedPlanInfo).toLocaleString()}/mo`}
+                        ? t("marketing.pricing.free")
+                        : `৳${getPrice(selectedPlanInfo).toLocaleString()}${t("marketing.pricing.perMonth")}`}
                   </span>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="space-y-2"><Label className="text-white/60">Company Name *</Label><Input value={form.companyName} onChange={(e) => update("companyName", e.target.value)} placeholder="Your Travel Agency" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
-                  <div className="space-y-2"><Label className="text-white/60">Your Name *</Label><Input value={form.ownerName} onChange={(e) => update("ownerName", e.target.value)} placeholder="Full name" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
+                  <div className="space-y-2"><Label className="text-white/60">{t("marketing.pricing.companyName")} *</Label><Input value={form.companyName} onChange={(e) => update("companyName", e.target.value)} placeholder={t("marketing.pricing.companyPh")} required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
+                  <div className="space-y-2"><Label className="text-white/60">{t("marketing.pricing.yourName")} *</Label><Input value={form.ownerName} onChange={(e) => update("ownerName", e.target.value)} placeholder={t("marketing.pricing.yourNamePh")} required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="space-y-2"><Label className="text-white/60">Email *</Label><Input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="you@agency.com" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
-                  <div className="space-y-2"><Label className="text-white/60">Phone *</Label><Input value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+880 1XXX-XXXXXX" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
+                  <div className="space-y-2"><Label className="text-white/60">{t("marketing.pricing.email")} *</Label><Input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder={t("marketing.pricing.emailPh")} required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
+                  <div className="space-y-2"><Label className="text-white/60">{t("marketing.pricing.phone")} *</Label><Input value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder={t("marketing.pricing.phonePh")} required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
                 </div>
-                <div className="space-y-2"><Label className="text-white/60">Password *</Label><Input type="password" value={form.password} onChange={(e) => update("password", e.target.value)} placeholder="Min 8 characters" required minLength={8} className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
+                <div className="space-y-2"><Label className="text-white/60">{t("marketing.pricing.password")} *</Label><Input type="password" value={form.password} onChange={(e) => update("password", e.target.value)} placeholder={t("marketing.pricing.passwordPh")} required minLength={8} className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
                 <Button type="submit" disabled={loading} className="w-full h-11 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg shadow-amber-500/20">
-                  {loading ? "Creating Account..." : "Create Account"}
+                  {loading ? t("marketing.pricing.creating") : t("marketing.pricing.createAccount")}
                 </Button>
-                <p className="text-center text-xs text-white/25">Already have an account? <Link to="/login" className="text-amber-400 underline">Sign in</Link></p>
+                <p className="text-center text-xs text-white/25">{t("marketing.pricing.alreadyHave")} <Link to="/login" className="text-amber-400 underline">{t("marketing.pricing.signIn")}</Link></p>
               </form>
             </DialogContent>
           );
