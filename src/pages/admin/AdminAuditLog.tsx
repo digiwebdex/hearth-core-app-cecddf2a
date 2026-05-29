@@ -213,70 +213,70 @@ const AdminAuditLog = () => {
         {/* Detail Dialog */}
         <Dialog open={detailOpen} onOpenChange={setDetailOpen}>
           <DialogContent className="max-w-lg">
-            <DialogHeader><DialogTitle>Audit Event Details</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{t("adminAuditLog.detail.title")}</DialogTitle></DialogHeader>
             {selectedLog && (
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-sm">
-                  <span className="text-muted-foreground">Timestamp:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.timestamp")}:</span>
                   <span>{new Date(selectedLog.createdAt).toLocaleString()}</span>
-                  <span className="text-muted-foreground">Actor:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.actor")}:</span>
                   <span className="font-medium">{selectedLog.actorName}</span>
-                  <span className="text-muted-foreground">Email:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.email")}:</span>
                   <span>{selectedLog.actorEmail}</span>
-                  <span className="text-muted-foreground">Role:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.role")}:</span>
                   <Badge variant="outline" className="capitalize w-fit">{selectedLog.actorRole}</Badge>
                   {selectedLog.tenantName && (
                     <>
-                      <span className="text-muted-foreground">Tenant:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.tenant")}:</span>
                       <span>{selectedLog.tenantName}</span>
                     </>
                   )}
-                  <span className="text-muted-foreground">Module:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.module")}:</span>
                   <Badge variant="outline" className="w-fit">{MODULE_LABELS[selectedLog.module as AuditModule] || selectedLog.module}</Badge>
-                  <span className="text-muted-foreground">Action:</span>
+                  <span className="text-muted-foreground">{t("adminAuditLog.detail.action")}:</span>
                   <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium w-fit ${getActionColor(selectedLog.action as any)}`}>
                     {ACTION_LABELS[selectedLog.action as keyof typeof ACTION_LABELS] || selectedLog.action}
                   </span>
                   {selectedLog.targetLabel && (
                     <>
-                      <span className="text-muted-foreground">Target:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.target")}:</span>
                       <span>{selectedLog.targetLabel}</span>
                     </>
                   )}
                   {selectedLog.targetType && (
                     <>
-                      <span className="text-muted-foreground">Target Type:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.targetType")}:</span>
                       <span className="capitalize">{selectedLog.targetType}</span>
                     </>
                   )}
                   {selectedLog.targetId && (
                     <>
-                      <span className="text-muted-foreground">Target ID:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.targetId")}:</span>
                       <span className="font-mono text-xs">{selectedLog.targetId}</span>
                     </>
                   )}
                   {selectedLog.oldValue && (
                     <>
-                      <span className="text-muted-foreground">Old Value:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.oldValue")}:</span>
                       <span className="line-through text-destructive">{selectedLog.oldValue}</span>
                     </>
                   )}
                   {selectedLog.newValue && (
                     <>
-                      <span className="text-muted-foreground">New Value:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.newValue")}:</span>
                       <span className="font-medium text-green-600">{selectedLog.newValue}</span>
                     </>
                   )}
                   {selectedLog.ipAddress && (
                     <>
-                      <span className="text-muted-foreground">IP Address:</span>
+                      <span className="text-muted-foreground">{t("adminAuditLog.detail.ip")}:</span>
                       <span className="font-mono text-xs">{selectedLog.ipAddress}</span>
                     </>
                   )}
                 </div>
                 {selectedLog.metadata && Object.keys(selectedLog.metadata).length > 0 && (
                   <div className="space-y-1">
-                    <p className="text-sm font-medium">Additional Data</p>
+                    <p className="text-sm font-medium">{t("adminAuditLog.detail.additional")}</p>
                     <div className="rounded-md border p-3 text-xs space-y-1">
                       {Object.entries(selectedLog.metadata).map(([k, v]) => (
                         <div key={k} className="flex gap-2">
@@ -289,7 +289,7 @@ const AdminAuditLog = () => {
                 )}
               </div>
             )}
-            <DialogClose asChild><Button variant="outline" className="w-full">Close</Button></DialogClose>
+            <DialogClose asChild><Button variant="outline" className="w-full">{t("adminAuditLog.detail.close")}</Button></DialogClose>
           </DialogContent>
         </Dialog>
       </div>
