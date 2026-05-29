@@ -346,22 +346,22 @@ const QuotationBuilder = () => {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm">Line Items</CardTitle>
-                  <Button size="sm" onClick={() => addItem()}><Plus className="mr-1 h-3.5 w-3.5" /> Add Item</Button>
+                  <CardTitle className="text-sm">{t("quotationBuilder.pricing.lineItems")}</CardTitle>
+                  <Button size="sm" onClick={() => addItem()}><Plus className="mr-1 h-3.5 w-3.5" /> {t("quotationBuilder.pricing.addItem")}</Button>
                 </div>
               </CardHeader>
               <CardContent className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-[120px]">Type</TableHead>
-                      <TableHead className="min-w-[200px]">Description</TableHead>
-                      <TableHead className="w-[100px]">Cost (৳)</TableHead>
-                      <TableHead className="w-[80px]">Markup %</TableHead>
-                      <TableHead className="w-[100px]">Selling (৳)</TableHead>
-                      <TableHead className="w-[60px]">Qty</TableHead>
-                      <TableHead className="w-[60px]">Nights</TableHead>
-                      <TableHead className="w-[100px]">Subtotal</TableHead>
+                      <TableHead className="w-[120px]">{t("quotationBuilder.pricing.th.type")}</TableHead>
+                      <TableHead className="min-w-[200px]">{t("quotationBuilder.pricing.th.description")}</TableHead>
+                      <TableHead className="w-[100px]">{t("quotationBuilder.pricing.th.cost")}</TableHead>
+                      <TableHead className="w-[80px]">{t("quotationBuilder.pricing.th.markup")}</TableHead>
+                      <TableHead className="w-[100px]">{t("quotationBuilder.pricing.th.selling")}</TableHead>
+                      <TableHead className="w-[60px]">{t("quotationBuilder.pricing.th.qty")}</TableHead>
+                      <TableHead className="w-[60px]">{t("quotationBuilder.pricing.th.nights")}</TableHead>
+                      <TableHead className="w-[100px]">{t("quotationBuilder.pricing.th.subtotal")}</TableHead>
                       <TableHead className="w-[40px]"></TableHead>
                     </TableRow>
                   </TableHeader>
@@ -374,16 +374,16 @@ const QuotationBuilder = () => {
                             <Select value={item.type} onValueChange={(v) => updateItem(item.id, { type: v as QuotationItemType })}>
                               <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                               <SelectContent>
-                                {ITEM_TYPES.map((t) => (
-                                  <SelectItem key={t.value} value={t.value}>
-                                    <div className="flex items-center gap-1.5"><t.icon className="h-3 w-3" />{t.label}</div>
+                                {ITEM_TYPES.map((it) => (
+                                  <SelectItem key={it.value} value={it.value}>
+                                    <div className="flex items-center gap-1.5"><it.icon className="h-3 w-3" />{t(`quotationBuilder.itemTypes.${it.labelKey}`)}</div>
                                   </SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>
                           </TableCell>
                           <TableCell>
-                            <Input className="h-8 text-xs" value={item.description} onChange={(e) => updateItem(item.id, { description: e.target.value })} placeholder="Description" />
+                            <Input className="h-8 text-xs" value={item.description} onChange={(e) => updateItem(item.id, { description: e.target.value })} placeholder={t("quotationBuilder.pricing.descriptionPh")} />
                           </TableCell>
                           <TableCell>
                             <Input type="number" className="h-8 text-xs" value={item.costPrice} onChange={(e) => updateItem(item.id, { costPrice: +e.target.value })} />
@@ -415,6 +415,7 @@ const QuotationBuilder = () => {
                 </Table>
               </CardContent>
             </Card>
+
 
             {/* Totals Card */}
             <Card>
