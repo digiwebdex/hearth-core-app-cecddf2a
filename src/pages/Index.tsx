@@ -44,31 +44,13 @@ import { useTranslation } from "react-i18next";
 
 const Index = () => {
   const { t } = useTranslation();
-  const { toast } = useToast();
-  const { register } = useAuth();
   const navigate = useNavigate();
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ companyName: "", ownerName: "", email: "", phone: "", password: "", address: "", website: "", employees: "", message: "" });
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const handleSelectPlan = (planId: string) => { setSelectedPlan(planId); setDialogOpen(true); };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await register({ name: form.ownerName, email: form.email, password: form.password, tenantName: form.companyName });
-      toast({ title: "Account Submitted", description: `Your ${PLANS.find(p => p.id === selectedPlan)?.name} plan signup is pending admin approval. You'll be notified once approved.` });
-      setDialogOpen(false);
-      navigate("/login");
-    } catch (err: any) {
-      toast({ variant: "destructive", title: "Registration Failed", description: err.message });
-    } finally { setLoading(false); }
+  // Single entry point: any plan-card click → /register with pre-selected plan
+  const handleSelectPlan = (planId: string) => {
+    navigate(`/register?plan=${planId}`);
   };
-
-  const update = (key: string, val: string) => setForm((p) => ({ ...p, [key]: val }));
 
   const visiblePlans = PLANS;
 
