@@ -120,12 +120,12 @@ const Dashboard = () => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-            <p className="text-muted-foreground">Your agency at a glance — leads, bookings, payments, and operations.</p>
+            <h1 className="text-3xl font-bold tracking-tight">{t("dashboard.title")}</h1>
+            <p className="text-muted-foreground">{t("dashboard.subtitle")}</p>
           </div>
           <Button variant="outline" size="sm" onClick={fetchData} disabled={loading}>
             <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />
-            Refresh
+            {t("common.refresh")}
           </Button>
         </div>
 
@@ -136,17 +136,16 @@ const Dashboard = () => {
               <div className="text-center space-y-4">
                 <Briefcase className="h-12 w-12 text-muted-foreground mx-auto" />
                 <div>
-                  <h2 className="text-xl font-semibold">Welcome to your travel agency dashboard</h2>
+                  <h2 className="text-xl font-semibold">{t("dashboard.welcomeTitle")}</h2>
                   <p className="text-muted-foreground mt-1 max-w-lg mx-auto">
-                    Start by adding a lead, sending a quotation, or creating a booking.
-                    Your operational summary will appear here as you grow.
+                    {t("dashboard.welcomeDesc")}
                   </p>
                 </div>
                 <div className="flex flex-wrap justify-center gap-3 pt-2">
-                  <Button onClick={() => navigate("/leads")}><UserPlus className="mr-2 h-4 w-4" /> Add a Lead</Button>
-                  <Button variant="outline" onClick={() => navigate("/quotations/new")}><Send className="mr-2 h-4 w-4" /> Create Quotation</Button>
-                  <Button variant="outline" onClick={() => navigate("/bookings")}><Plane className="mr-2 h-4 w-4" /> New Booking</Button>
-                  <Button variant="outline" onClick={() => navigate("/invoices")}><ReceiptText className="mr-2 h-4 w-4" /> Create Invoice</Button>
+                  <Button onClick={() => navigate("/leads")}><UserPlus className="mr-2 h-4 w-4" /> {t("dashboard.addLead")}</Button>
+                  <Button variant="outline" onClick={() => navigate("/quotations/new")}><Send className="mr-2 h-4 w-4" /> {t("dashboard.createQuotation")}</Button>
+                  <Button variant="outline" onClick={() => navigate("/bookings")}><Plane className="mr-2 h-4 w-4" /> {t("dashboard.newBooking")}</Button>
+                  <Button variant="outline" onClick={() => navigate("/invoices")}><ReceiptText className="mr-2 h-4 w-4" /> {t("dashboard.createInvoice")}</Button>
                 </div>
               </div>
             </CardContent>
@@ -156,54 +155,55 @@ const Dashboard = () => {
         {/* ── KPI Row 1: Pipeline ── */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <WidgetCard
-            title="Active Leads" value={stats?.activeLeads ?? 0} icon={UserPlus}
+            title={t("dashboard.activeLeads")} value={stats?.activeLeads ?? 0} icon={UserPlus}
             color="text-blue-600" loading={loading}
             onClick={() => navigate("/leads")}
-            subtitle={stats?.followUpsDueToday ? `${stats.followUpsDueToday} follow-up${stats.followUpsDueToday > 1 ? "s" : ""} due today` : undefined}
+            subtitle={stats?.followUpsDueToday ? `${stats.followUpsDueToday} ${t("dashboard.followUpsDue")}` : undefined}
             subtitleColor={stats?.followUpsDueToday ? "text-orange-600 dark:text-orange-400" : undefined}
           />
           <WidgetCard
-            title="Quotations Sent" value={stats?.quotationsSentThisMonth ?? 0} icon={Send}
+            title={t("dashboard.quotationsSent")} value={stats?.quotationsSentThisMonth ?? 0} icon={Send}
             color="text-indigo-600" loading={loading}
             onClick={() => navigate("/quotations")}
-            subtitle={stats?.quotationsAwaitingApproval ? `${stats.quotationsAwaitingApproval} awaiting approval` : undefined}
+            subtitle={stats?.quotationsAwaitingApproval ? `${stats.quotationsAwaitingApproval} ${t("dashboard.awaitingApproval")}` : undefined}
           />
           <WidgetCard
-            title="Confirmed Bookings" value={stats?.confirmedBookings ?? 0} icon={CheckCircle2}
+            title={t("dashboard.confirmedBookings")} value={stats?.confirmedBookings ?? 0} icon={CheckCircle2}
             color="text-emerald-600" loading={loading}
             onClick={() => navigate("/bookings")}
           />
           <WidgetCard
-            title="Upcoming Departures" value={stats?.upcomingDepartures ?? 0} icon={Plane}
+            title={t("dashboard.upcomingDepartures")} value={stats?.upcomingDepartures ?? 0} icon={Plane}
             color="text-violet-600" loading={loading}
             onClick={() => navigate("/bookings")}
-            subtitle="Next 7 days"
+            subtitle={t("dashboard.next7Days")}
           />
         </div>
 
         {/* ── KPI Row 2: Financial ── */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <WidgetCard
-            title="Sales This Month" value={`৳${(stats?.salesThisMonth ?? 0).toLocaleString()}`}
+            title={t("dashboard.salesThisMonth")} value={`৳${(stats?.salesThisMonth ?? 0).toLocaleString()}`}
             icon={TrendingUp} color="text-emerald-600" loading={loading}
           />
           <WidgetCard
-            title="Overdue Invoices" value={stats?.overdueInvoices ?? 0}
+            title={t("dashboard.overdueInvoices")} value={stats?.overdueInvoices ?? 0}
             icon={AlertTriangle} color="text-destructive" loading={loading}
             onClick={() => navigate("/invoices")}
-            subtitle={stats?.overdueInvoiceAmount ? `৳${stats.overdueInvoiceAmount.toLocaleString()} outstanding` : undefined}
+            subtitle={stats?.overdueInvoiceAmount ? `৳${stats.overdueInvoiceAmount.toLocaleString()} ${t("dashboard.outstanding")}` : undefined}
             subtitleColor="text-destructive"
           />
           <WidgetCard
-            title="Vendor Dues" value={`৳${(stats?.vendorDues ?? 0).toLocaleString()}`}
+            title={t("dashboard.vendorDues")} value={`৳${(stats?.vendorDues ?? 0).toLocaleString()}`}
             icon={Building2} color="text-orange-600" loading={loading}
             onClick={() => navigate("/vendors")}
           />
           <WidgetCard
-            title="Total Revenue" value={`৳${(stats?.totalRevenue ?? 0).toLocaleString()}`}
+            title={t("dashboard.totalRevenue")} value={`৳${(stats?.totalRevenue ?? 0).toLocaleString()}`}
             icon={DollarSign} color="text-amber-600" loading={loading}
           />
         </div>
+
 
         {/* ── Main Content ── */}
         <div className="grid gap-6 lg:grid-cols-3">
