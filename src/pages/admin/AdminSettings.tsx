@@ -157,41 +157,41 @@ const AdminSettings = () => {
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-            <Settings className="h-8 w-8" /> System Settings
+            <Settings className="h-8 w-8" /> {t("adminSettings.title")}
           </h1>
-          <p className="text-muted-foreground">Configure global platform settings</p>
+          <p className="text-muted-foreground">{t("adminSettings.subtitle")}</p>
         </div>
 
         <Tabs defaultValue="general" className="space-y-4">
           <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="general" className="gap-1.5"><Settings className="h-4 w-4" /> General</TabsTrigger>
-            <TabsTrigger value="email" className="gap-1.5"><Mail className="h-4 w-4" /> Email</TabsTrigger>
-            <TabsTrigger value="sms" className="gap-1.5"><Smartphone className="h-4 w-4" /> SMS</TabsTrigger>
-            <TabsTrigger value="payment" className="gap-1.5"><CreditCard className="h-4 w-4" /> Payment</TabsTrigger>
-            <TabsTrigger value="domain" className="gap-1.5"><Globe className="h-4 w-4" /> Domain</TabsTrigger>
+            <TabsTrigger value="general" className="gap-1.5"><Settings className="h-4 w-4" /> {t("adminSettings.tabs.general")}</TabsTrigger>
+            <TabsTrigger value="email" className="gap-1.5"><Mail className="h-4 w-4" /> {t("adminSettings.tabs.email")}</TabsTrigger>
+            <TabsTrigger value="sms" className="gap-1.5"><Smartphone className="h-4 w-4" /> {t("adminSettings.tabs.sms")}</TabsTrigger>
+            <TabsTrigger value="payment" className="gap-1.5"><CreditCard className="h-4 w-4" /> {t("adminSettings.tabs.payment")}</TabsTrigger>
+            <TabsTrigger value="domain" className="gap-1.5"><Globe className="h-4 w-4" /> {t("adminSettings.tabs.domain")}</TabsTrigger>
           </TabsList>
 
           {/* ════════ GENERAL ════════ */}
           <TabsContent value="general">
             <Card>
               <CardHeader>
-                <CardTitle>General Settings</CardTitle>
-                <CardDescription>Basic platform configuration</CardDescription>
+                <CardTitle>{t("adminSettings.general.title")}</CardTitle>
+                <CardDescription>{t("adminSettings.general.desc")}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>Application Name</Label>
+                    <Label>{t("adminSettings.general.appName")}</Label>
                     <Input value={general.appName} onChange={(e) => setGeneral({ ...general, appName: e.target.value })} />
                   </div>
                   <div className="space-y-2">
-                    <Label>Support Email</Label>
+                    <Label>{t("adminSettings.general.supportEmail")}</Label>
                     <Input type="email" value={general.supportEmail} onChange={(e) => setGeneral({ ...general, supportEmail: e.target.value })} />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Logo</Label>
+                  <Label>{t("adminSettings.general.logo")}</Label>
                   <div className="flex items-center gap-4">
                     {general.logoUrl ? (
                       <img src={general.logoUrl} alt="Logo" className="h-12 w-12 rounded-md object-cover border" />
@@ -202,7 +202,7 @@ const AdminSettings = () => {
                     )}
                     <Input
                       type="url"
-                      placeholder="Logo URL (e.g. https://example.com/logo.png)"
+                      placeholder={t("adminSettings.general.logoPlaceholder")}
                       value={general.logoUrl}
                       onChange={(e) => setGeneral({ ...general, logoUrl: e.target.value })}
                       className="flex-1"
@@ -212,7 +212,7 @@ const AdminSettings = () => {
 
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="space-y-2">
-                    <Label>Currency</Label>
+                    <Label>{t("adminSettings.general.currency")}</Label>
                     <Select value={general.currency} onValueChange={(v) => setGeneral({ ...general, currency: v })}>
                       <SelectTrigger><SelectValue /></SelectTrigger>
                       <SelectContent>
@@ -226,11 +226,11 @@ const AdminSettings = () => {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label>Currency Symbol</Label>
+                    <Label>{t("adminSettings.general.currencySymbol")}</Label>
                     <Input value={general.currencySymbol} onChange={(e) => setGeneral({ ...general, currencySymbol: e.target.value })} maxLength={5} />
                   </div>
                   <div className="space-y-2">
-                    <Label>Timezone</Label>
+                    <Label>{t("adminSettings.general.timezone")}</Label>
                     <Select value={general.timezone} onValueChange={(v) => setGeneral({ ...general, timezone: v })}>
                       <SelectTrigger><SelectValue /></SelectTrigger>
                       <SelectContent>
@@ -246,21 +246,21 @@ const AdminSettings = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Meta Description</Label>
+                  <Label>{t("adminSettings.general.metaDescription")}</Label>
                   <Textarea value={general.metaDescription} onChange={(e) => setGeneral({ ...general, metaDescription: e.target.value })} rows={2} maxLength={300} />
                 </div>
 
                 <div className="flex items-center justify-between rounded-lg border p-4">
                   <div>
-                    <p className="font-medium">Maintenance Mode</p>
-                    <p className="text-sm text-muted-foreground">Temporarily disable the platform for all tenants</p>
+                    <p className="font-medium">{t("adminSettings.general.maintenance")}</p>
+                    <p className="text-sm text-muted-foreground">{t("adminSettings.general.maintenanceDesc")}</p>
                   </div>
                   <Switch checked={general.maintenanceMode} onCheckedChange={(v) => setGeneral({ ...general, maintenanceMode: v })} />
                 </div>
 
-                <Button onClick={() => handleSave("General")} disabled={saving}>
+                <Button onClick={() => handleSave(t("adminSettings.tabs.general"))} disabled={saving}>
                   {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-                  Save General Settings
+                  {t("adminSettings.general.saveBtn")}
                 </Button>
               </CardContent>
             </Card>
