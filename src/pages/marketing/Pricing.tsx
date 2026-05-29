@@ -187,16 +187,16 @@ const Pricing = () => {
       {/* Feature Comparison */}
       <section className="py-16 bg-[#0f1729]">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-8">Full Feature Comparison</h2>
+          <h2 className="text-2xl font-bold text-center mb-8">{t("marketing.pricing.fullCompare")}</h2>
           <div className="max-w-7xl mx-auto overflow-x-auto rounded-xl border border-white/8">
             <Table>
               <TableHeader>
                 <TableRow className="border-white/8 bg-white/[0.04]">
-                  <TableHead className="text-white/60 min-w-[200px]">Feature</TableHead>
+                  <TableHead className="text-white/60 min-w-[200px]">{t("marketing.pricing.feature")}</TableHead>
                   {PLANS.map((p) => (
                     <TableHead key={p.id} className="text-center text-white/60 min-w-[100px]">
                       <div className="font-semibold">{p.name}</div>
-                      <div className="text-xs text-amber-400 font-normal">{p.monthlyPrice === -1 ? "Custom" : p.monthlyPrice === 0 ? "Free" : `৳${p.monthlyPrice}`}</div>
+                      <div className="text-xs text-amber-400 font-normal">{p.monthlyPrice === -1 ? t("marketing.pricing.custom") : p.monthlyPrice === 0 ? t("marketing.pricing.free") : `৳${p.monthlyPrice}`}</div>
                     </TableHead>
                   ))}
                 </TableRow>
