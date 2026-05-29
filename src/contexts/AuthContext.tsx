@@ -88,17 +88,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const register = useCallback(
-    async (data: { name: string; email: string; password: string; tenantName: string }) => {
-      const res = await authApi.register(data);
-      // New signups are pending admin approval — no token returned
-      if (res.pendingApproval || !res.token) {
-        return { pendingApproval: true, message: res.message };
+    async (data: { name: string; email: string; password: string; tenantName: string; plan?: string }) => {
+      const res: any = await authApi.register(data);
+      // New flow: instant token + 3-day trial
+      if (res.token) {
+        localStorage.setItem("token", res.token);
+        if (res.user) setUser(res.user);
+        if (res.tenant) setTenant(res.tenant);
+        else fetchTenant();
+        return { pendingApproval: false, user: res.user, trialDays: res.trialDays, message: res.message };
       }
-      // Legacy path (auto-approval) — should not happen, but kept defensive
-      localStorage.setItem("token", res.token);
-      if (res.user) setUser(res.user);
-      fetchTenant();
-      return { pendingApproval: false, user: res.user };
+      // Legacy fallback (older backend still in pending-approval mode)
+      return { pendingApproval: true, message: res.message };
     },
     []
   );
