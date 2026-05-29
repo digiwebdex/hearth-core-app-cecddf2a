@@ -296,47 +296,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ───── Registration Dialog ───── */}
-      <Dialog
-        open={dialogOpen}
-        onOpenChange={(open) => {
-          setDialogOpen(open);
-          if (!open) setSelectedPlan(null);
-        }}
-      >
-        {(() => {
-          const selectedPlanInfo = PLANS.find((p) => p.id === selectedPlan);
-          if (!selectedPlanInfo) return null;
-
-          return (
-            <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto bg-[#111827] border-white/10 text-white">
-              <DialogHeader>
-                <DialogTitle className="text-xl">{t("register.subscribeTo")} <span className="text-amber-400">{selectedPlanInfo.name}</span> {t("register.planSuffix")}</DialogTitle>
-                <DialogDescription className="text-white/45">{t("register.fillDetails")}</DialogDescription>
-              </DialogHeader>
-              <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                <div className="p-3 rounded-lg bg-amber-400/10 border border-amber-400/20 flex items-center justify-between">
-                  <span className="text-sm font-medium">{selectedPlanInfo.name}</span>
-                  <span className="font-bold text-amber-400">{selectedPlanInfo.price === -1 ? t("register.contactForPrice") : `৳${selectedPlanInfo.price.toLocaleString()}${t("common.perMonth")}`}</span>
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2"><Label className="text-white/60">{t("register.companyName")} *</Label><Input value={form.companyName} onChange={(e) => update("companyName", e.target.value)} placeholder={t("register.yourAgency")} required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
-                  <div className="space-y-2"><Label className="text-white/60">{t("register.ownerName")} *</Label><Input value={form.ownerName} onChange={(e) => update("ownerName", e.target.value)} placeholder={t("common.fullName")} required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2"><Label className="text-white/60">{t("common.email")} *</Label><Input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="you@company.com" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
-                  <div className="space-y-2"><Label className="text-white/60">{t("register.phone")} *</Label><Input value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="+880 1XXX-XXXXXX" required className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
-                </div>
-                <div className="space-y-2"><Label className="text-white/60">{t("common.password")} *</Label><Input type="password" value={form.password} onChange={(e) => update("password", e.target.value)} placeholder={t("register.minChars")} required minLength={8} className="bg-white/5 border-white/12 text-white placeholder:text-white/25" /></div>
-                <Button type="submit" disabled={loading} className="w-full h-11 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg shadow-amber-500/20">
-                  {loading ? t("register.creating") : t("common.createAccount")}
-                </Button>
-                <p className="text-center text-xs text-white/25">{t("common.alreadyHaveAccount")} <Link to="/login" className="text-amber-400 underline">{t("common.signIn")}</Link></p>
-              </form>
-            </DialogContent>
-          );
-        })()}
-      </Dialog>
     </MarketingLayout>
   );
 };
