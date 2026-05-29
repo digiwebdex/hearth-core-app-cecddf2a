@@ -142,8 +142,12 @@
   },
   "leadsForm": {
     "statuses": {
-      "new": "নতুন", "contacted": "যোগাযোগ হয়েছে", "qualified": "যোগ্য",
-      "quoted": "কোটেশন দেওয়া", "won": "জিতেছে", "lost": "হারিয়েছে"
+      "new": "নতুন",
+      "contacted": "যোগাযোগ হয়েছে",
+      "qualified": "যোগ্য",
+      "quoted": "কোটেশন দেওয়া",
+      "won": "জিতেছে",
+      "lost": "হারিয়েছে"
     },
     "all": "সব",
     "searchPlaceholder": "নাম, ইমেইল, ফোন, গন্তব্য খুঁজুন...",
@@ -200,15 +204,25 @@
   },
   "bookingsForm": {
     "statuses": {
-      "pending": "অপেক্ষমাণ", "confirmed": "নিশ্চিত", "ticketed": "টিকেট ইস্যু",
-      "traveling": "ভ্রমণরত", "completed": "সম্পন্ন", "cancelled": "বাতিল"
+      "pending": "অপেক্ষমাণ",
+      "confirmed": "নিশ্চিত",
+      "ticketed": "টিকেট ইস্যু",
+      "traveling": "ভ্রমণরত",
+      "completed": "সম্পন্ন",
+      "cancelled": "বাতিল"
     },
     "types": {
-      "tour": "ট্যুর", "ticket": "টিকেট", "hotel": "হোটেল",
-      "visa": "ভিসা", "package": "প্যাকেজ"
+      "tour": "ট্যুর",
+      "ticket": "টিকেট",
+      "hotel": "হোটেল",
+      "visa": "ভিসা",
+      "package": "প্যাকেজ"
     },
     "payments": {
-      "all": "সব পেমেন্ট", "unpaid": "অপরিশোধিত", "partial": "আংশিক", "paid": "পরিশোধিত"
+      "all": "সব পেমেন্ট",
+      "unpaid": "অপরিশোধিত",
+      "partial": "আংশিক",
+      "paid": "পরিশোধিত"
     },
     "all": "সব",
     "searchPlaceholder": "শিরোনাম, ক্লায়েন্ট, গন্তব্য খুঁজুন...",
@@ -278,22 +292,40 @@
   },
   "clientsForm": {
     "searchPlaceholder": "নাম, ইমেইল, ফোন, পাসপোর্ট খুঁজুন...",
-    "name": "নাম", "contact": "যোগাযোগ", "passport": "পাসপোর্ট",
-    "nationality": "জাতীয়তা", "tags": "ট্যাগ", "actions": "অ্যাকশন",
+    "name": "নাম",
+    "contact": "যোগাযোগ",
+    "passport": "পাসপোর্ট",
+    "nationality": "জাতীয়তা",
+    "tags": "ট্যাগ",
+    "actions": "অ্যাকশন",
     "noClientsFound": "কোনো ক্লায়েন্ট পাওয়া যায়নি।",
-    "view": "দেখুন", "edit": "সম্পাদনা", "delete": "মুছুন",
-    "editClient": "ক্লায়েন্ট সম্পাদনা", "newClient": "নতুন ক্লায়েন্ট",
-    "contactInfo": "যোগাযোগের তথ্য", "identityDocs": "পরিচয় ও ডকুমেন্ট",
+    "view": "দেখুন",
+    "edit": "সম্পাদনা",
+    "delete": "মুছুন",
+    "editClient": "ক্লায়েন্ট সম্পাদনা",
+    "newClient": "নতুন ক্লায়েন্ট",
+    "contactInfo": "যোগাযোগের তথ্য",
+    "identityDocs": "পরিচয় ও ডকুমেন্ট",
     "emergencyContact": "জরুরি যোগাযোগ",
-    "phone": "ফোন", "email": "ইমেইল", "alternatePhone": "বিকল্প ফোন",
-    "address": "ঠিকানা", "dateOfBirth": "জন্ম তারিখ",
-    "passportNumber": "পাসপোর্ট নম্বর", "passportExpiry": "পাসপোর্ট মেয়াদ",
-    "nidNumber": "এনআইডি নম্বর", "contactName": "যোগাযোগের নাম",
-    "contactPhone": "যোগাযোগের ফোন", "notes": "নোট",
+    "phone": "ফোন",
+    "email": "ইমেইল",
+    "alternatePhone": "বিকল্প ফোন",
+    "address": "ঠিকানা",
+    "dateOfBirth": "জন্ম তারিখ",
+    "passportNumber": "পাসপোর্ট নম্বর",
+    "passportExpiry": "পাসপোর্ট মেয়াদ",
+    "nidNumber": "এনআইডি নম্বর",
+    "contactName": "যোগাযোগের নাম",
+    "contactPhone": "যোগাযোগের ফোন",
+    "notes": "নোট",
     "pickDate": "তারিখ নির্বাচন করুন",
-    "updateClient": "ক্লায়েন্ট আপডেট", "createClient": "ক্লায়েন্ট তৈরি", "cancel": "বাতিল",
-    "clientCreated": "ক্লায়েন্ট তৈরি হয়েছে", "clientUpdated": "ক্লায়েন্ট আপডেট হয়েছে",
-    "clientDeleted": "ক্লায়েন্ট মুছে ফেলা হয়েছে", "error": "ত্রুটি"
+    "updateClient": "ক্লায়েন্ট আপডেট",
+    "createClient": "ক্লায়েন্ট তৈরি",
+    "cancel": "বাতিল",
+    "clientCreated": "ক্লায়েন্ট তৈরি হয়েছে",
+    "clientUpdated": "ক্লায়েন্ট আপডেট হয়েছে",
+    "clientDeleted": "ক্লায়েন্ট মুছে ফেলা হয়েছে",
+    "error": "ত্রুটি"
   },
   "trial": {
     "proTrial": "প্রো ট্রায়াল",
@@ -951,6 +983,160 @@
           "contact": true
         }
       ]
+    }
+  },
+  "invoicesForm": {
+    "statuses": {
+      "unpaid": "অপরিশোধিত",
+      "partial": "আংশিক পরিশোধিত",
+      "paid": "পরিশোধিত",
+      "overdue": "মেয়াদোত্তীর্ণ",
+      "refunded": "ফেরত দেওয়া",
+      "cancelled": "বাতিল"
+    },
+    "methods": {
+      "cash": "নগদ",
+      "bank": "ব্যাংক ট্রান্সফার",
+      "card": "ক্রেডিট/ডেবিট কার্ড",
+      "mobile_banking": "মোবাইল ব্যাংকিং (বিকাশ/নগদ)",
+      "cheque": "চেক",
+      "online": "অনলাইন পেমেন্ট"
+    },
+    "createTitle": "ইনভয়েস তৈরি করুন",
+    "createBtn": "ইনভয়েস তৈরি করুন",
+    "cancel": "বাতিল",
+    "bookingId": "বুকিং আইডি",
+    "bookingIdPh": "বুকিং রেফারেন্স",
+    "bookingTitle": "বুকিং শিরোনাম",
+    "bookingTitlePh": "যেমন: থাইল্যান্ড ট্যুর — ৫রাত/৬দিন",
+    "clientName": "ক্লায়েন্টের নাম",
+    "clientNamePh": "যেমন: জনাব করিম আহমেদ",
+    "invoiceAmount": "ইনভয়েস পরিমাণ (৳)",
+    "cost": "খরচ (৳)",
+    "profit": "লাভ",
+    "dueDate": "শেষ তারিখ",
+    "notes": "নোট",
+    "notesPh": "অভ্যন্তরীণ নোট...",
+    "widgets": {
+      "totalInvoiced": "মোট ইনভয়েস",
+      "collected": "আদায়কৃত",
+      "outstanding": "বকেয়া",
+      "profit": "লাভ",
+      "overdue": "মেয়াদোত্তীর্ণ",
+      "refunded": "ফেরত"
+    },
+    "all": "সব",
+    "searchPh": "ইনভয়েস, ক্লায়েন্ট, বুকিং খুঁজুন...",
+    "table": {
+      "invoice": "ইনভয়েস",
+      "booking": "বুকিং",
+      "client": "ক্লায়েন্ট",
+      "total": "মোট",
+      "paid": "পরিশোধিত",
+      "due": "বকেয়া",
+      "progress": "অগ্রগতি",
+      "dueDate": "শেষ তারিখ",
+      "status": "অবস্থা",
+      "actions": "অ্যাকশন",
+      "noMatch": "কোনো ইনভয়েস ফিল্টারের সাথে মেলে না।"
+    },
+    "empty": {
+      "title": "এখনো কোনো ইনভয়েস নেই",
+      "desc": "পেমেন্ট ট্র্যাক করা শুরু করতে বুকিং থেকে প্রথম ইনভয়েস তৈরি করুন।",
+      "action": "নতুন ইনভয়েস"
+    },
+    "actions": {
+      "viewDetails": "বিস্তারিত দেখুন",
+      "viewReceipt": "রসিদ দেখুন",
+      "addPayment": "পেমেন্ট যোগ করুন",
+      "sendEmail": "ইনভয়েস ইমেইল পাঠান",
+      "payOnline": "অনলাইনে পরিশোধ করুন"
+    },
+    "detail": {
+      "title": "ইনভয়েস বিস্তারিত",
+      "client": "ক্লায়েন্ট",
+      "booking": "বুকিং",
+      "dueDate": "শেষ তারিখ",
+      "notSet": "নির্ধারিত নয়",
+      "created": "তৈরি হয়েছে",
+      "total": "মোট",
+      "paid": "পরিশোধিত",
+      "due": "বকেয়া",
+      "profit": "লাভ",
+      "recordPayment": "পেমেন্ট রেকর্ড করুন",
+      "sendReminder": "অনুস্মারক পাঠান",
+      "refund": "ফেরত",
+      "cancel": "বাতিল",
+      "payments": "পেমেন্ট",
+      "refunds": "ফেরত",
+      "audit": "অডিট ট্রেইল",
+      "noPayments": "এখনো কোনো পেমেন্ট রেকর্ড হয়নি।",
+      "noRefunds": "কোনো ফেরত প্রক্রিয়া করা হয়নি।",
+      "noAudit": "কোনো অডিট ইভেন্ট নেই।",
+      "date": "তারিখ",
+      "amount": "পরিমাণ",
+      "method": "পদ্ধতি",
+      "reference": "রেফারেন্স",
+      "notes": "নোট",
+      "reason": "কারণ",
+      "by": "দ্বারা"
+    },
+    "payDialog": {
+      "title": "পেমেন্ট রেকর্ড করুন",
+      "totalLabel": "মোট:",
+      "paidLabel": "এ পর্যন্ত পরিশোধিত:",
+      "remainingLabel": "অবশিষ্ট:",
+      "amount": "পরিমাণ (৳)",
+      "method": "পদ্ধতি",
+      "date": "পেমেন্টের তারিখ",
+      "ref": "ট্রানজেকশন রেফ",
+      "refPh": "যেমন: TXN-12345",
+      "receivedBy": "গ্রহণকারী",
+      "receivedByPh": "স্টাফের নাম",
+      "notes": "নোট",
+      "notesPh": "ঐচ্ছিক পেমেন্ট নোট...",
+      "submit": "পেমেন্ট রেকর্ড করুন"
+    },
+    "refundDialog": {
+      "title": "ফেরত প্রক্রিয়া করুন",
+      "paidAmount": "পরিশোধিত পরিমাণ:",
+      "alreadyRefunded": "ইতিমধ্যে ফেরত:",
+      "maxRefundable": "সর্বাধিক ফেরতযোগ্য:",
+      "amount": "ফেরত পরিমাণ (৳)",
+      "reason": "কারণ *",
+      "reasonPh": "ফেরতের কারণ...",
+      "method": "ফেরত পদ্ধতি",
+      "methodPh": "পেমেন্টের মতোই",
+      "submit": "ফেরত প্রক্রিয়া করুন"
+    },
+    "cancelDialog": {
+      "title": "ইনভয়েস বাতিল করুন",
+      "warning": "এই কাজটি ফেরানো যাবে না। ইনভয়েসটি বাতিল হিসেবে চিহ্নিত হবে।",
+      "reason": "বাতিলের কারণ *",
+      "reasonPh": "বাতিলের কারণ...",
+      "confirm": "বাতিল নিশ্চিত করুন",
+      "keep": "ইনভয়েস রাখুন"
+    },
+    "fromBooking": {
+      "title": "বুকিং থেকে ইনভয়েস তৈরি করুন",
+      "loading": "বুকিং লোড হচ্ছে...",
+      "none": "কোনো বুকিং পাওয়া যায়নি।",
+      "noClient": "কোনো ক্লায়েন্ট নেই"
+    },
+    "toast": {
+      "created": "ইনভয়েস তৈরি হয়েছে",
+      "smsSent": "ক্লায়েন্টকে SMS পাঠানো হয়েছে",
+      "paymentSmsSent": "পেমেন্ট SMS পাঠানো হয়েছে",
+      "paymentRecorded": "পেমেন্ট রেকর্ড হয়েছে",
+      "invalidAmount": "অবৈধ পরিমাণ",
+      "refundProcessed": "ফেরত প্রক্রিয়া হয়েছে",
+      "refundFailed": "ফেরত ব্যর্থ",
+      "cancelled": "ইনভয়েস বাতিল হয়েছে",
+      "failed": "ব্যর্থ",
+      "emailSent": "ইনভয়েস ইমেইল পাঠানো হয়েছে",
+      "emailFailed": "ইমেইল ব্যর্থ",
+      "reminderSent": "অনুস্মারক পাঠানো হয়েছে",
+      "exported": "ইনভয়েস এক্সপোর্ট হয়েছে"
     }
   }
 }

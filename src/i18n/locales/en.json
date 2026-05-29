@@ -142,8 +142,12 @@
   },
   "leadsForm": {
     "statuses": {
-      "new": "New", "contacted": "Contacted", "qualified": "Qualified",
-      "quoted": "Quoted", "won": "Won", "lost": "Lost"
+      "new": "New",
+      "contacted": "Contacted",
+      "qualified": "Qualified",
+      "quoted": "Quoted",
+      "won": "Won",
+      "lost": "Lost"
     },
     "all": "All",
     "searchPlaceholder": "Search name, email, phone, destination...",
@@ -200,15 +204,25 @@
   },
   "bookingsForm": {
     "statuses": {
-      "pending": "Pending", "confirmed": "Confirmed", "ticketed": "Ticketed",
-      "traveling": "Traveling", "completed": "Completed", "cancelled": "Cancelled"
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "ticketed": "Ticketed",
+      "traveling": "Traveling",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
     },
     "types": {
-      "tour": "Tour", "ticket": "Ticket", "hotel": "Hotel",
-      "visa": "Visa", "package": "Package"
+      "tour": "Tour",
+      "ticket": "Ticket",
+      "hotel": "Hotel",
+      "visa": "Visa",
+      "package": "Package"
     },
     "payments": {
-      "all": "All Payments", "unpaid": "Unpaid", "partial": "Partial", "paid": "Paid"
+      "all": "All Payments",
+      "unpaid": "Unpaid",
+      "partial": "Partial",
+      "paid": "Paid"
     },
     "all": "All",
     "searchPlaceholder": "Search title, client, destination...",
@@ -278,22 +292,40 @@
   },
   "clientsForm": {
     "searchPlaceholder": "Search name, email, phone, passport...",
-    "name": "Name", "contact": "Contact", "passport": "Passport",
-    "nationality": "Nationality", "tags": "Tags", "actions": "Actions",
+    "name": "Name",
+    "contact": "Contact",
+    "passport": "Passport",
+    "nationality": "Nationality",
+    "tags": "Tags",
+    "actions": "Actions",
     "noClientsFound": "No clients found.",
-    "view": "View", "edit": "Edit", "delete": "Delete",
-    "editClient": "Edit Client", "newClient": "New Client",
-    "contactInfo": "Contact Info", "identityDocs": "Identity & Documents",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "editClient": "Edit Client",
+    "newClient": "New Client",
+    "contactInfo": "Contact Info",
+    "identityDocs": "Identity & Documents",
     "emergencyContact": "Emergency Contact",
-    "phone": "Phone", "email": "Email", "alternatePhone": "Alternate Phone",
-    "address": "Address", "dateOfBirth": "Date of Birth",
-    "passportNumber": "Passport Number", "passportExpiry": "Passport Expiry",
-    "nidNumber": "NID Number", "contactName": "Contact Name",
-    "contactPhone": "Contact Phone", "notes": "Notes",
+    "phone": "Phone",
+    "email": "Email",
+    "alternatePhone": "Alternate Phone",
+    "address": "Address",
+    "dateOfBirth": "Date of Birth",
+    "passportNumber": "Passport Number",
+    "passportExpiry": "Passport Expiry",
+    "nidNumber": "NID Number",
+    "contactName": "Contact Name",
+    "contactPhone": "Contact Phone",
+    "notes": "Notes",
     "pickDate": "Pick a date",
-    "updateClient": "Update Client", "createClient": "Create Client", "cancel": "Cancel",
-    "clientCreated": "Client created", "clientUpdated": "Client updated",
-    "clientDeleted": "Client deleted", "error": "Error"
+    "updateClient": "Update Client",
+    "createClient": "Create Client",
+    "cancel": "Cancel",
+    "clientCreated": "Client created",
+    "clientUpdated": "Client updated",
+    "clientDeleted": "Client deleted",
+    "error": "Error"
   },
   "trial": {
     "proTrial": "Pro Trial",
@@ -951,6 +983,160 @@
           "contact": true
         }
       ]
+    }
+  },
+  "invoicesForm": {
+    "statuses": {
+      "unpaid": "Unpaid",
+      "partial": "Partially Paid",
+      "paid": "Paid",
+      "overdue": "Overdue",
+      "refunded": "Refunded",
+      "cancelled": "Cancelled"
+    },
+    "methods": {
+      "cash": "Cash",
+      "bank": "Bank Transfer",
+      "card": "Credit/Debit Card",
+      "mobile_banking": "Mobile Banking (bKash/Nagad)",
+      "cheque": "Cheque",
+      "online": "Online Payment"
+    },
+    "createTitle": "Create Invoice",
+    "createBtn": "Create Invoice",
+    "cancel": "Cancel",
+    "bookingId": "Booking ID",
+    "bookingIdPh": "Booking reference",
+    "bookingTitle": "Booking Title",
+    "bookingTitlePh": "e.g. Thailand Tour — 5N/6D",
+    "clientName": "Client Name",
+    "clientNamePh": "e.g. Mr. Karim Ahmed",
+    "invoiceAmount": "Invoice Amount (৳)",
+    "cost": "Cost (৳)",
+    "profit": "Profit",
+    "dueDate": "Due Date",
+    "notes": "Notes",
+    "notesPh": "Internal notes...",
+    "widgets": {
+      "totalInvoiced": "Total Invoiced",
+      "collected": "Collected",
+      "outstanding": "Outstanding",
+      "profit": "Profit",
+      "overdue": "Overdue",
+      "refunded": "Refunded"
+    },
+    "all": "All",
+    "searchPh": "Search invoice, client, booking...",
+    "table": {
+      "invoice": "Invoice",
+      "booking": "Booking",
+      "client": "Client",
+      "total": "Total",
+      "paid": "Paid",
+      "due": "Due",
+      "progress": "Progress",
+      "dueDate": "Due Date",
+      "status": "Status",
+      "actions": "Actions",
+      "noMatch": "No invoices match your filters."
+    },
+    "empty": {
+      "title": "No invoices yet",
+      "desc": "Create your first invoice from a booking to start tracking payments.",
+      "action": "New Invoice"
+    },
+    "actions": {
+      "viewDetails": "View Details",
+      "viewReceipt": "View Receipt",
+      "addPayment": "Add Payment",
+      "sendEmail": "Send Invoice Email",
+      "payOnline": "Pay Online"
+    },
+    "detail": {
+      "title": "Invoice Details",
+      "client": "Client",
+      "booking": "Booking",
+      "dueDate": "Due Date",
+      "notSet": "Not set",
+      "created": "Created",
+      "total": "Total",
+      "paid": "Paid",
+      "due": "Due",
+      "profit": "Profit",
+      "recordPayment": "Record Payment",
+      "sendReminder": "Send Reminder",
+      "refund": "Refund",
+      "cancel": "Cancel",
+      "payments": "Payments",
+      "refunds": "Refunds",
+      "audit": "Audit Trail",
+      "noPayments": "No payments recorded yet.",
+      "noRefunds": "No refunds processed.",
+      "noAudit": "No audit events.",
+      "date": "Date",
+      "amount": "Amount",
+      "method": "Method",
+      "reference": "Reference",
+      "notes": "Notes",
+      "reason": "Reason",
+      "by": "By"
+    },
+    "payDialog": {
+      "title": "Record Payment",
+      "totalLabel": "Total:",
+      "paidLabel": "Paid so far:",
+      "remainingLabel": "Remaining:",
+      "amount": "Amount (৳)",
+      "method": "Method",
+      "date": "Payment Date",
+      "ref": "Transaction Ref",
+      "refPh": "e.g. TXN-12345",
+      "receivedBy": "Received By",
+      "receivedByPh": "Staff name",
+      "notes": "Notes",
+      "notesPh": "Optional payment notes...",
+      "submit": "Record Payment"
+    },
+    "refundDialog": {
+      "title": "Process Refund",
+      "paidAmount": "Paid amount:",
+      "alreadyRefunded": "Already refunded:",
+      "maxRefundable": "Max refundable:",
+      "amount": "Refund Amount (৳)",
+      "reason": "Reason *",
+      "reasonPh": "Reason for refund...",
+      "method": "Refund Method",
+      "methodPh": "Same as payment",
+      "submit": "Process Refund"
+    },
+    "cancelDialog": {
+      "title": "Cancel Invoice",
+      "warning": "This action cannot be undone. The invoice will be marked as cancelled.",
+      "reason": "Cancellation Reason *",
+      "reasonPh": "Reason for cancellation...",
+      "confirm": "Confirm Cancellation",
+      "keep": "Keep Invoice"
+    },
+    "fromBooking": {
+      "title": "Create Invoice from Booking",
+      "loading": "Loading bookings...",
+      "none": "No bookings found.",
+      "noClient": "No client"
+    },
+    "toast": {
+      "created": "Invoice created",
+      "smsSent": "SMS sent to client",
+      "paymentSmsSent": "Payment SMS sent",
+      "paymentRecorded": "Payment recorded",
+      "invalidAmount": "Invalid amount",
+      "refundProcessed": "Refund processed",
+      "refundFailed": "Refund failed",
+      "cancelled": "Invoice cancelled",
+      "failed": "Failed",
+      "emailSent": "Invoice email sent",
+      "emailFailed": "Email failed",
+      "reminderSent": "Reminder sent",
+      "exported": "Exported invoices"
     }
   }
 }
