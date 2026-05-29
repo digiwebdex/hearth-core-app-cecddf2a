@@ -33,18 +33,27 @@ const Pricing = () => {
   const update = (key: string, val: string) => setForm((p) => ({ ...p, [key]: val }));
 
   const handleSelectPlan = (planId: string) => {
-    setSelectedPlan(planId);
-    setDialogOpen(true);
+    // Direct route to Register with plan pre-selected — Pattern B (instant 3-day trial)
+    if (planId === "free") {
+      navigate(`/register?plan=free`);
+    } else {
+      navigate(`/register?plan=${planId}`);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await register({ name: form.ownerName, email: form.email, password: form.password, tenantName: form.companyName });
-      toast({ title: "Account Submitted", description: `Your ${PLANS.find(p => p.id === selectedPlan)?.name} plan signup is pending admin approval. You'll be notified once approved.` });
-      setDialogOpen(false);
-      navigate("/login");
+      const res = await register({ name: form.ownerName, email: form.email, password: form.password, tenantName: form.companyName, plan: selectedPlan || "pro" });
+      if (res.pendingApproval) {
+        toast({ title: "Account Submitted", description: res.message || "Pending admin approval." });
+        navigate("/login");
+      } else {
+        toast({ title: "🎉 3-Day Pro Trial Started!", description: `Welcome! Explore all features. Upgrade to ${PLANS.find(p => p.id === selectedPlan)?.name} anytime.` });
+        setDialogOpen(false);
+        navigate("/onboarding");
+      }
     } catch (err: any) {
       toast({ variant: "destructive", title: "Registration Failed", description: err.message });
     } finally { setLoading(false); }
