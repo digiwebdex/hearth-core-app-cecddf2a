@@ -457,28 +457,28 @@ const AdminSubscriptions = () => {
               const usage = checkUsage(selectedSub);
               return (
                 <>
-                  <DialogHeader><DialogTitle>Subscription Details — {selectedSub.tenantName}</DialogTitle></DialogHeader>
+                  <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.viewTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-2 text-sm">
-                      <span className="text-muted-foreground">Plan:</span>
-                      <Badge variant="secondary" className="capitalize w-fit">{selectedSub.plan}</Badge>
-                      <span className="text-muted-foreground">Billing:</span>
-                      <span className="capitalize">{selectedSub.billingCycle}</span>
-                      <span className="text-muted-foreground">Price:</span>
-                      <span className="font-semibold">{selectedSub.price === 0 ? "Free" : `৳${selectedSub.price.toLocaleString()}/${selectedSub.billingCycle === "yearly" ? "yr" : "mo"}`}</span>
-                      <span className="text-muted-foreground">Status:</span>
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.plan")}</span>
+                      <Badge variant="secondary" className="w-fit">{planLabel(selectedSub.plan)}</Badge>
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.billing")}</span>
+                      <span>{tt(`adminSubscriptions.cycle.${selectedSub.billingCycle}`)}</span>
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.price")}</span>
+                      <span className="font-semibold">{selectedSub.price === 0 ? tt("adminSubscriptions.table.free") : `৳${selectedSub.price.toLocaleString()}/${selectedSub.billingCycle === "yearly" ? tt("adminSubscriptions.cycle.yr") : tt("adminSubscriptions.cycle.mo")}`}</span>
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.status")}</span>
                       <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium w-fit ${getStatusMeta(selectedSub.status).color}`}>{statusLabel(selectedSub.status)}</span>
-                      <span className="text-muted-foreground">Period:</span>
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.period")}</span>
                       <span>{selectedSub.startDate} → {selectedSub.endDate || "—"}</span>
-                      <span className="text-muted-foreground">Auto-Renew:</span>
-                      <span>{selectedSub.autoRenew ? "Yes" : "No"}</span>
-                      {selectedSub.trialEndDate && <><span className="text-muted-foreground">Trial Ends:</span><span className="text-blue-600">{selectedSub.trialEndDate}</span></>}
-                      {selectedSub.cancelReason && <><span className="text-muted-foreground">Cancel Reason:</span><span className="text-destructive">{selectedSub.cancelReason}</span></>}
-                      {selectedSub.suspendReason && <><span className="text-muted-foreground">Suspend Reason:</span><span className="text-orange-600">{selectedSub.suspendReason}</span></>}
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.autoRenew")}</span>
+                      <span>{selectedSub.autoRenew ? tt("adminSubscriptions.details.yes") : tt("adminSubscriptions.details.no")}</span>
+                      {selectedSub.trialEndDate && <><span className="text-muted-foreground">{tt("adminSubscriptions.details.trialEnds")}</span><span className="text-blue-600">{selectedSub.trialEndDate}</span></>}
+                      {selectedSub.cancelReason && <><span className="text-muted-foreground">{tt("adminSubscriptions.details.cancelReason")}</span><span className="text-destructive">{selectedSub.cancelReason}</span></>}
+                      {selectedSub.suspendReason && <><span className="text-muted-foreground">{tt("adminSubscriptions.details.suspendReason")}</span><span className="text-orange-600">{selectedSub.suspendReason}</span></>}
                     </div>
 
                     <Separator />
-                    <h4 className="text-sm font-medium">Usage & Limits</h4>
+                    <h4 className="text-sm font-medium">{tt("adminSubscriptions.details.usageLimits")}</h4>
                     <div className="grid gap-2">
                       {usage.map((u) => (
                         <div key={u.resource} className="space-y-1">
@@ -498,7 +498,7 @@ const AdminSubscriptions = () => {
                       ))}
                     </div>
                   </div>
-                  <DialogClose asChild><Button variant="outline" className="mt-4 w-full">Close</Button></DialogClose>
+                  <DialogClose asChild><Button variant="outline" className="mt-4 w-full">{tt("adminSubscriptions.actions.close")}</Button></DialogClose>
                 </>
               );
             })()}
