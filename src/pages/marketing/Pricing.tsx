@@ -49,15 +49,15 @@ const Pricing = () => {
     try {
       const res = await register({ name: form.ownerName, email: form.email, password: form.password, tenantName: form.companyName, plan: selectedPlan || "pro" });
       if (res.pendingApproval) {
-        toast({ title: "Account Submitted", description: res.message || "Pending admin approval." });
+        toast({ title: t("marketing.pricing.submitted"), description: res.message || t("marketing.pricing.pendingApproval") });
         navigate("/login");
       } else {
-        toast({ title: "🎉 3-Day Pro Trial Started!", description: `Welcome! Explore all features. Upgrade to ${PLANS.find(p => p.id === selectedPlan)?.name} anytime.` });
+        toast({ title: `🎉 ${t("marketing.pricing.trialStarted")}`, description: t("marketing.pricing.trialDesc", { plan: PLANS.find(p => p.id === selectedPlan)?.name }) });
         setDialogOpen(false);
         navigate("/onboarding");
       }
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Registration Failed", description: err.message });
+      toast({ variant: "destructive", title: t("marketing.pricing.regFailed"), description: err.message });
     } finally { setLoading(false); }
   };
 
