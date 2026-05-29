@@ -423,16 +423,16 @@ const Bookings = () => {
             <CardContent className="p-3">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="space-y-1">
-                  <Label className="text-xs">Destination</Label>
-                  <Input className="h-8 text-xs" placeholder="e.g. Dubai, Thailand" value={destinationFilter} onChange={(e) => setDestinationFilter(e.target.value)} />
+                  <Label className="text-xs">{t("bookingsForm.destination")}</Label>
+                  <Input className="h-8 text-xs" placeholder={t("bookingsForm.destinationPlaceholder")} value={destinationFilter} onChange={(e) => setDestinationFilter(e.target.value)} />
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs">Travel Date From</Label>
+                  <Label className="text-xs">{t("bookingsForm.travelDateFrom")}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button variant="outline" size="sm" className={cn("w-full justify-start text-left font-normal h-8 text-xs", !travelDateFrom && "text-muted-foreground")}>
                         <CalendarIcon className="mr-1 h-3 w-3" />
-                        {travelDateFrom ? format(travelDateFrom, "PP") : "Any"}
+                        {travelDateFrom ? format(travelDateFrom, "PP") : t("bookingsForm.any")}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -441,12 +441,12 @@ const Bookings = () => {
                   </Popover>
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs">Travel Date To</Label>
+                  <Label className="text-xs">{t("bookingsForm.travelDateTo")}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button variant="outline" size="sm" className={cn("w-full justify-start text-left font-normal h-8 text-xs", !travelDateTo && "text-muted-foreground")}>
                         <CalendarIcon className="mr-1 h-3 w-3" />
-                        {travelDateTo ? format(travelDateTo, "PP") : "Any"}
+                        {travelDateTo ? format(travelDateTo, "PP") : t("bookingsForm.any")}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -465,27 +465,27 @@ const Bookings = () => {
         ) : error ? (
           <ErrorState message={error} onRetry={fetchBookings} />
         ) : items.length === 0 ? (
-          <EmptyState icon={Plane} title="No bookings yet" description="Create your first booking to start tracking tours, tickets, hotels, and visas." actionLabel="New Booking" onAction={() => setDialogOpen(true)} />
+          <EmptyState icon={Plane} title={t("bookingsForm.noBookingsYet")} description={t("bookingsForm.noBookingsDesc")} actionLabel={t("bookingsForm.newBooking")} onAction={() => setDialogOpen(true)} />
         ) : (
           <Card>
             <CardContent className="p-0">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Booking</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Destination</TableHead>
-                    <TableHead>Travel Date</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
-                    <TableHead className="text-right">Profit</TableHead>
-                    <TableHead>Payment</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[120px]">Actions</TableHead>
+                    <TableHead>{t("bookingsForm.booking")}</TableHead>
+                    <TableHead>{t("bookingsForm.client")}</TableHead>
+                    <TableHead>{t("bookingsForm.destination")}</TableHead>
+                    <TableHead>{t("bookingsForm.travelDate")}</TableHead>
+                    <TableHead className="text-right">{t("bookingsForm.amount")}</TableHead>
+                    <TableHead className="text-right">{t("bookingsForm.profitLabel")}</TableHead>
+                    <TableHead>{t("bookingsForm.payment")}</TableHead>
+                    <TableHead>{t("bookingsForm.status")}</TableHead>
+                    <TableHead className="w-[120px]">{t("bookingsForm.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filtered.length === 0 ? (
-                    <TableRow><TableCell colSpan={9} className="text-center py-8 text-muted-foreground">No bookings found.</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={9} className="text-center py-8 text-muted-foreground">{t("bookingsForm.noBookingsFound")}</TableCell></TableRow>
                   ) : (
                     filtered.map((b) => {
                       const meta = getStatusMeta(b.status);
@@ -496,8 +496,8 @@ const Bookings = () => {
                             <div className="flex items-center gap-2">
                               <TypeIcon className="h-4 w-4 text-muted-foreground" />
                               <div>
-                                <p className="font-medium text-sm truncate max-w-[180px]">{b.title || `${b.type} Booking`}</p>
-                                <p className="text-xs text-muted-foreground capitalize">{b.type}</p>
+                                <p className="font-medium text-sm truncate max-w-[180px]">{b.title || t("bookingsForm.bookingTypeFallback", { type: t(`bookingsForm.types.${b.type}`) })}</p>
+                                <p className="text-xs text-muted-foreground">{t(`bookingsForm.types.${b.type}`)}</p>
                               </div>
                             </div>
                           </TableCell>
@@ -518,24 +518,24 @@ const Bookings = () => {
                                 b.paymentStatus === "paid" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" :
                                 b.paymentStatus === "partial" ? "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200" :
                                 "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-                              )}>{b.paymentStatus}</span>
+                              )}>{t(`bookingsForm.payments.${b.paymentStatus}`)}</span>
                             ) : <span className="text-xs text-muted-foreground">—</span>}
                           </TableCell>
                           <TableCell>
-                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{meta.label}</span>
+                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{t(`bookingsForm.statuses.${b.status}`)}</span>
                           </TableCell>
                           <TableCell>
                             <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
-                              <Button variant="ghost" size="icon" title="View" onClick={() => navigate(`/bookings/${b.id}`)}>
+                              <Button variant="ghost" size="icon" title={t("bookingsForm.view")} onClick={() => navigate(`/bookings/${b.id}`)}>
                                 <Eye className="h-4 w-4" />
                               </Button>
                               <PermissionGate module="bookings" action="edit">
-                                <Button variant="ghost" size="icon" title="Edit" onClick={() => handleEdit(b)}>
+                                <Button variant="ghost" size="icon" title={t("bookingsForm.edit")} onClick={() => handleEdit(b)}>
                                   <Pencil className="h-4 w-4" />
                                 </Button>
                               </PermissionGate>
                               <PermissionGate module="bookings" action="delete">
-                                <Button variant="ghost" size="icon" title="Delete" onClick={() => handleDelete(b.id)}>
+                                <Button variant="ghost" size="icon" title={t("bookingsForm.delete")} onClick={() => handleDelete(b.id)}>
                                   <Trash2 className="h-4 w-4 text-destructive" />
                                 </Button>
                               </PermissionGate>
@@ -556,18 +556,18 @@ const Bookings = () => {
       <Dialog open={quotationDialogOpen} onOpenChange={setQuotationDialogOpen}>
         <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Create Booking from Quotation</DialogTitle>
+            <DialogTitle>{t("bookingsForm.createFromQuotation")}</DialogTitle>
           </DialogHeader>
           {loadingQuotations ? (
-            <div className="py-8 text-center text-sm text-muted-foreground">Loading approved quotations...</div>
+            <div className="py-8 text-center text-sm text-muted-foreground">{t("bookingsForm.loadingQuotations")}</div>
           ) : approvedQuotations.length === 0 ? (
             <div className="py-8 text-center space-y-2">
-              <p className="text-sm text-muted-foreground">No approved quotations available.</p>
-              <p className="text-xs text-muted-foreground">Quotations must be in "Approved" status to convert into bookings.</p>
+              <p className="text-sm text-muted-foreground">{t("bookingsForm.noApprovedQuotations")}</p>
+              <p className="text-xs text-muted-foreground">{t("bookingsForm.mustBeApproved")}</p>
             </div>
           ) : (
             <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Select an approved quotation to convert into a booking:</p>
+              <p className="text-sm text-muted-foreground">{t("bookingsForm.selectQuotation")}</p>
               {approvedQuotations.map((q) => (
                 <div
                   key={q.id}
@@ -579,7 +579,7 @@ const Bookings = () => {
                     <div className="flex items-center gap-3 mt-0.5 text-xs text-muted-foreground">
                       {q.clientName && <span>{q.clientName}</span>}
                       {q.destination && <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{q.destination}</span>}
-                      <span>{q.travelerCount} travelers</span>
+                      <span>{t("bookingsForm.travelersCount", { count: q.travelerCount })}</span>
                     </div>
                   </div>
                   <div className="text-right ml-3">
