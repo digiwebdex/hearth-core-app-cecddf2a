@@ -169,15 +169,15 @@ const Leads = () => {
       if (editingId) {
         const updated = await leadApi.update(editingId, payload);
         setLeads((p) => p.map((l) => (l.id === editingId ? { ...l, ...updated } : l)));
-        toast({ title: "Lead updated" });
+        toast({ title: t("leadsForm.leadUpdated") });
       } else {
         const created = await leadApi.create(payload as any);
         setLeads((p) => [created, ...p]);
-        toast({ title: "Lead created" });
+        toast({ title: t("leadsForm.leadCreated") });
       }
       setDialogOpen(false);
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("leadsForm.error"), description: err.message });
     }
   };
 
@@ -185,9 +185,9 @@ const Leads = () => {
     try {
       await leadApi.delete(id);
       setLeads((p) => p.filter((l) => l.id !== id));
-      toast({ title: "Lead deleted" });
+      toast({ title: t("leadsForm.leadDeleted") });
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("leadsForm.error"), description: err.message });
     }
   };
 
@@ -205,9 +205,9 @@ const Leads = () => {
     try {
       await leadApi.convertToClient(lead.id);
       setLeads((p) => p.map((l) => (l.id === lead.id ? { ...l, status: "won" as LeadStatus } : l)));
-      toast({ title: "Lead converted to client!", description: `${lead.name} is now a client.` });
+      toast({ title: t("leadsForm.convertedTitle"), description: t("leadsForm.convertedDesc", { name: lead.name }) });
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("leadsForm.error"), description: err.message });
     }
   };
 
