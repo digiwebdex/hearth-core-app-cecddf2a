@@ -410,7 +410,7 @@ const Leads = () => {
         {/* Status summary */}
         <div className="flex flex-wrap gap-2">
           <Button variant={statusFilter === "all" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("all")}>
-            All ({statusCounts.all})
+            {t("leadsForm.all")} ({statusCounts.all})
           </Button>
           {LEAD_STATUSES.map((s) => (
             <Button key={s.value} variant={statusFilter === s.value ? "default" : "outline"} size="sm" onClick={() => setStatusFilter(s.value)}>
@@ -423,17 +423,17 @@ const Leads = () => {
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2 flex-1 min-w-[200px] max-w-sm">
             <Search className="h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search name, email, phone, destination..." value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Input placeholder={t("leadsForm.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
           <Button variant="outline" size="sm" onClick={() => setShowFilters((v) => !v)} className="gap-1.5">
-            <Filter className="h-4 w-4" /> Filters
+            <Filter className="h-4 w-4" /> {t("leadsForm.filters")}
             {activeFilterCount > 0 && (
               <Badge variant="secondary" className="ml-1 h-5 w-5 p-0 flex items-center justify-center text-[10px]">{activeFilterCount}</Badge>
             )}
           </Button>
           {activeFilterCount > 0 && (
             <Button variant="ghost" size="sm" onClick={() => { setSourceFilter("all"); setDestinationFilter(""); setDateFrom(undefined); setDateTo(undefined); }}>
-              Clear filters
+              {t("leadsForm.clearFilters")}
             </Button>
           )}
         </div>
@@ -444,11 +444,11 @@ const Leads = () => {
             <CardContent className="p-3">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div className="space-y-1">
-                  <Label className="text-xs">Source</Label>
+                  <Label className="text-xs">{t("leadsForm.source")}</Label>
                   <Select value={sourceFilter} onValueChange={setSourceFilter}>
                     <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All Sources</SelectItem>
+                      <SelectItem value="all">{t("leadsForm.allSources")}</SelectItem>
                       {(uniqueSources.length > 0 ? uniqueSources : LEAD_SOURCES).map((s) => (
                         <SelectItem key={s} value={s}>{s}</SelectItem>
                       ))}
@@ -456,16 +456,16 @@ const Leads = () => {
                   </Select>
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs">Destination</Label>
-                  <Input className="h-8 text-xs" placeholder="e.g. Dubai, Thailand" value={destinationFilter} onChange={(e) => setDestinationFilter(e.target.value)} />
+                  <Label className="text-xs">{t("leadsForm.destination")}</Label>
+                  <Input className="h-8 text-xs" placeholder={t("leadsForm.destinationPlaceholder")} value={destinationFilter} onChange={(e) => setDestinationFilter(e.target.value)} />
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs">Created From</Label>
+                  <Label className="text-xs">{t("leadsForm.createdFrom")}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button variant="outline" size="sm" className={cn("w-full justify-start text-left font-normal h-8 text-xs", !dateFrom && "text-muted-foreground")}>
                         <CalendarIcon className="mr-1 h-3 w-3" />
-                        {dateFrom ? format(dateFrom, "PP") : "Any"}
+                        {dateFrom ? format(dateFrom, "PP") : t("leadsForm.any")}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -474,12 +474,12 @@ const Leads = () => {
                   </Popover>
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs">Created To</Label>
+                  <Label className="text-xs">{t("leadsForm.createdTo")}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button variant="outline" size="sm" className={cn("w-full justify-start text-left font-normal h-8 text-xs", !dateTo && "text-muted-foreground")}>
                         <CalendarIcon className="mr-1 h-3 w-3" />
-                        {dateTo ? format(dateTo, "PP") : "Any"}
+                        {dateTo ? format(dateTo, "PP") : t("leadsForm.any")}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -497,12 +497,12 @@ const Leads = () => {
         ) : error ? (
           <ErrorState message={error} onRetry={fetchLeads} />
         ) : leads.length === 0 ? (
-          <EmptyState icon={Target} title="No leads yet" description="Start by adding your first lead" actionLabel="Add Lead" onAction={openNew} />
+          <EmptyState icon={Target} title={t("leadsForm.noLeadsYet")} description={t("leadsForm.noLeadsDesc")} actionLabel={t("leadsForm.addLead")} onAction={openNew} />
         ) : (
           <Tabs defaultValue="kanban" className="space-y-4">
             <TabsList>
-              <TabsTrigger value="kanban" className="gap-1.5"><LayoutGrid className="h-4 w-4" /> Kanban</TabsTrigger>
-              <TabsTrigger value="table" className="gap-1.5"><List className="h-4 w-4" /> Table</TabsTrigger>
+              <TabsTrigger value="kanban" className="gap-1.5"><LayoutGrid className="h-4 w-4" /> {t("leadsForm.kanban")}</TabsTrigger>
+              <TabsTrigger value="table" className="gap-1.5"><List className="h-4 w-4" /> {t("leadsForm.table")}</TabsTrigger>
             </TabsList>
             <TabsContent value="kanban"><KanbanView /></TabsContent>
             <TabsContent value="table"><TableView /></TabsContent>
