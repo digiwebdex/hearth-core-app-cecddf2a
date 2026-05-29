@@ -1720,5 +1720,90 @@
         ]
       }
     }
+  },
+  "notificationLog": {
+    "title": "নোটিফিকেশন লগ",
+    "subtitle": "SMS ও ইমেইল নোটিফিকেশন ডেলিভারি ইতিহাস",
+    "configure": "কনফিগার",
+    "export": "এক্সপোর্ট",
+    "stats": {
+      "total": "মোট",
+      "sent": "পাঠানো",
+      "failed": "ব্যর্থ",
+      "pending": "অপেক্ষমাণ",
+      "sms": "SMS",
+      "email": "ইমেইল"
+    },
+    "filters": {
+      "searchPlaceholder": "প্রাপক, বার্তা খুঁজুন…",
+      "event": "ইভেন্ট",
+      "allEvents": "সব ইভেন্ট",
+      "channel": "চ্যানেল",
+      "allChannels": "সব চ্যানেল",
+      "status": "স্ট্যাটাস",
+      "allStatus": "সব স্ট্যাটাস"
+    },
+    "status": {
+      "pending": "অপেক্ষমাণ",
+      "sent": "পাঠানো হয়েছে",
+      "failed": "ব্যর্থ",
+      "retrying": "পুনরায় চেষ্টা"
+    },
+    "channels": {
+      "sms": "SMS",
+      "email": "ইমেইল"
+    },
+    "events": {
+      "lead_assigned": "লিড অ্যাসাইনড",
+      "quotation_sent": "কোটেশন প্রেরিত",
+      "quotation_approved": "কোটেশন অনুমোদিত",
+      "booking_confirmed": "বুকিং নিশ্চিত",
+      "payment_received": "পেমেন্ট প্রাপ্ত",
+      "payment_overdue": "পেমেন্ট ওভারডিউ",
+      "subscription_expiring": "সাবস্ক্রিপশন শেষ হচ্ছে"
+    },
+    "table": {
+      "title": "ডেলিভারি ইতিহাস",
+      "event": "ইভেন্ট",
+      "channel": "চ্যানেল",
+      "recipient": "প্রাপক",
+      "message": "বার্তা",
+      "status": "স্ট্যাটাস",
+      "attempts": "প্রচেষ্টা",
+      "date": "তারিখ",
+      "actions": "অ্যাকশন",
+      "empty": "কোনো নোটিফিকেশন পাওয়া যায়নি।",
+      "retry": "পুনরায় চেষ্টা"
+    },
+    "detail": {
+      "title": "নোটিফিকেশন বিস্তারিত",
+      "event": "ইভেন্ট:",
+      "channel": "চ্যানেল:",
+      "recipient": "প্রাপক:",
+      "address": "ঠিকানা:",
+      "status": "স্ট্যাটাস:",
+      "attempts": "প্রচেষ্টা:",
+      "created": "তৈরি:",
+      "sentAt": "প্রেরণের সময়:",
+      "failureReason": "ব্যর্থতার কারণ:",
+      "tenant": "টেন্যান্ট:",
+      "message": "বার্তা",
+      "retryBtn": "পুনরায় পাঠান",
+      "close": "বন্ধ"
+    },
+    "config": {
+      "title": "নোটিফিকেশন কনফিগারেশন",
+      "intro": "প্রতিটি ইভেন্ট টাইপের জন্য চ্যানেল সক্রিয়/নিষ্ক্রিয় করুন।",
+      "sms": "SMS",
+      "email": "ইমেইল",
+      "save": "কনফিগারেশন সংরক্ষণ",
+      "cancel": "বাতিল",
+      "saved": "✅ কনফিগারেশন সংরক্ষিত"
+    },
+    "toast": {
+      "retrySuccess": "✅ পুনরায় চেষ্টা সফল",
+      "retryFailed": "❌ পুনরায় চেষ্টা ব্যর্থ",
+      "sentOk": "নোটিফিকেশন সফলভাবে পাঠানো হয়েছে"
+    }
   }
 }

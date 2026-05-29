@@ -1720,5 +1720,90 @@
         ]
       }
     }
+  },
+  "notificationLog": {
+    "title": "Notification Log",
+    "subtitle": "SMS and email notification delivery history",
+    "configure": "Configure",
+    "export": "Export",
+    "stats": {
+      "total": "Total",
+      "sent": "Sent",
+      "failed": "Failed",
+      "pending": "Pending",
+      "sms": "SMS",
+      "email": "Email"
+    },
+    "filters": {
+      "searchPlaceholder": "Search recipient, message…",
+      "event": "Event",
+      "allEvents": "All Events",
+      "channel": "Channel",
+      "allChannels": "All Channels",
+      "status": "Status",
+      "allStatus": "All Status"
+    },
+    "status": {
+      "pending": "Pending",
+      "sent": "Sent",
+      "failed": "Failed",
+      "retrying": "Retrying"
+    },
+    "channels": {
+      "sms": "SMS",
+      "email": "Email"
+    },
+    "events": {
+      "lead_assigned": "Lead Assigned",
+      "quotation_sent": "Quotation Sent",
+      "quotation_approved": "Quotation Approved",
+      "booking_confirmed": "Booking Confirmed",
+      "payment_received": "Payment Received",
+      "payment_overdue": "Payment Overdue",
+      "subscription_expiring": "Subscription Expiring"
+    },
+    "table": {
+      "title": "Delivery History",
+      "event": "Event",
+      "channel": "Channel",
+      "recipient": "Recipient",
+      "message": "Message",
+      "status": "Status",
+      "attempts": "Attempts",
+      "date": "Date",
+      "actions": "Actions",
+      "empty": "No notifications found.",
+      "retry": "Retry"
+    },
+    "detail": {
+      "title": "Notification Details",
+      "event": "Event:",
+      "channel": "Channel:",
+      "recipient": "Recipient:",
+      "address": "Address:",
+      "status": "Status:",
+      "attempts": "Attempts:",
+      "created": "Created:",
+      "sentAt": "Sent At:",
+      "failureReason": "Failure Reason:",
+      "tenant": "Tenant:",
+      "message": "Message",
+      "retryBtn": "Retry Notification",
+      "close": "Close"
+    },
+    "config": {
+      "title": "Notification Configuration",
+      "intro": "Enable or disable notification channels per event type.",
+      "sms": "SMS",
+      "email": "Email",
+      "save": "Save Configuration",
+      "cancel": "Cancel",
+      "saved": "✅ Configuration saved"
+    },
+    "toast": {
+      "retrySuccess": "✅ Retry successful",
+      "retryFailed": "❌ Retry failed",
+      "sentOk": "Notification sent successfully"
+    }
   }
 }
