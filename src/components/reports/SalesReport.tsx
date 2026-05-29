@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -22,28 +23,25 @@ const STATUS_COLORS: Record<string, string> = {
 interface Props { bookings: Booking[]; }
 
 export default function SalesReport({ bookings }: Props) {
+  const { t } = useTranslation();
   const data = useMemo(() => {
     const totalSales = bookings.reduce((s, b) => s + b.amount, 0);
     const avgValue = bookings.length > 0 ? Math.round(totalSales / bookings.length) : 0;
 
-    // By type
     const byType: Record<string, number> = {};
     bookings.forEach((b) => { byType[b.type] = (byType[b.type] || 0) + b.amount; });
     const byTypeArr = Object.entries(byType).map(([name, value]) => ({ name: name.charAt(0).toUpperCase() + name.slice(1), value }));
 
-    // By destination
     const byDest: Record<string, number> = {};
     bookings.forEach((b) => { if (b.destination) byDest[b.destination] = (byDest[b.destination] || 0) + 1; });
     const byDestArr = Object.entries(byDest).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([name, value]) => ({ name, value }));
 
-    // Monthly trend
     const byMonth: Record<string, number> = {};
     bookings.forEach((b) => {
       try { const m = format(parseISO(b.createdAt || b.travelDateFrom || ""), "MMM yyyy"); byMonth[m] = (byMonth[m] || 0) + b.amount; } catch {}
     });
     const monthlyTrend = Object.entries(byMonth).map(([month, amount]) => ({ month, amount }));
 
-    // By status
     const byStatus: Record<string, number> = {};
     bookings.forEach((b) => { byStatus[b.status] = (byStatus[b.status] || 0) + 1; });
     const byStatusArr = Object.entries(byStatus).map(([name, value]) => ({ name: name.charAt(0).toUpperCase() + name.slice(1), value }));
@@ -63,18 +61,18 @@ export default function SalesReport({ bookings }: Props) {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <div className="grid gap-4 md:grid-cols-3 flex-1 mr-4">
-          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1.5"><DollarSign className="h-4 w-4" />Total Sales</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">৳{data.totalSales.toLocaleString()}</p></CardContent></Card>
-          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1.5"><Plane className="h-4 w-4" />Total Bookings</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{bookings.length}</p></CardContent></Card>
-          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1.5"><TrendingUp className="h-4 w-4" />Avg Booking Value</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">৳{data.avgValue.toLocaleString()}</p></CardContent></Card>
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1.5"><DollarSign className="h-4 w-4" />{t("reportComponents.sales.totalSales")}</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">৳{data.totalSales.toLocaleString()}</p></CardContent></Card>
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1.5"><Plane className="h-4 w-4" />{t("reportComponents.sales.totalBookings")}</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">{bookings.length}</p></CardContent></Card>
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground flex items-center gap-1.5"><TrendingUp className="h-4 w-4" />{t("reportComponents.sales.avgValue")}</CardTitle></CardHeader><CardContent><p className="text-2xl font-bold">৳{data.avgValue.toLocaleString()}</p></CardContent></Card>
         </div>
         <PermissionGate module="reports" action="export">
-          <Button variant="outline" size="sm" onClick={exportCsv}><Download className="mr-2 h-4 w-4" />Export</Button>
+          <Button variant="outline" size="sm" onClick={exportCsv}><Download className="mr-2 h-4 w-4" />{t("reportComponents.common.export")}</Button>
         </PermissionGate>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
-          <CardHeader><CardTitle className="text-base">Monthly Revenue</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-base">{t("reportComponents.sales.monthlyRevenue")}</CardTitle></CardHeader>
           <CardContent>
             {data.monthlyTrend.length > 0 ? (
               <ResponsiveContainer width="100%" height={280}>
@@ -82,15 +80,15 @@ export default function SalesReport({ bookings }: Props) {
                   <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                   <XAxis dataKey="month" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }} />
                   <YAxis tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }} />
-                  <Tooltip formatter={(v: number) => [`৳${v.toLocaleString()}`, "Revenue"]} />
+                  <Tooltip formatter={(v: number) => [`৳${v.toLocaleString()}`, t("reportComponents.sales.revenue")]} />
                   <Area type="monotone" dataKey="amount" stroke="hsl(var(--primary))" fill="hsl(var(--primary))" fillOpacity={0.15} strokeWidth={2} />
                 </AreaChart>
               </ResponsiveContainer>
-            ) : <p className="text-center text-muted-foreground py-12">No booking data for this period</p>}
+            ) : <p className="text-center text-muted-foreground py-12">{t("reportComponents.sales.noPeriod")}</p>}
           </CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-base">Sales by Package Type</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-base">{t("reportComponents.sales.salesByType")}</CardTitle></CardHeader>
           <CardContent>
             {data.byTypeArr.length > 0 ? (
               <ResponsiveContainer width="100%" height={280}>
@@ -101,14 +99,14 @@ export default function SalesReport({ bookings }: Props) {
                   <Tooltip formatter={(v: number) => `৳${v.toLocaleString()}`} />
                 </PieChart>
               </ResponsiveContainer>
-            ) : <p className="text-center text-muted-foreground py-12">No data available</p>}
+            ) : <p className="text-center text-muted-foreground py-12">{t("reportComponents.common.noData")}</p>}
           </CardContent>
         </Card>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
-          <CardHeader><CardTitle className="text-base">Bookings by Status</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-base">{t("reportComponents.sales.bookingsByStatus")}</CardTitle></CardHeader>
           <CardContent>
             {data.byStatusArr.length > 0 ? (
               <ResponsiveContainer width="100%" height={280}>
@@ -119,11 +117,11 @@ export default function SalesReport({ bookings }: Props) {
                   <Tooltip />
                 </PieChart>
               </ResponsiveContainer>
-            ) : <p className="text-center text-muted-foreground py-12">No data available</p>}
+            ) : <p className="text-center text-muted-foreground py-12">{t("reportComponents.common.noData")}</p>}
           </CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-base">Top Destinations</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-base">{t("reportComponents.sales.topDestinations")}</CardTitle></CardHeader>
           <CardContent>
             {data.byDestArr.length > 0 ? (
               <div className="space-y-3">
@@ -136,24 +134,24 @@ export default function SalesReport({ bookings }: Props) {
                   </div>
                 ))}
               </div>
-            ) : <p className="text-center text-muted-foreground py-12">No destination data</p>}
+            ) : <p className="text-center text-muted-foreground py-12">{t("reportComponents.sales.noDestination")}</p>}
           </CardContent>
         </Card>
       </div>
 
       <Card>
-        <CardHeader><CardTitle className="text-base">Booking Details</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-base">{t("reportComponents.sales.bookingDetails")}</CardTitle></CardHeader>
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Client</TableHead><TableHead>Type</TableHead><TableHead>Destination</TableHead>
-                <TableHead className="text-right">Amount</TableHead><TableHead>Status</TableHead>
+                <TableHead>{t("reportComponents.sales.th.client")}</TableHead><TableHead>{t("reportComponents.sales.th.type")}</TableHead><TableHead>{t("reportComponents.sales.th.destination")}</TableHead>
+                <TableHead className="text-right">{t("reportComponents.sales.th.amount")}</TableHead><TableHead>{t("reportComponents.sales.th.status")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {bookings.length === 0 ? (
-                <TableRow><TableCell colSpan={5} className="text-center text-muted-foreground py-8">No bookings in this period</TableCell></TableRow>
+                <TableRow><TableCell colSpan={5} className="text-center text-muted-foreground py-8">{t("reportComponents.sales.noBookingsPeriod")}</TableCell></TableRow>
               ) : bookings.slice(0, 20).map((b) => (
                 <TableRow key={b.id}>
                   <TableCell className="font-medium">{b.clientName || "—"}</TableCell>
