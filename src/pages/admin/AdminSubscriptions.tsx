@@ -255,7 +255,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, status: "suspended" as SubscriptionStatus, suspendReason: actionReason, suspendedAt: new Date().toISOString() } : s
     ));
-    toast({ title: "Suspended" });
+    toast({ title: tt("adminSubscriptions.toast.suspended") });
     setDialogOpen(false);
   };
 
