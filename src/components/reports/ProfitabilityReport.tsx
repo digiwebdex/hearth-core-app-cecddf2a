@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export default function ProfitabilityReport({ bookings, invoices, vendorBills, expenses }: Props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const data = useMemo(() => {
@@ -31,7 +33,6 @@ export default function ProfitabilityReport({ bookings, invoices, vendorBills, e
     const netProfit = grossProfit - totalExpenses;
     const margin = totalRevenue > 0 ? ((grossProfit / totalRevenue) * 100).toFixed(1) : "0";
 
-    // Per-booking profit
     const bookingProfits = bookings
       .filter((b) => b.amount > 0)
       .map((b) => ({
@@ -47,7 +48,6 @@ export default function ProfitabilityReport({ bookings, invoices, vendorBills, e
       }))
       .sort((a, b) => b.profit - a.profit);
 
-    // Monthly P&L
     const months: Record<string, { revenue: number; cost: number; expense: number }> = {};
     bookings.forEach((b) => {
       try {
@@ -83,19 +83,19 @@ export default function ProfitabilityReport({ bookings, invoices, vendorBills, e
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <div className="grid gap-4 md:grid-cols-5 flex-1 mr-4">
-          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Revenue</CardTitle></CardHeader><CardContent><p className="text-xl font-bold">৳{data.totalRevenue.toLocaleString()}</p></CardContent></Card>
-          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Vendor Costs</CardTitle></CardHeader><CardContent><p className="text-xl font-bold text-orange-600">৳{data.totalCost.toLocaleString()}</p></CardContent></Card>
-          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Expenses</CardTitle></CardHeader><CardContent><p className="text-xl font-bold text-muted-foreground">৳{data.totalExpenses.toLocaleString()}</p></CardContent></Card>
-          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Gross Profit</CardTitle></CardHeader><CardContent><p className={`text-xl font-bold ${data.grossProfit >= 0 ? "text-green-600" : "text-destructive"}`}>৳{data.grossProfit.toLocaleString()}</p></CardContent></Card>
-          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Margin</CardTitle></CardHeader><CardContent><p className="text-xl font-bold">{data.margin}%</p></CardContent></Card>
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.profit.revenue")}</CardTitle></CardHeader><CardContent><p className="text-xl font-bold">৳{data.totalRevenue.toLocaleString()}</p></CardContent></Card>
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.profit.vendorCosts")}</CardTitle></CardHeader><CardContent><p className="text-xl font-bold text-orange-600">৳{data.totalCost.toLocaleString()}</p></CardContent></Card>
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.profit.expenses")}</CardTitle></CardHeader><CardContent><p className="text-xl font-bold text-muted-foreground">৳{data.totalExpenses.toLocaleString()}</p></CardContent></Card>
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.profit.grossProfit")}</CardTitle></CardHeader><CardContent><p className={`text-xl font-bold ${data.grossProfit >= 0 ? "text-green-600" : "text-destructive"}`}>৳{data.grossProfit.toLocaleString()}</p></CardContent></Card>
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">{t("reportComponents.profit.margin")}</CardTitle></CardHeader><CardContent><p className="text-xl font-bold">{data.margin}%</p></CardContent></Card>
         </div>
         <PermissionGate module="reports" action="export">
-          <Button variant="outline" size="sm" onClick={exportCsv}><Download className="mr-2 h-4 w-4" />Export</Button>
+          <Button variant="outline" size="sm" onClick={exportCsv}><Download className="mr-2 h-4 w-4" />{t("reportComponents.common.export")}</Button>
         </PermissionGate>
       </div>
 
       <Card>
-        <CardHeader><CardTitle className="text-base">Monthly Revenue vs Costs</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-base">{t("reportComponents.profit.monthlyCmp")}</CardTitle></CardHeader>
         <CardContent>
           {data.monthlyPL.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
@@ -105,30 +105,30 @@ export default function ProfitabilityReport({ bookings, invoices, vendorBills, e
                 <YAxis tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }} />
                 <Tooltip formatter={(v: number) => `৳${v.toLocaleString()}`} />
                 <Legend />
-                <Bar dataKey="revenue" name="Revenue" fill="hsl(var(--primary))" radius={[4,4,0,0]} />
-                <Bar dataKey="costs" name="Total Costs" fill="#f59e0b" radius={[4,4,0,0]} />
-                <Bar dataKey="profit" name="Profit" fill="#10b981" radius={[4,4,0,0]} />
+                <Bar dataKey="revenue" name={t("reportComponents.profit.revenue")} fill="hsl(var(--primary))" radius={[4,4,0,0]} />
+                <Bar dataKey="costs" name={t("reportComponents.profit.totalCosts")} fill="#f59e0b" radius={[4,4,0,0]} />
+                <Bar dataKey="profit" name={t("reportComponents.profit.profit")} fill="#10b981" radius={[4,4,0,0]} />
               </BarChart>
             </ResponsiveContainer>
-          ) : <p className="text-center text-muted-foreground py-12">No financial data for this period</p>}
+          ) : <p className="text-center text-muted-foreground py-12">{t("reportComponents.profit.noFinancial")}</p>}
         </CardContent>
       </Card>
 
       <Card>
-        <CardHeader><CardTitle className="text-base">Booking Profitability</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-base">{t("reportComponents.profit.bookingProfitability")}</CardTitle></CardHeader>
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Booking</TableHead><TableHead>Client</TableHead><TableHead>Type</TableHead>
-                <TableHead className="text-right">Revenue</TableHead><TableHead className="text-right">Cost</TableHead>
-                <TableHead className="text-right">Profit</TableHead><TableHead className="text-right">Margin</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>{t("reportComponents.profit.th.booking")}</TableHead><TableHead>{t("reportComponents.profit.th.client")}</TableHead><TableHead>{t("reportComponents.profit.th.type")}</TableHead>
+                <TableHead className="text-right">{t("reportComponents.profit.th.revenue")}</TableHead><TableHead className="text-right">{t("reportComponents.profit.th.cost")}</TableHead>
+                <TableHead className="text-right">{t("reportComponents.profit.th.profit")}</TableHead><TableHead className="text-right">{t("reportComponents.profit.th.margin")}</TableHead>
+                <TableHead>{t("reportComponents.profit.th.status")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {data.bookingProfits.length === 0 ? (
-                <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">No booking profitability data. Add vendor costs to bookings to see margins.</TableCell></TableRow>
+                <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">{t("reportComponents.profit.noProfitData")}</TableCell></TableRow>
               ) : data.bookingProfits.slice(0, 25).map((b) => (
                 <TableRow key={b.id} className="cursor-pointer hover:bg-muted/50" onClick={() => navigate(`/bookings/${b.id}`)}>
                   <TableCell className="font-medium">{b.title}</TableCell>
