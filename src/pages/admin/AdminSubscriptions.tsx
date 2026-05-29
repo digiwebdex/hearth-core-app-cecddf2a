@@ -237,7 +237,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, endDate: newEnd, status: "active" } : s
     ));
-    toast({ title: "Subscription Extended", description: `Expires ${newEnd}` });
+    toast({ title: tt("adminSubscriptions.toast.extended"), description: tt("adminSubscriptions.toast.extendedDesc", { date: newEnd }) });
     setDialogOpen(false);
   };
 
