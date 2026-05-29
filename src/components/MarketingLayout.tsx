@@ -95,9 +95,9 @@ const MarketingLayout = ({ children, title, description }: Props) => {
               </Link>
             ))}
             <LanguageSwitcher className="text-white/70 hover:text-white" />
-            <Link to="/demo">
-              <Button size="sm" variant="outline" className="border-amber-400/30 text-amber-400 hover:bg-amber-400/10">
-                {t("common.bookDemo")}
+            <Link to="/pricing">
+              <Button size="sm" className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white">
+                {t("common.getStarted")}
               </Button>
             </Link>
           </nav>
