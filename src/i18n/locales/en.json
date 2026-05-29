@@ -1138,5 +1138,54 @@
       "reminderSent": "Reminder sent",
       "exported": "Exported invoices"
     }
+  },
+  "quotationsForm": {
+    "statuses": {
+      "draft": "Draft",
+      "sent": "Sent",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "expired": "Expired"
+    },
+    "widgets": {
+      "totalQuotes": "Total Quotes",
+      "approved": "Approved",
+      "totalValue": "Total Value",
+      "estProfit": "Est. Profit"
+    },
+    "all": "All",
+    "searchPh": "Search by title, client, destination...",
+    "table": {
+      "title": "Title",
+      "client": "Client",
+      "destination": "Destination",
+      "travelers": "Travelers",
+      "grandTotal": "Grand Total",
+      "profit": "Profit",
+      "status": "Status",
+      "version": "Version",
+      "validUntil": "Valid Until",
+      "actions": "Actions",
+      "untitled": "Untitled",
+      "noMatch": "No quotations found."
+    },
+    "empty": {
+      "title": "No quotations yet",
+      "desc": "Create your first travel quotation",
+      "action": "New Quotation"
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "convert": "Convert to Booking",
+      "delete": "Delete"
+    },
+    "toast": {
+      "deleted": "Quotation deleted",
+      "duplicated": "Quotation duplicated",
+      "converted": "Booking created from quotation!",
+      "error": "Error"
+    }
   }
 }
