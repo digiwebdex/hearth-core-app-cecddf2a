@@ -261,7 +261,7 @@ const Leads = () => {
                         <DropdownMenuContent>
                           {LEAD_STATUSES.filter((s) => s.value !== lead.status).map((s) => (
                             <DropdownMenuItem key={s.value} onClick={(e) => { e.stopPropagation(); handleStatusChange(lead.id, s.value); }}>
-                              <span className={`inline-flex items-center rounded-full px-1.5 py-0 text-[10px] font-medium mr-2 ${s.color}`}>{s.label}</span>
+                              <span className={`inline-flex items-center rounded-full px-1.5 py-0 text-[10px] font-medium mr-2 ${s.color}`}>{t(`leadsForm.statuses.${s.value}`)}</span>
                             </DropdownMenuItem>
                           ))}
                         </DropdownMenuContent>
@@ -319,18 +319,18 @@ const Leads = () => {
                     <TableCell className="text-sm">{lead.budget ? `৳${lead.budget.toLocaleString()}` : "—"}</TableCell>
                     <TableCell>
                       <PermissionGate module="leads" action="edit" fallback={
-                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{meta.label}</span>
+                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{t(`leadsForm.statuses.${lead.status}`)}</span>
                       }>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <button className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium cursor-pointer ${meta.color}`} onClick={(e) => e.stopPropagation()}>
-                              {meta.label} <ChevronDown className="ml-1 h-3 w-3" />
+                              {t(`leadsForm.statuses.${lead.status}`)} <ChevronDown className="ml-1 h-3 w-3" />
                             </button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
                             {LEAD_STATUSES.filter((s) => s.value !== lead.status).map((s) => (
                               <DropdownMenuItem key={s.value} onClick={(e) => { e.stopPropagation(); handleStatusChange(lead.id, s.value); }}>
-                                <span className={`inline-flex items-center rounded-full px-1.5 py-0 text-[10px] font-medium mr-2 ${s.color}`}>{s.label}</span>
+                                <span className={`inline-flex items-center rounded-full px-1.5 py-0 text-[10px] font-medium mr-2 ${s.color}`}>{t(`leadsForm.statuses.${s.value}`)}</span>
                               </DropdownMenuItem>
                             ))}
                           </DropdownMenuContent>
@@ -414,7 +414,7 @@ const Leads = () => {
           </Button>
           {LEAD_STATUSES.map((s) => (
             <Button key={s.value} variant={statusFilter === s.value ? "default" : "outline"} size="sm" onClick={() => setStatusFilter(s.value)}>
-              {s.label} ({statusCounts[s.value] || 0})
+              {t(`leadsForm.statuses.${s.value}`)} ({statusCounts[s.value] || 0})
             </Button>
           ))}
         </div>
@@ -534,7 +534,7 @@ const Leads = () => {
                   <Select value={form.status} onValueChange={(v) => setForm((f) => ({ ...f, status: v as LeadStatus }))}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      {LEAD_STATUSES.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
+                      {LEAD_STATUSES.map((s) => <SelectItem key={s.value} value={s.value}>{t(`leadsForm.statuses.${s.value}`)}</SelectItem>)}
                     </SelectContent>
                   </Select>
                 </div>
