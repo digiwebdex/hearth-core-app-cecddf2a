@@ -165,29 +165,29 @@ const Reports = () => {
               <div className="flex flex-wrap items-end gap-3">
                 <div className="flex items-center gap-1.5">
                   <Filter className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm font-medium">Filters:</span>
+                  <span className="text-sm font-medium">{t("reports.filters.label")}</span>
                 </div>
-                <DatePicker date={dateFrom} onChange={setDateFrom} label="From date" />
-                <DatePicker date={dateTo} onChange={setDateTo} label="To date" />
+                <DatePicker date={dateFrom} onChange={setDateFrom} label={t("reports.filters.fromDate")} />
+                <DatePicker date={dateTo} onChange={setDateTo} label={t("reports.filters.toDate")} />
                 <Select value={filterAgent} onValueChange={setFilterAgent}>
-                  <SelectTrigger className="w-[160px] h-9 text-sm"><SelectValue placeholder="Staff" /></SelectTrigger>
+                  <SelectTrigger className="w-[160px] h-9 text-sm"><SelectValue placeholder={t("reports.filters.staff")} /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Staff</SelectItem>
+                    <SelectItem value="all">{t("reports.filters.allStaff")}</SelectItem>
                     {agentOptions.map(([id, name]) => <SelectItem key={id} value={id}>{name}</SelectItem>)}
                   </SelectContent>
                 </Select>
                 <Select value={filterStatus} onValueChange={setFilterStatus}>
-                  <SelectTrigger className="w-[140px] h-9 text-sm"><SelectValue placeholder="Status" /></SelectTrigger>
+                  <SelectTrigger className="w-[140px] h-9 text-sm"><SelectValue placeholder={t("reports.filters.status")} /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Statuses</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="confirmed">Confirmed</SelectItem>
-                    <SelectItem value="ticketed">Ticketed</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                    <SelectItem value="cancelled">Cancelled</SelectItem>
+                    <SelectItem value="all">{t("reports.filters.allStatuses")}</SelectItem>
+                    <SelectItem value="pending">{t("reports.filters.pending")}</SelectItem>
+                    <SelectItem value="confirmed">{t("reports.filters.confirmed")}</SelectItem>
+                    <SelectItem value="ticketed">{t("reports.filters.ticketed")}</SelectItem>
+                    <SelectItem value="completed">{t("reports.filters.completed")}</SelectItem>
+                    <SelectItem value="cancelled">{t("reports.filters.cancelled")}</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button variant="ghost" size="sm" onClick={resetFilters}>Reset</Button>
+                <Button variant="ghost" size="sm" onClick={resetFilters}>{t("reports.filters.reset")}</Button>
               </div>
             </CardContent>
           </Card>
@@ -195,12 +195,12 @@ const Reports = () => {
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="grid grid-cols-3 lg:grid-cols-6 w-full">
-              <TabsTrigger value="sales" className="text-xs"><DollarSign className="mr-1 h-3.5 w-3.5 hidden sm:inline" />Sales</TabsTrigger>
-              <TabsTrigger value="leads" className="text-xs"><Target className="mr-1 h-3.5 w-3.5 hidden sm:inline" />Leads & Quotes</TabsTrigger>
-              <TabsTrigger value="payments" className="text-xs"><TrendingUp className="mr-1 h-3.5 w-3.5 hidden sm:inline" />Payments</TabsTrigger>
-              <TabsTrigger value="vendors" className="text-xs"><Store className="mr-1 h-3.5 w-3.5 hidden sm:inline" />Vendors</TabsTrigger>
-              <TabsTrigger value="staff" className="text-xs"><Users className="mr-1 h-3.5 w-3.5 hidden sm:inline" />Staff</TabsTrigger>
-              <TabsTrigger value="profitability" className="text-xs"><BarChart3 className="mr-1 h-3.5 w-3.5 hidden sm:inline" />Profitability</TabsTrigger>
+              <TabsTrigger value="sales" className="text-xs"><DollarSign className="mr-1 h-3.5 w-3.5 hidden sm:inline" />{t("reports.tabs.sales")}</TabsTrigger>
+              <TabsTrigger value="leads" className="text-xs"><Target className="mr-1 h-3.5 w-3.5 hidden sm:inline" />{t("reports.tabs.leads")}</TabsTrigger>
+              <TabsTrigger value="payments" className="text-xs"><TrendingUp className="mr-1 h-3.5 w-3.5 hidden sm:inline" />{t("reports.tabs.payments")}</TabsTrigger>
+              <TabsTrigger value="vendors" className="text-xs"><Store className="mr-1 h-3.5 w-3.5 hidden sm:inline" />{t("reports.tabs.vendors")}</TabsTrigger>
+              <TabsTrigger value="staff" className="text-xs"><Users className="mr-1 h-3.5 w-3.5 hidden sm:inline" />{t("reports.tabs.staff")}</TabsTrigger>
+              <TabsTrigger value="profitability" className="text-xs"><BarChart3 className="mr-1 h-3.5 w-3.5 hidden sm:inline" />{t("reports.tabs.profitability")}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="sales"><SalesReport bookings={filteredBookings} /></TabsContent>
