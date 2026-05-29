@@ -232,13 +232,13 @@ const Pricing = () => {
       <section className="py-16">
         <div className="container mx-auto px-4 text-center">
           <Gem className="h-10 w-10 text-amber-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold mb-3">Need a Custom Solution?</h2>
+          <h2 className="text-2xl font-bold mb-3">{t("marketing.pricing.needCustom")}</h2>
           <p className="text-white/45 max-w-md mx-auto mb-6">
-            Enterprise plans include custom integrations, dedicated support, API access, custom branding, and more.
+            {t("marketing.pricing.enterpriseDesc")}
           </p>
           <Link to="/demo">
             <Button size="lg" variant="outline" className="border-white/15 text-white hover:bg-white/10 px-8">
-              Contact Sales
+              {t("marketing.pricing.contactSales")}
             </Button>
           </Link>
         </div>
