@@ -123,8 +123,8 @@ const MarketingLayout = ({ children, title, description }: Props) => {
               </Link>
             ))}
             <div className="py-2.5"><LanguageSwitcher className="text-white/70" /></div>
-            <Link to="/demo" className="block py-2.5">
-              <Button size="sm" variant="outline" className="w-full border-amber-400/30 text-amber-400">{t("common.bookDemo")}</Button>
+            <Link to="/pricing" className="block py-2.5">
+              <Button size="sm" className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white">{t("common.getStarted")}</Button>
             </Link>
           </div>
         )}
