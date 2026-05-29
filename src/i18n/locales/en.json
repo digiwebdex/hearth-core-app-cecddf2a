@@ -1892,5 +1892,103 @@
       "updated": "Plan updated",
       "created": "Plan created"
     }
+  },
+  "adminTenants": {
+    "title": "All Agencies",
+    "subtitle": "View and manage all registered companies",
+    "createAgency": "Create Agency",
+    "refresh": "Refresh",
+    "searchPlaceholder": "Search by name or email…",
+    "companies": "Companies ({{count}})",
+    "noAgencies": "No agencies found.",
+    "creating": "Creating…",
+    "saving": "Saving…",
+    "deleting": "Deleting…",
+    "saveChanges": "Save changes",
+    "deletePermanently": "Delete permanently",
+    "sections": {
+      "company": "Company",
+      "ownerAccount": "Owner Account",
+      "subscription": "Subscription"
+    },
+    "dialog": {
+      "createTitle": "Create New Agency",
+      "createDesc": "Manually create a company and its owner account with a subscription.",
+      "editTitle": "Edit Agency",
+      "editDesc": "Update company info and subscription.",
+      "deleteTitle": "Delete agency?",
+      "deleteDesc": "This will permanently delete <1>{{name}}</1> and all its users, bookings, clients, invoices, and related data. This action cannot be undone."
+    },
+    "fields": {
+      "companyName": "Company Name",
+      "companyPhone": "Company Phone",
+      "companyWhatsapp": "Company WhatsApp",
+      "address": "Address",
+      "city": "City",
+      "country": "Country",
+      "website": "Website",
+      "ownerName": "Owner Name",
+      "ownerEmail": "Owner Email",
+      "ownerMobile": "Owner Mobile",
+      "ownerWhatsapp": "Owner WhatsApp",
+      "tempPassword": "Temporary Password",
+      "resetPassword": "Reset Password",
+      "plan": "Plan",
+      "status": "Status",
+      "months": "Months",
+      "expiry": "Expiry",
+      "phone": "Phone",
+      "whatsapp": "WhatsApp",
+      "notes": "Notes",
+      "notesInternal": "Notes (internal)",
+      "passwordPlaceholder": "Min 6 characters",
+      "resetPasswordPlaceholder": "Leave blank to keep current password (min 6 chars)",
+      "notesPlaceholder": "Optional internal notes",
+      "websitePlaceholder": "example.com"
+    },
+    "table": {
+      "company": "Company",
+      "owner": "Owner",
+      "plan": "Plan",
+      "users": "Users",
+      "bookings": "Bookings",
+      "status": "Status",
+      "created": "Created",
+      "actions": "Actions"
+    },
+    "plans": {
+      "basic": "Basic",
+      "pro": "Pro",
+      "business": "Business",
+      "enterprise": "Unlimited",
+      "free": "Free"
+    },
+    "status": {
+      "active": "Active",
+      "trial": "Trial",
+      "suspended": "Suspended"
+    },
+    "actions": {
+      "viewDetails": "View details",
+      "edit": "Edit",
+      "suspend": "Suspend",
+      "reactivate": "Reactivate",
+      "delete": "Delete",
+      "cancel": "Cancel"
+    },
+    "toast": {
+      "missingFields": "Missing fields",
+      "missingFieldsDesc": "All fields are required",
+      "agencyCreated": "Agency created",
+      "agencyUpdated": "Agency updated",
+      "agencyDeleted": "Agency deleted",
+      "companySuspended": "Company suspended",
+      "companyReactivated": "Company reactivated",
+      "loadFailed": "Failed to load agencies",
+      "createFailed": "Failed to create agency",
+      "updateFailed": "Update failed",
+      "deleteFailed": "Delete failed",
+      "actionFailed": "Action failed"
+    }
   }
 }
