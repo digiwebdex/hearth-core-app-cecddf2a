@@ -224,9 +224,9 @@ const Invoices = () => {
       }));
       setRefundForm({ amount: 0, reason: "", method: "" });
       setRefundDialogOpen(false);
-      toast({ title: "Refund processed" });
+      toast({ title: t("invoicesForm.toast.refundProcessed") });
     } catch (err: any) {
-      toast({ title: "Refund failed", description: err.message, variant: "destructive" });
+      toast({ title: t("invoicesForm.toast.refundFailed"), description: err.message, variant: "destructive" });
     }
   };
 
@@ -240,9 +240,9 @@ const Invoices = () => {
       ));
       setCancelReason("");
       setCancelDialogOpen(false);
-      toast({ title: "Invoice cancelled" });
+      toast({ title: t("invoicesForm.toast.cancelled") });
     } catch (err: any) {
-      toast({ title: "Failed", description: err.message, variant: "destructive" });
+      toast({ title: t("invoicesForm.toast.failed"), description: err.message, variant: "destructive" });
     }
   };
 
