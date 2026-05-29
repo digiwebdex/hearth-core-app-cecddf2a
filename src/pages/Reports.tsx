@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -40,6 +41,7 @@ function DatePicker({ date, onChange, label }: { date: Date | undefined; onChang
 }
 
 const Reports = () => {
+  const { t } = useTranslation();
   const { currentPlan } = useAuth();
   const [activeTab, setActiveTab] = useState("sales");
   const [loading, setLoading] = useState(true);
@@ -149,11 +151,11 @@ const Reports = () => {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">Reports & Analytics</h1>
-              <p className="text-muted-foreground">Sales, leads, payments, vendors, staff, and profitability insights</p>
+              <h1 className="text-3xl font-bold tracking-tight">{t("pages.reportsTitle")}</h1>
+              <p className="text-muted-foreground">{t("pages.reportsSubtitle")}</p>
             </div>
             <Button variant="outline" size="sm" onClick={fetchData} disabled={loading}>
-              <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />Refresh
+              <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />{t("common.refresh")}
             </Button>
           </div>
 

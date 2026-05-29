@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import PermissionGate from "@/components/PermissionGate";
@@ -47,6 +48,7 @@ const getCategoryMeta = (c: VendorCategory) => CATEGORIES.find((x) => x.value ==
 const getBillStatusMeta = (s: VendorBillStatus) => BILL_STATUS_META.find((x) => x.value === s) || BILL_STATUS_META[0];
 
 const Vendors = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [vendors, setVendors] = useState<Vendor[]>([]);
@@ -201,19 +203,19 @@ const Vendors = () => {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-              <Store className="h-8 w-8" /> Vendors & Suppliers
+              <Store className="h-8 w-8" /> {t("pages.vendorsTitle")}
             </h1>
-            <p className="text-muted-foreground">Manage suppliers, track vendor bills, and monitor payable settlements</p>
+            <p className="text-muted-foreground">{t("pages.vendorsSubtitle")}</p>
           </div>
           <div className="flex gap-2">
             <PermissionGate module="vendors" action="export">
               <Button variant="outline" size="sm" onClick={handleExport}>
-                <Download className="mr-1 h-4 w-4" /> Export
+                <Download className="mr-1 h-4 w-4" /> {t("pages.export")}
               </Button>
             </PermissionGate>
             <PermissionGate module="vendors" action="create">
               <Button onClick={() => { setForm(emptyForm); setEditVendor(null); setCreateOpen(true); }}>
-                <Plus className="mr-2 h-4 w-4" /> Add Vendor
+                <Plus className="mr-2 h-4 w-4" /> {t("pages.addVendor")}
               </Button>
             </PermissionGate>
           </div>

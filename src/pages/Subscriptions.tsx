@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,7 @@ const planIcons: Record<string, React.ElementType> = {
 };
 
 const Subscription_Page = () => {
+  const { t } = useTranslation();
   const [payRequests, setPayRequests] = useState<PaymentRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
@@ -108,11 +110,11 @@ const Subscription_Page = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Subscription</h1>
-            <p className="text-muted-foreground">Choose a plan and manage your subscription</p>
+            <h1 className="text-3xl font-bold tracking-tight">{t("pages.subscriptionTitle")}</h1>
+            <p className="text-muted-foreground">{t("pages.subscriptionSubtitle")}</p>
           </div>
           <Button variant="outline" size="sm" onClick={() => { fetchRequests(); refreshTenant(); }} disabled={loading}>
-            <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> Refresh
+            <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> {t("common.refresh")}
           </Button>
         </div>
 

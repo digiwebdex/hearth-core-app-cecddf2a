@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import PermissionGate from "@/components/PermissionGate";
@@ -50,6 +51,7 @@ const emptyForm = {
 };
 
 const Bookings = () => {
+  const { t } = useTranslation();
   const [items, setItems] = useState<Booking[]>([]);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -217,20 +219,20 @@ const Bookings = () => {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-              <Plane className="h-8 w-8" /> Bookings
+              <Plane className="h-8 w-8" /> {t("sidebar.bookings")}
             </h1>
-            <p className="text-muted-foreground">Manage tours, tickets, hotels, visas & packages</p>
+            <p className="text-muted-foreground">{t("pages.bookingsSubtitle")}</p>
           </div>
           <div className="flex gap-2">
             <PermissionGate module="bookings" action="create">
               <Button variant="outline" onClick={handleOpenQuotationDialog}>
-                <FileText className="mr-2 h-4 w-4" /> From Quotation
+                <FileText className="mr-2 h-4 w-4" /> {t("pages.fromQuotation")}
               </Button>
             </PermissionGate>
             <PermissionGate module="bookings" action="create">
               <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) resetForm(); }}>
                 <DialogTrigger asChild>
-                  <Button><Plus className="mr-2 h-4 w-4" />New Booking</Button>
+                  <Button><Plus className="mr-2 h-4 w-4" />{t("pages.newBooking")}</Button>
                 </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>

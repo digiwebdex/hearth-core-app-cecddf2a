@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import LoadingState from "@/components/LoadingState";
@@ -50,6 +51,7 @@ const emptyForm = {
 };
 
 const Leads = () => {
+  const { t } = useTranslation();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -396,12 +398,12 @@ const Leads = () => {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-              <Target className="h-8 w-8" /> Leads
+              <Target className="h-8 w-8" /> {t("sidebar.leads")}
             </h1>
-            <p className="text-muted-foreground">Manage your sales pipeline</p>
+            <p className="text-muted-foreground">{t("pages.leadsSubtitle")}</p>
           </div>
           <PermissionGate module="leads" action="create">
-            <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" /> New Lead</Button>
+            <Button onClick={openNew}><Plus className="mr-2 h-4 w-4" /> {t("pages.newLead")}</Button>
           </PermissionGate>
         </div>
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ import { usePermissions } from "@/hooks/usePermissions";
 import { getRoleMeta } from "@/lib/permissions";
 
 const Team = () => {
+  const { t } = useTranslation();
   const [members, setMembers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [inviteEmail, setInviteEmail] = useState("");
@@ -79,20 +81,20 @@ const Team = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Team</h1>
-            <p className="text-muted-foreground">Manage your team members ({members.length})</p>
+            <h1 className="text-3xl font-bold tracking-tight">{t("pages.teamTitle")}</h1>
+            <p className="text-muted-foreground">{t("pages.teamSubtitle")} ({members.length})</p>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={fetchMembers} disabled={loading}>
-              <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> Refresh
+              <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> {t("common.refresh")}
             </Button>
             {canManageTeam && (
               <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button><UserPlus className="mr-2 h-4 w-4" />Add Member</Button>
+                  <Button><UserPlus className="mr-2 h-4 w-4" />{t("pages.addMember")}</Button>
                 </DialogTrigger>
                 <DialogContent>
-                  <DialogHeader><DialogTitle>Add Team Member</DialogTitle></DialogHeader>
+                  <DialogHeader><DialogTitle>{t("pages.addMember")}</DialogTitle></DialogHeader>
                   <form onSubmit={handleInvite} className="space-y-4">
                     <div className="space-y-2">
                       <Label>Name</Label>

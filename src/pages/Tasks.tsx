@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -43,6 +44,7 @@ const priorityColors: Record<TaskPriority, string> = {
 };
 
 const Tasks = () => {
+  const { t } = useTranslation();
   const [items, setItems] = useState<Task[]>([]);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -108,15 +110,15 @@ const Tasks = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Tasks</h1>
-            <p className="text-muted-foreground">Manage your team tasks</p>
+            <h1 className="text-3xl font-bold tracking-tight">{t("sidebar.tasks")}</h1>
+            <p className="text-muted-foreground">{t("pages.tasksSubtitle")}</p>
           </div>
           <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) resetForm(); }}>
             <DialogTrigger asChild>
-              <Button><Plus className="mr-2 h-4 w-4" />New Task</Button>
+              <Button><Plus className="mr-2 h-4 w-4" />{t("pages.newTask")}</Button>
             </DialogTrigger>
             <DialogContent>
-              <DialogHeader><DialogTitle>{editingId ? "Edit" : "New"} Task</DialogTitle></DialogHeader>
+              <DialogHeader><DialogTitle>{editingId ? t("common.edit") : t("common.new")} {t("sidebar.tasks")}</DialogTitle></DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
                   <Label>Title</Label>
