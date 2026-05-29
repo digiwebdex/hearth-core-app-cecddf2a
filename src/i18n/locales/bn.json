@@ -1,34 +1,8 @@
 {
   "common": {
     "brand": "ট্রাভেল এজেন্সি ওয়েব",
-    "brandSub": "ওয়েবসাইট ও সফটওয়্যার সলিউশন",
     "login": "লগইন",
     "register": "রেজিস্ট্রেশন",
-    "logout": "লগআউট",
-    "startFreeTrial": "৩ দিনের ফ্রি ট্রায়াল শুরু করুন",
-    "bookDemo": "ডেমো বুক করুন",
-    "viewPricing": "প্যাকেজ দেখুন",
-    "subscribeNow": "এখনই সাবস্ক্রাইব করুন",
-    "contactUs": "যোগাযোগ করুন",
-    "phone": "ফোন",
-    "email": "ইমেইল",
-    "address": "ঠিকানা",
-    "language": "ভাষা",
-    "createAccount": "অ্যাকাউন্ট তৈরি করুন",
-    "alreadyHaveAccount": "ইতিমধ্যে অ্যাকাউন্ট আছে?",
-    "signIn": "সাইন ইন",
-    "dontHaveAccount": "অ্যাকাউন্ট নেই?",
-    "password": "পাসওয়ার্ড",
-    "fullName": "পূর্ণ নাম",
-    "agencyName": "এজেন্সির নাম",
-    "creating": "অ্যাকাউন্ট তৈরি হচ্ছে…",
-    "signingIn": "সাইন ইন হচ্ছে…",
-    "forgotPassword": "পাসওয়ার্ড ভুলে গেছেন?",
-    "backToLogin": "লগইনে ফিরে যান",
-    "selectedPlan": "নির্বাচিত প্যাকেজ",
-    "perMonth": "/মাস",
-    "free": "ফ্রি",
-    "custom": "কাস্টম",
-    "popular": "জনপ্রিয়",
-    "bestValue": "সেরা মূল্য",
-    "noCreditCard": "ক্রেডিট কার্ড ল
+    "logout": "লগআউট"
+  }
+}

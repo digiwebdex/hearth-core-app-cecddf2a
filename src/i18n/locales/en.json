@@ -1,0 +1,8 @@
+{
+  "common": {
+    "brand": "Travel Agency Web",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  }
+}
