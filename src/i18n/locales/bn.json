@@ -2128,6 +2128,64 @@
       "reactivated": "পুনরায় সক্রিয় করা হয়েছে",
       "renewed": "নবায়ন করা হয়েছে"
     }
+  },
+  "adminPayments": {
+    "title": "পেমেন্ট অনুরোধ",
+    "subtitle": "টেন্যান্টের সাবস্ক্রিপশন পেমেন্ট পর্যালোচনা, অনুমোদন বা প্রত্যাখ্যান করুন",
+    "export": "এক্সপোর্ট",
+    "exportFilename": "payment-requests.csv",
+    "stats": {
+      "total": "মোট অনুরোধ",
+      "pending": "মুলতুবি",
+      "approved": "অনুমোদিত",
+      "rejected": "প্রত্যাখ্যান",
+      "approvedRevenue": "অনুমোদিত আয়",
+      "pendingAmount": "মুলতুবি পরিমাণ"
+    },
+    "filters": {
+      "searchPlaceholder": "TRX ID খুঁজুন…",
+      "allStatus": "সব স্ট্যাটাস"
+    },
+    "status": {
+      "all": "সব স্ট্যাটাস",
+      "pending": "মুলতুবি",
+      "approved": "অনুমোদিত",
+      "rejected": "প্রত্যাখ্যান"
+    },
+    "table": {
+      "title": "পেমেন্ট অনুরোধ ({{count}})",
+      "plan": "প্ল্যান",
+      "amount": "পরিমাণ",
+      "method": "পদ্ধতি",
+      "trxId": "TRX ID",
+      "status": "স্ট্যাটাস",
+      "date": "তারিখ",
+      "actions": "কর্ম",
+      "empty": "কোনো পেমেন্ট অনুরোধ পাওয়া যায়নি।",
+      "pendingBadge": "{{count}} মুলতুবি"
+    },
+    "dialog": {
+      "title": "পেমেন্ট অনুরোধের বিবরণ",
+      "plan": "প্ল্যান:",
+      "amount": "পরিমাণ:",
+      "method": "পদ্ধতি:",
+      "trxId": "TRX ID:",
+      "status": "স্ট্যাটাস:",
+      "date": "তারিখ:",
+      "reviewComment": "পর্যালোচনা মন্তব্য (ঐচ্ছিক)",
+      "reviewPlaceholder": "এই পেমেন্ট সম্পর্কে একটি নোট যোগ করুন...",
+      "approve": "অনুমোদন ও সক্রিয় করুন",
+      "reject": "প্রত্যাখ্যান করুন",
+      "reviewLabel": "পর্যালোচনা মন্তব্য:"
+    },
+    "toast": {
+      "loadFailed": "পেমেন্ট অনুরোধ লোড করতে ব্যর্থ",
+      "approved": "পেমেন্ট অনুমোদিত",
+      "approvedDesc": "সাবস্ক্রিপশন সক্রিয় করা হয়েছে।",
+      "rejected": "পেমেন্ট প্রত্যাখ্যান",
+      "rejectedDesc": "পেমেন্ট প্রত্যাখ্যান করা হয়েছে।",
+      "actionFailed": "কাজ ব্যর্থ"
+    }
   }
 }
 
