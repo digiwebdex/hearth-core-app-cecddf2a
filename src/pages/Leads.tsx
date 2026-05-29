@@ -341,23 +341,23 @@ const Leads = () => {
                     <TableCell className="text-sm text-muted-foreground">{lead.createdAt?.slice(0, 10)}</TableCell>
                     <TableCell>
                       <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
-                        <Button variant="ghost" size="icon" title="View" onClick={() => navigate(`/leads/${lead.id}`)}>
+                        <Button variant="ghost" size="icon" title={t("leadsForm.view")} onClick={() => navigate(`/leads/${lead.id}`)}>
                           <Eye className="h-4 w-4" />
                         </Button>
                         <PermissionGate module="leads" action="edit">
-                          <Button variant="ghost" size="icon" title="Edit" onClick={() => openEdit(lead)}>
+                          <Button variant="ghost" size="icon" title={t("leadsForm.edit")} onClick={() => openEdit(lead)}>
                             <Pencil className="h-4 w-4" />
                           </Button>
                         </PermissionGate>
                         {lead.status === "won" && (
                           <PermissionGate module="leads" action="approve">
-                            <Button variant="ghost" size="icon" title="Convert to Client" onClick={() => handleConvert(lead)}>
+                            <Button variant="ghost" size="icon" title={t("leadsForm.convertToClient")} onClick={() => handleConvert(lead)}>
                               <UserPlus className="h-4 w-4 text-green-600" />
                             </Button>
                           </PermissionGate>
                         )}
                         <PermissionGate module="leads" action="delete">
-                          <Button variant="ghost" size="icon" title="Delete" onClick={() => handleDelete(lead.id)}>
+                          <Button variant="ghost" size="icon" title={t("leadsForm.delete")} onClick={() => handleDelete(lead.id)}>
                             <Trash2 className="h-4 w-4 text-destructive" />
                           </Button>
                         </PermissionGate>
