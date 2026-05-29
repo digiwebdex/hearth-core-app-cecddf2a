@@ -82,7 +82,7 @@ const AdminTenants = () => {
       const data = await adminApi.getTenants();
       setTenants(data);
     } catch (err: any) {
-      toast({ title: "Failed to load agencies", description: err.message, variant: "destructive" });
+      toast({ title: tt("adminTenants.toast.loadFailed"), description: err.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
