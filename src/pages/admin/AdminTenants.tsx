@@ -59,18 +59,18 @@ const AdminTenants = () => {
 
   const handleCreate = async () => {
     if (!form.tenantName || !form.ownerName || !form.ownerEmail || !form.ownerPassword) {
-      toast({ title: "Missing fields", description: "All fields are required", variant: "destructive" });
+      toast({ title: tt("adminTenants.toast.missingFields"), description: tt("adminTenants.toast.missingFieldsDesc"), variant: "destructive" });
       return;
     }
     setCreating(true);
     try {
       await adminApi.createTenant({ ...form, subscriptionMonths: Number(form.subscriptionMonths) });
-      toast({ title: "Agency created", description: form.tenantName });
+      toast({ title: tt("adminTenants.toast.agencyCreated"), description: form.tenantName });
       setCreateOpen(false);
       resetForm();
       fetchTenants();
     } catch (err: any) {
-      toast({ title: "Failed to create agency", description: err.message, variant: "destructive" });
+      toast({ title: tt("adminTenants.toast.createFailed"), description: err.message, variant: "destructive" });
     } finally {
       setCreating(false);
     }
