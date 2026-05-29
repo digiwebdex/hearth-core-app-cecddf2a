@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -36,6 +37,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const fetchData = async () => {
     setLoading(true);
@@ -101,7 +103,7 @@ const Dashboard = () => {
           topDestinations,
         });
       } catch {
-        toast({ title: "Failed to load dashboard", variant: "destructive" });
+        toast({ title: t("dashboard.loadFailed"), variant: "destructive" });
       }
     } finally {
       setLoading(false);
