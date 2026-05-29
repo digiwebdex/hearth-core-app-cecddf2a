@@ -96,23 +96,23 @@ const AdminAuditLog = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Audit Log</h1>
-            <p className="text-muted-foreground">Track all important actions across the platform — server-side logs</p>
+            <h1 className="text-3xl font-bold tracking-tight">{t("adminAuditLog.title")}</h1>
+            <p className="text-muted-foreground">{t("adminAuditLog.subtitle")}</p>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={fetchLogs} disabled={loading}>
-              <RefreshCw className={`mr-1 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> Refresh
+              <RefreshCw className={`mr-1 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> {t("adminAuditLog.refresh")}
             </Button>
-            <Button variant="outline" size="sm" onClick={handleExport}><Download className="mr-1 h-4 w-4" /> Export</Button>
+            <Button variant="outline" size="sm" onClick={handleExport}><Download className="mr-1 h-4 w-4" /> {t("adminAuditLog.export")}</Button>
           </div>
         </div>
 
         {/* Stats */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Activity className="h-8 w-8 text-primary" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.total}</p><p className="text-xs text-muted-foreground">Total Events</p></div></div></CardContent></Card>
-          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Clock className="h-8 w-8 text-blue-500" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.today}</p><p className="text-xs text-muted-foreground">Today</p></div></div></CardContent></Card>
-          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Shield className="h-8 w-8 text-red-500" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.securityEvents}</p><p className="text-xs text-muted-foreground">Auth Events</p></div></div></CardContent></Card>
-          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><FileText className="h-8 w-8 text-green-500" /><div><p className="text-2xl font-bold">{loading ? "…" : Object.keys(stats.moduleCounts).length}</p><p className="text-xs text-muted-foreground">Active Modules</p></div></div></CardContent></Card>
+          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Activity className="h-8 w-8 text-primary" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.total}</p><p className="text-xs text-muted-foreground">{t("adminAuditLog.stats.total")}</p></div></div></CardContent></Card>
+          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Clock className="h-8 w-8 text-blue-500" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.today}</p><p className="text-xs text-muted-foreground">{t("adminAuditLog.stats.today")}</p></div></div></CardContent></Card>
+          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><Shield className="h-8 w-8 text-red-500" /><div><p className="text-2xl font-bold">{loading ? "…" : stats.securityEvents}</p><p className="text-xs text-muted-foreground">{t("adminAuditLog.stats.auth")}</p></div></div></CardContent></Card>
+          <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><FileText className="h-8 w-8 text-green-500" /><div><p className="text-2xl font-bold">{loading ? "…" : Object.keys(stats.moduleCounts).length}</p><p className="text-xs text-muted-foreground">{t("adminAuditLog.stats.modules")}</p></div></div></CardContent></Card>
         </div>
 
         {/* Filters */}
