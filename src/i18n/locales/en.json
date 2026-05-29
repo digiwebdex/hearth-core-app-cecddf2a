@@ -1368,5 +1368,98 @@
       "staff": "Staff",
       "profitability": "Profitability"
     }
+  },
+  "reportComponents": {
+    "common": {
+      "export": "Export",
+      "noData": "No data available"
+    },
+    "sales": {
+      "totalSales": "Total Sales",
+      "totalBookings": "Total Bookings",
+      "avgValue": "Avg Booking Value",
+      "monthlyRevenue": "Monthly Revenue",
+      "salesByType": "Sales by Package Type",
+      "bookingsByStatus": "Bookings by Status",
+      "topDestinations": "Top Destinations",
+      "bookingDetails": "Booking Details",
+      "revenue": "Revenue",
+      "noPeriod": "No booking data for this period",
+      "noDestination": "No destination data",
+      "noBookingsPeriod": "No bookings in this period",
+      "th": { "client": "Client", "type": "Type", "destination": "Destination", "amount": "Amount", "status": "Status" }
+    },
+    "leadsQuote": {
+      "leadAnalytics": "Lead Analytics",
+      "quoteAnalytics": "Quotation Analytics",
+      "exportLeads": "Export Leads",
+      "totalLeads": "Total Leads",
+      "won": "Won",
+      "lost": "Lost",
+      "conversionRate": "Conversion Rate",
+      "leadsByStage": "Leads by Stage",
+      "convBySource": "Conversion by Source",
+      "noLeadData": "No lead data",
+      "noSourceData": "No source data",
+      "totalQuotations": "Total Quotations",
+      "approved": "Approved",
+      "totalValue": "Total Value",
+      "approvalRate": "Approval Rate",
+      "statusBreakdown": "Quotation Status Breakdown",
+      "noQuoteData": "No quotation data",
+      "totalLeadsBar": "Total Leads",
+      "converted": "Converted",
+      "th": { "status": "Status", "count": "Count", "totalValue": "Total Value", "pct": "% of Total" }
+    },
+    "payments": {
+      "totalInvoiced": "Total Invoiced",
+      "collected": "Collected",
+      "outstanding": "Outstanding",
+      "overdue": "Overdue ({{n}})",
+      "monthlyCmp": "Collected vs Outstanding (Monthly)",
+      "byMethod": "Collection by Method",
+      "overdueInvoices": "Overdue Invoices",
+      "noPaymentData": "No payment data for this period",
+      "noMethodData": "No payment method data",
+      "noOverdue": "No overdue invoices — great job!",
+      "amount": "Amount",
+      "th": { "invoice": "Invoice", "client": "Client", "total": "Total", "paid": "Paid", "due": "Due", "dueDate": "Due Date" }
+    },
+    "vendors": {
+      "totalBills": "Total Vendor Bills",
+      "paidToVendors": "Paid to Vendors",
+      "outstanding": "Outstanding",
+      "overdue": "Overdue ({{n}})",
+      "byVendor": "Payables by Vendor",
+      "details": "Vendor Payable Details",
+      "noVendorData": "No vendor bill data",
+      "noBills": "No vendor bills recorded",
+      "paid": "Paid",
+      "th": { "vendor": "Vendor", "description": "Description", "total": "Total", "paid": "Paid", "due": "Due", "status": "Status", "dueDate": "Due Date" }
+    },
+    "staff": {
+      "title": "Staff Performance",
+      "comparison": "Staff Comparison",
+      "detailed": "Detailed Staff Metrics",
+      "noActivity": "No staff activity data",
+      "noStaff": "No staff data available. Assign leads and bookings to team members.",
+      "leads": "Leads",
+      "bookings": "Bookings",
+      "th": { "staff": "Staff Member", "leads": "Leads", "won": "Won", "conv": "Conv. %", "quotations": "Quotations", "approved": "Approved", "bookings": "Bookings", "revenue": "Revenue" }
+    },
+    "profit": {
+      "revenue": "Revenue",
+      "vendorCosts": "Vendor Costs",
+      "expenses": "Expenses",
+      "grossProfit": "Gross Profit",
+      "margin": "Margin",
+      "monthlyCmp": "Monthly Revenue vs Costs",
+      "bookingProfitability": "Booking Profitability",
+      "noFinancial": "No financial data for this period",
+      "noProfitData": "No booking profitability data. Add vendor costs to bookings to see margins.",
+      "totalCosts": "Total Costs",
+      "profit": "Profit",
+      "th": { "booking": "Booking", "client": "Client", "type": "Type", "revenue": "Revenue", "cost": "Cost", "profit": "Profit", "margin": "Margin", "status": "Status" }
+    }
   }
 }

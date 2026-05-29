@@ -1368,5 +1368,98 @@
       "staff": "স্টাফ",
       "profitability": "লাভজনকতা"
     }
+  },
+  "reportComponents": {
+    "common": {
+      "export": "এক্সপোর্ট",
+      "noData": "কোনো ডেটা নেই"
+    },
+    "sales": {
+      "totalSales": "মোট বিক্রয়",
+      "totalBookings": "মোট বুকিং",
+      "avgValue": "গড় বুকিং মূল্য",
+      "monthlyRevenue": "মাসিক রাজস্ব",
+      "salesByType": "প্যাকেজ অনুসারে বিক্রয়",
+      "bookingsByStatus": "স্ট্যাটাস অনুসারে বুকিং",
+      "topDestinations": "শীর্ষ গন্তব্য",
+      "bookingDetails": "বুকিং বিস্তারিত",
+      "revenue": "রাজস্ব",
+      "noPeriod": "এই সময়কালে কোনো বুকিং ডেটা নেই",
+      "noDestination": "কোনো গন্তব্য ডেটা নেই",
+      "noBookingsPeriod": "এই সময়কালে কোনো বুকিং নেই",
+      "th": { "client": "ক্লায়েন্ট", "type": "ধরন", "destination": "গন্তব্য", "amount": "পরিমাণ", "status": "স্ট্যাটাস" }
+    },
+    "leadsQuote": {
+      "leadAnalytics": "লিড অ্যানালিটিক্স",
+      "quoteAnalytics": "কোটেশন অ্যানালিটিক্স",
+      "exportLeads": "লিড এক্সপোর্ট",
+      "totalLeads": "মোট লিড",
+      "won": "জেতা",
+      "lost": "হারানো",
+      "conversionRate": "কনভার্সন রেট",
+      "leadsByStage": "ধাপ অনুসারে লিড",
+      "convBySource": "সোর্স অনুসারে কনভার্সন",
+      "noLeadData": "কোনো লিড ডেটা নেই",
+      "noSourceData": "কোনো সোর্স ডেটা নেই",
+      "totalQuotations": "মোট কোটেশন",
+      "approved": "অনুমোদিত",
+      "totalValue": "মোট মূল্য",
+      "approvalRate": "অনুমোদনের হার",
+      "statusBreakdown": "কোটেশন স্ট্যাটাস বিভাজন",
+      "noQuoteData": "কোনো কোটেশন ডেটা নেই",
+      "totalLeadsBar": "মোট লিড",
+      "converted": "কনভার্ট",
+      "th": { "status": "স্ট্যাটাস", "count": "সংখ্যা", "totalValue": "মোট মূল্য", "pct": "মোটের %" }
+    },
+    "payments": {
+      "totalInvoiced": "মোট ইনভয়েস",
+      "collected": "সংগৃহীত",
+      "outstanding": "বকেয়া",
+      "overdue": "বিলম্বিত ({{n}})",
+      "monthlyCmp": "সংগৃহীত বনাম বকেয়া (মাসিক)",
+      "byMethod": "পদ্ধতি অনুসারে সংগ্রহ",
+      "overdueInvoices": "বিলম্বিত ইনভয়েস",
+      "noPaymentData": "এই সময়কালে কোনো পেমেন্ট ডেটা নেই",
+      "noMethodData": "কোনো পেমেন্ট পদ্ধতির ডেটা নেই",
+      "noOverdue": "কোনো বিলম্বিত ইনভয়েস নেই — চমৎকার!",
+      "amount": "পরিমাণ",
+      "th": { "invoice": "ইনভয়েস", "client": "ক্লায়েন্ট", "total": "মোট", "paid": "পরিশোধিত", "due": "বকেয়া", "dueDate": "শেষ তারিখ" }
+    },
+    "vendors": {
+      "totalBills": "মোট ভেন্ডর বিল",
+      "paidToVendors": "ভেন্ডরকে পরিশোধিত",
+      "outstanding": "বকেয়া",
+      "overdue": "বিলম্বিত ({{n}})",
+      "byVendor": "ভেন্ডর অনুসারে পরিশোধযোগ্য",
+      "details": "ভেন্ডর পরিশোধযোগ্য বিস্তারিত",
+      "noVendorData": "কোনো ভেন্ডর বিল ডেটা নেই",
+      "noBills": "কোনো ভেন্ডর বিল নথিভুক্ত নেই",
+      "paid": "পরিশোধিত",
+      "th": { "vendor": "ভেন্ডর", "description": "বিবরণ", "total": "মোট", "paid": "পরিশোধিত", "due": "বকেয়া", "status": "স্ট্যাটাস", "dueDate": "শেষ তারিখ" }
+    },
+    "staff": {
+      "title": "স্টাফ পারফরম্যান্স",
+      "comparison": "স্টাফ তুলনা",
+      "detailed": "বিস্তারিত স্টাফ মেট্রিক্স",
+      "noActivity": "কোনো স্টাফ কার্যকলাপ ডেটা নেই",
+      "noStaff": "কোনো স্টাফ ডেটা নেই। টিম সদস্যদের লিড ও বুকিং বরাদ্দ করুন।",
+      "leads": "লিড",
+      "bookings": "বুকিং",
+      "th": { "staff": "স্টাফ সদস্য", "leads": "লিড", "won": "জেতা", "conv": "কনভ. %", "quotations": "কোটেশন", "approved": "অনুমোদিত", "bookings": "বুকিং", "revenue": "রাজস্ব" }
+    },
+    "profit": {
+      "revenue": "রাজস্ব",
+      "vendorCosts": "ভেন্ডর খরচ",
+      "expenses": "ব্যয়",
+      "grossProfit": "গ্রস লাভ",
+      "margin": "মার্জিন",
+      "monthlyCmp": "মাসিক রাজস্ব বনাম খরচ",
+      "bookingProfitability": "বুকিং লাভজনকতা",
+      "noFinancial": "এই সময়কালে কোনো আর্থিক ডেটা নেই",
+      "noProfitData": "কোনো বুকিং লাভজনকতা ডেটা নেই। মার্জিন দেখতে বুকিংয়ে ভেন্ডর খরচ যোগ করুন।",
+      "totalCosts": "মোট খরচ",
+      "profit": "লাভ",
+      "th": { "booking": "বুকিং", "client": "ক্লায়েন্ট", "type": "ধরন", "revenue": "রাজস্ব", "cost": "খরচ", "profit": "লাভ", "margin": "মার্জিন", "status": "স্ট্যাটাস" }
+    }
   }
 }
