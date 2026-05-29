@@ -153,14 +153,14 @@ const Invoices = () => {
       setInvoices((prev) => [...prev, created as Invoice]);
       setInvoiceForm({ bookingId: "", bookingTitle: "", clientName: "", totalAmount: 0, bookingCost: 0, dueDate: "", notes: "" });
       setCreateDialogOpen(false);
-      toast({ title: "Invoice created" });
+      toast({ title: t("invoicesForm.toast.created") });
       sendPaymentSms({
         invoiceId: (created as any).id, bookingId: invoiceForm.bookingId,
         paymentAmount: invoiceForm.totalAmount, balance: invoiceForm.totalAmount,
         clientName: invoiceForm.clientName, clientPhone: "", company: "Travel Agency",
-      }).then((res) => { if (res.sent) toast({ title: "SMS sent to client" }); }).catch(() => {});
+      }).then((res) => { if (res.sent) toast({ title: t("invoicesForm.toast.smsSent") }); }).catch(() => {});
     } catch (err: any) {
-      toast({ title: "Failed", description: err.message, variant: "destructive" });
+      toast({ title: t("invoicesForm.toast.failed"), description: err.message, variant: "destructive" });
     }
   };
 
