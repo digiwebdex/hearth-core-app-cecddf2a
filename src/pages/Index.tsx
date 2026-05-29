@@ -23,28 +23,21 @@ const BRAND = "Travel Agency Website & Software Solution";
 
 const planIcons: Record<string, React.ElementType> = { free: Star, basic: Zap, pro: Crown, business: Rocket, enterprise: Gem };
 
-const features = [
-  { icon: Target, title: "Leads & CRM", desc: "Capture inquiries from any source and convert them into loyal clients with stage-based pipelines" },
-  { icon: FileText, title: "Quotations", desc: "Build itemized travel quotations with PDF export and one-click conversion to bookings" },
-  { icon: Plane, title: "Booking Management", desc: "Handle tours, flights, hotels, and visa bookings with traveler docs and vendor tracking" },
-  { icon: Receipt, title: "Invoices & Payments", desc: "Generate invoices, collect installments via bKash, SSLCommerz, or bank transfer" },
-  { icon: Store, title: "Vendor Management", desc: "Track vendor costs, payables, and calculate booking-level profitability" },
-  { icon: Shield, title: "Team & Permissions", desc: "Role-based access for owners, managers, sales agents, accountants, and operations" },
-  { icon: BarChart3, title: "Reports & Analytics", desc: "Sales, leads, payments, vendors, staff performance, and profitability reports" },
-  { icon: Moon, title: "Hajj & Umrah", desc: "Pilgrim management, room allocation, family grouping, and installment plans" },
-];
+const featureKeys = [
+  { icon: Target, t: "leads" },
+  { icon: FileText, t: "quotes" },
+  { icon: Plane, t: "bookings" },
+  { icon: Receipt, t: "invoices" },
+  { icon: Store, t: "vendors" },
+  { icon: Shield, t: "team" },
+  { icon: BarChart3, t: "reports" },
+  { icon: Moon, t: "hajj" },
+] as const;
 
 const testimonials = [
-  { name: "Rafiq Ahmed", role: "Owner, Al-Baraka Tours", text: "Before this platform, we managed everything on spreadsheets. Now our team handles 3x more bookings with less confusion. The quotation-to-booking flow alone saved us hours every week." },
-  { name: "Fatima Begum", role: "Operations Manager, Skyway Travel", text: "The vendor payable tracking is a game changer. We finally know exactly how much we owe each hotel and transport partner — and our profit margins are visible in real time." },
-  { name: "Kamal Hossain", role: "Director, Noor Hajj Services", text: "The Hajj/Umrah module is exactly what we needed. Managing 500+ pilgrims with room allocation, installment plans, and document tracking used to be a nightmare. Not anymore." },
-];
-
-const faqItems = [
-  { q: "Who is this platform for?", a: "It's built for travel agencies, tour operators, ticketing offices, and Hajj/Umrah service providers in Bangladesh and beyond." },
-  { q: "What plans do you offer?", a: "Four simple plans — Basic (৳500/mo), Pro (৳800/mo), Business (৳1,500/mo), and Unlimited (custom pricing). Pick what fits your team." },
-  { q: "Do I need technical skills?", a: "No. If you can use WhatsApp, you can use our platform. No coding or IT team required." },
-  { q: "Can I change my plan later?", a: "Yes — upgrade or downgrade anytime from your dashboard. Pricing is prorated." },
+  { name: "Rafiq Ahmed", role: "Owner, Al-Baraka Tours", text: "Before this platform, we managed everything on spreadsheets. Now our team handles 3x more bookings with less confusion." },
+  { name: "Fatima Begum", role: "Operations Manager, Skyway Travel", text: "The vendor payable tracking is a game changer. Our profit margins are visible in real time." },
+  { name: "Kamal Hossain", role: "Director, Noor Hajj Services", text: "The Hajj/Umrah module is exactly what we needed. Managing 500+ pilgrims is finally simple." },
 ];
 
 import { useTranslation } from "react-i18next";
