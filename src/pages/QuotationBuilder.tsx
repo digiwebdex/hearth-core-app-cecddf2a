@@ -192,14 +192,14 @@ const QuotationBuilder = () => {
     try {
       if (isEdit) {
         await quotationApi.update(id!, payload);
-        toast({ title: "Quotation updated" });
+        toast({ title: t("quotationBuilder.updated") });
       } else {
         const created = await quotationApi.create(payload);
-        toast({ title: "Quotation created" });
+        toast({ title: t("quotationBuilder.created") });
         navigate(`/quotations/${created.id}`);
       }
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("quotationBuilder.error"), description: err.message });
     } finally {
       setSaving(false);
     }
