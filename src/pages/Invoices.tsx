@@ -36,23 +36,16 @@ import ErrorState from "@/components/ErrorState";
 import DataExport from "@/components/DataExport";
 import { isAfter, isBefore, parseISO } from "date-fns";
 
-const STATUS_META: { value: InvoiceStatus; label: string; color: string; icon: any }[] = [
-  { value: "unpaid", label: "Unpaid", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200", icon: XCircle },
-  { value: "partial", label: "Partially Paid", color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200", icon: Clock },
-  { value: "paid", label: "Paid", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200", icon: CheckCircle2 },
-  { value: "overdue", label: "Overdue", color: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200", icon: AlertTriangle },
-  { value: "refunded", label: "Refunded", color: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200", icon: RotateCcw },
-  { value: "cancelled", label: "Cancelled", color: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200", icon: Ban },
+const STATUS_META: { value: InvoiceStatus; color: string; icon: any }[] = [
+  { value: "unpaid", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200", icon: XCircle },
+  { value: "partial", color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200", icon: Clock },
+  { value: "paid", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200", icon: CheckCircle2 },
+  { value: "overdue", color: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200", icon: AlertTriangle },
+  { value: "refunded", color: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200", icon: RotateCcw },
+  { value: "cancelled", color: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200", icon: Ban },
 ];
 
-const PAYMENT_METHODS: { value: PaymentMethod; label: string }[] = [
-  { value: "cash", label: "Cash" },
-  { value: "bank", label: "Bank Transfer" },
-  { value: "card", label: "Credit/Debit Card" },
-  { value: "mobile_banking", label: "Mobile Banking (bKash/Nagad)" },
-  { value: "cheque", label: "Cheque" },
-  { value: "online", label: "Online Payment" },
-];
+const PAYMENT_METHOD_VALUES: PaymentMethod[] = ["cash", "bank", "card", "mobile_banking", "cheque", "online"];
 
 const getStatusMeta = (s: InvoiceStatus) => STATUS_META.find((x) => x.value === s) || STATUS_META[0];
 
