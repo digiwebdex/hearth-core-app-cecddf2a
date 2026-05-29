@@ -72,6 +72,12 @@ function tenantToSubscription(t: AdminTenant): TenantSubscription {
 }
 
 const AdminSubscriptions = () => {
+  const { t: tt } = useTranslation();
+  const statusLabel = (s: SubscriptionStatus) => tt(`adminSubscriptions.status.${s}`);
+  const planLabel = (p: string) => {
+    const meta = PLANS.find((x) => x.id === p);
+    return meta?.name || p;
+  };
   const [subscriptions, setSubscriptions] = useState<TenantSubscription[]>([]);
   const [loading, setLoading] = useState(true);
 
