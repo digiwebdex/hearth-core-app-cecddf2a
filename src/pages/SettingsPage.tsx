@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,12 +10,13 @@ import DataExport from "@/components/DataExport";
 import { CreditCard, ArrowRight } from "lucide-react";
 
 const SettingsPage = () => {
+  const { t } = useTranslation();
   return (
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-          <p className="text-muted-foreground">Manage your account, billing and email settings</p>
+          <h1 className="text-3xl font-bold tracking-tight">{t("pages.settingsTitle")}</h1>
+          <p className="text-muted-foreground">{t("pages.settingsSubtitle")}</p>
         </div>
 
         <Card>
@@ -22,13 +24,13 @@ const SettingsPage = () => {
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div>
                 <CardTitle className="flex items-center gap-2">
-                  <CreditCard className="h-5 w-5" /> Billing & Subscription
+                  <CreditCard className="h-5 w-5" /> {t("pages.billingSection")}
                 </CardTitle>
-                <CardDescription>Plan, trial status, invoices & upgrades</CardDescription>
+                <CardDescription>{t("pages.billingDesc")}</CardDescription>
               </div>
               <Button asChild variant="outline">
                 <Link to="/settings/billing">
-                  Manage billing <ArrowRight className="ml-2 h-4 w-4" />
+                  {t("pages.manageBilling")} <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>
@@ -36,17 +38,17 @@ const SettingsPage = () => {
         </Card>
 
         <Card>
-          <CardHeader><CardTitle>Profile</CardTitle></CardHeader>
+          <CardHeader><CardTitle>{t("pages.profile")}</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label>Name</Label>
-              <Input placeholder="Your name" />
+              <Label>{t("common.fullName")}</Label>
+              <Input placeholder={t("common.fullName")} />
             </div>
             <div className="space-y-2">
-              <Label>Email</Label>
+              <Label>{t("common.email")}</Label>
               <Input type="email" placeholder="you@example.com" disabled />
             </div>
-            <Button>Update Profile</Button>
+            <Button>{t("pages.updateProfile")}</Button>
           </CardContent>
         </Card>
         <SmtpSettings />
@@ -57,4 +59,3 @@ const SettingsPage = () => {
 };
 
 export default SettingsPage;
-

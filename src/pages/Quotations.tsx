@@ -112,13 +112,13 @@ const Quotations = () => {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-              <FileText className="h-8 w-8" /> Quotations
+              <FileText className="h-8 w-8" /> {t("sidebar.quotations")}
             </h1>
-            <p className="text-muted-foreground">Create and manage travel quotations</p>
+            <p className="text-muted-foreground">{t("pages.quotationsSubtitle")}</p>
           </div>
           <PermissionGate module="quotations" action="create">
             <Button onClick={() => navigate("/quotations/new")}>
-              <Plus className="mr-2 h-4 w-4" /> New Quotation
+              <Plus className="mr-2 h-4 w-4" /> {t("pages.newQuotation")}
             </Button>
           </PermissionGate>
         </div>

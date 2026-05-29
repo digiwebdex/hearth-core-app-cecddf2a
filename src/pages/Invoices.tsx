@@ -311,14 +311,14 @@ const Invoices = () => {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-              <Receipt className="h-8 w-8" /> Invoices & Payments
+              <Receipt className="h-8 w-8" /> {t("pages.invoicesTitle")}
             </h1>
-            <p className="text-muted-foreground">Track invoices, installments, refunds, and payment collection</p>
+            <p className="text-muted-foreground">{t("pages.invoicesSubtitle")}</p>
           </div>
           <div className="flex gap-2">
             <PermissionGate module="invoices" action="export">
               <Button variant="outline" size="sm" onClick={handleExport} disabled={!filtered.length}>
-                <Download className="mr-1 h-4 w-4" /> Export CSV
+                <Download className="mr-1 h-4 w-4" /> {t("pages.exportCsv")}
               </Button>
             </PermissionGate>
             <PermissionGate module="invoices" action="create">
@@ -331,13 +331,13 @@ const Invoices = () => {
                 } catch { setBookingsList([]); }
                 finally { setBookingsLoading(false); }
               }}>
-                <Plane className="mr-2 h-4 w-4" /> From Booking
+                <Plane className="mr-2 h-4 w-4" /> {t("pages.fromBooking")}
               </Button>
             </PermissionGate>
             <PermissionGate module="invoices" action="create">
               <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button><Plus className="mr-2 h-4 w-4" />New Invoice</Button>
+                  <Button><Plus className="mr-2 h-4 w-4" />{t("pages.newInvoice")}</Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-lg">
                   <DialogHeader><DialogTitle>Create Invoice</DialogTitle></DialogHeader>
