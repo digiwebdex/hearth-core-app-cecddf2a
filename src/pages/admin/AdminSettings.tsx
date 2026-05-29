@@ -493,48 +493,48 @@ const AdminSettings = () => {
           <TabsContent value="domain">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2"><Globe className="h-5 w-5 text-primary" /> Domain Settings</CardTitle>
-                <CardDescription>Configure main domain and subdomain allocation for tenants</CardDescription>
+                <CardTitle className="flex items-center gap-2"><Globe className="h-5 w-5 text-primary" /> {t("adminSettings.domain.title")}</CardTitle>
+                <CardDescription>{t("adminSettings.domain.desc")}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>Main Domain</Label>
+                    <Label>{t("adminSettings.domain.main")}</Label>
                     <Input value={domain.mainDomain} onChange={(e) => setDomain({ ...domain, mainDomain: e.target.value })} placeholder="travelagencyweb.com" />
-                    <p className="text-xs text-muted-foreground">The primary domain where the platform is hosted</p>
+                    <p className="text-xs text-muted-foreground">{t("adminSettings.domain.mainHelp")}</p>
                   </div>
                   <div className="space-y-2">
-                    <Label>Subdomain Prefix</Label>
+                    <Label>{t("adminSettings.domain.prefix")}</Label>
                     <Input value={domain.subdomainPrefix} onChange={(e) => setDomain({ ...domain, subdomainPrefix: e.target.value })} placeholder="app" />
-                    <p className="text-xs text-muted-foreground">Prefix used for tenant subdomains</p>
+                    <p className="text-xs text-muted-foreground">{t("adminSettings.domain.prefixHelp")}</p>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Default Subdomain Pattern</Label>
+                  <Label>{t("adminSettings.domain.pattern")}</Label>
                   <Input value={domain.defaultSubdomain} onChange={(e) => setDomain({ ...domain, defaultSubdomain: e.target.value })} placeholder="{company}.travelagencyweb.com" />
-                  <p className="text-xs text-muted-foreground">Use {"{company}"} as placeholder for tenant name</p>
+                  <p className="text-xs text-muted-foreground">{t("adminSettings.domain.patternHelp", { ph: "{company}" })}</p>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between rounded-lg border p-4">
                     <div>
-                      <p className="font-medium">SSL/HTTPS</p>
-                      <p className="text-sm text-muted-foreground">Force HTTPS on all tenant domains</p>
+                      <p className="font-medium">{t("adminSettings.domain.ssl")}</p>
+                      <p className="text-sm text-muted-foreground">{t("adminSettings.domain.sslDesc")}</p>
                     </div>
                     <Switch checked={domain.sslEnabled} onCheckedChange={(v) => setDomain({ ...domain, sslEnabled: v })} />
                   </div>
                   <div className="flex items-center justify-between rounded-lg border p-4">
                     <div>
-                      <p className="font-medium">Custom Domain Support</p>
-                      <p className="text-sm text-muted-foreground">Allow tenants to connect their own domains (Pro+ plans)</p>
+                      <p className="font-medium">{t("adminSettings.domain.customDomain")}</p>
+                      <p className="text-sm text-muted-foreground">{t("adminSettings.domain.customDomainDesc")}</p>
                     </div>
                     <Switch checked={domain.customDomainEnabled} onCheckedChange={(v) => setDomain({ ...domain, customDomainEnabled: v })} />
                   </div>
                 </div>
 
                 <div className="rounded-lg border bg-muted/50 p-4">
-                  <p className="text-sm font-medium mb-2">DNS Configuration Guide</p>
+                  <p className="text-sm font-medium mb-2">{t("adminSettings.domain.dnsGuide")}</p>
                   <div className="space-y-1 text-xs text-muted-foreground font-mono">
                     <p>A Record: @ → Your Server IP</p>
                     <p>A Record: *.{domain.mainDomain} → Your Server IP</p>
@@ -542,9 +542,9 @@ const AdminSettings = () => {
                   </div>
                 </div>
 
-                <Button onClick={() => handleSave("Domain")} disabled={saving}>
+                <Button onClick={() => handleSave(t("adminSettings.tabs.domain"))} disabled={saving}>
                   {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-                  Save Domain Settings
+                  {t("adminSettings.domain.saveBtn")}
                 </Button>
               </CardContent>
             </Card>
