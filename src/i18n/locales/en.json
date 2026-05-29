@@ -2128,6 +2128,64 @@
       "reactivated": "Reactivated",
       "renewed": "Renewed"
     }
+  },
+  "adminPayments": {
+    "title": "Payment Requests",
+    "subtitle": "Review, approve or reject subscription payments from tenants",
+    "export": "Export",
+    "exportFilename": "payment-requests.csv",
+    "stats": {
+      "total": "Total Requests",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "approvedRevenue": "Approved Revenue",
+      "pendingAmount": "Pending Amount"
+    },
+    "filters": {
+      "searchPlaceholder": "Search TRX ID…",
+      "allStatus": "All Status"
+    },
+    "status": {
+      "all": "All Status",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "table": {
+      "title": "Payment Requests ({{count}})",
+      "plan": "Plan",
+      "amount": "Amount",
+      "method": "Method",
+      "trxId": "TRX ID",
+      "status": "Status",
+      "date": "Date",
+      "actions": "Actions",
+      "empty": "No payment requests found.",
+      "pendingBadge": "{{count}} pending"
+    },
+    "dialog": {
+      "title": "Payment Request Details",
+      "plan": "Plan:",
+      "amount": "Amount:",
+      "method": "Method:",
+      "trxId": "TRX ID:",
+      "status": "Status:",
+      "date": "Date:",
+      "reviewComment": "Review Comment (optional)",
+      "reviewPlaceholder": "Add a note about this payment...",
+      "approve": "Approve & Activate",
+      "reject": "Reject",
+      "reviewLabel": "Review Comment:"
+    },
+    "toast": {
+      "loadFailed": "Failed to load payment requests",
+      "approved": "Payment Approved",
+      "approvedDesc": "Subscription activated.",
+      "rejected": "Payment Rejected",
+      "rejectedDesc": "Payment rejected.",
+      "actionFailed": "Action failed"
+    }
   }
 }
 
