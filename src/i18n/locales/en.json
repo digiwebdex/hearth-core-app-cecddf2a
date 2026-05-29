@@ -2223,7 +2223,128 @@
       "rejected": "User rejected",
       "rejectFailed": "Rejection failed"
     }
+  },
+  "adminSettings": {
+    "title": "System Settings",
+    "subtitle": "Configure global platform settings",
+    "tabs": {
+      "general": "General",
+      "email": "Email",
+      "sms": "SMS",
+      "payment": "Payment",
+      "domain": "Domain"
+    },
+    "common": {
+      "save": "Save",
+      "saving": "Saving",
+      "sendTest": "Send Test",
+      "show": "Show",
+      "hide": "Hide"
+    },
+    "general": {
+      "title": "General Settings",
+      "desc": "Basic platform configuration",
+      "appName": "Application Name",
+      "supportEmail": "Support Email",
+      "logo": "Logo",
+      "logoPlaceholder": "Logo URL (e.g. https://example.com/logo.png)",
+      "currency": "Currency",
+      "currencySymbol": "Currency Symbol",
+      "timezone": "Timezone",
+      "metaDescription": "Meta Description",
+      "maintenance": "Maintenance Mode",
+      "maintenanceDesc": "Temporarily disable the platform for all tenants",
+      "saveBtn": "Save General Settings"
+    },
+    "email": {
+      "title": "Email / SMTP Settings",
+      "desc": "Configure SMTP server for sending emails platform-wide",
+      "enable": "Enable Email System",
+      "enableDesc": "Allow sending emails from the platform",
+      "host": "SMTP Host",
+      "port": "SMTP Port",
+      "ssl": "Use SSL/TLS",
+      "user": "SMTP Username",
+      "pass": "SMTP Password",
+      "fromName": "From Name",
+      "fromEmail": "From Email",
+      "saveBtn": "Save Email Settings",
+      "testTitle": "Send Test Email",
+      "testPlaceholder": "test@example.com"
+    },
+    "payment": {
+      "ssl": {
+        "title": "SSLCommerz Configuration",
+        "desc": "Accept Visa, Mastercard, Mobile Banking & Internet Banking",
+        "enable": "Enable SSLCommerz",
+        "enableDesc": "Allow tenants to accept online payments",
+        "storeId": "Store ID",
+        "storePass": "Store Password",
+        "sandbox": "Sandbox Mode (Testing)"
+      },
+      "bkash": {
+        "title": "bKash Configuration",
+        "desc": "Accept payments via bKash mobile wallet",
+        "enable": "Enable bKash",
+        "enableDesc": "Allow bKash payment gateway for tenants",
+        "appKey": "App Key",
+        "appSecret": "App Secret",
+        "username": "Username",
+        "password": "Password",
+        "sandbox": "Sandbox Mode (Testing)"
+      },
+      "manual": {
+        "title": "Manual Payment Instructions",
+        "desc": "Instructions shown to tenants for manual/bank payments",
+        "enable": "Enable Manual Payment",
+        "enableDesc": "Allow tenants to submit manual payment requests",
+        "instructions": "Payment Instructions",
+        "instructionsPlaceholder": "Enter payment instructions for tenants..."
+      },
+      "saveBtn": "Save Payment Settings"
+    },
+    "domain": {
+      "title": "Domain Settings",
+      "desc": "Configure main domain and subdomain allocation for tenants",
+      "main": "Main Domain",
+      "mainHelp": "The primary domain where the platform is hosted",
+      "prefix": "Subdomain Prefix",
+      "prefixHelp": "Prefix used for tenant subdomains",
+      "pattern": "Default Subdomain Pattern",
+      "patternHelp": "Use {{ph}} as placeholder for tenant name",
+      "ssl": "SSL/HTTPS",
+      "sslDesc": "Force HTTPS on all tenant domains",
+      "customDomain": "Custom Domain Support",
+      "customDomainDesc": "Allow tenants to connect their own domains (Pro+ plans)",
+      "dnsGuide": "DNS Configuration Guide",
+      "saveBtn": "Save Domain Settings"
+    },
+    "sms": {
+      "title": "SMS Gateway Settings",
+      "desc": "Configure SMS provider for sending notifications and OTPs",
+      "enable": "Enable SMS System",
+      "enableDesc": "Allow sending SMS from the platform",
+      "provider": "SMS Provider",
+      "senderId": "Sender ID",
+      "senderIdHelp": "Approved sender ID from your provider",
+      "apiKey": "API Key",
+      "baseUrl": "Base URL",
+      "baseUrlHelp": "Provider API endpoint URL",
+      "saveBtn": "Save SMS Settings",
+      "testTitle": "Send Test SMS",
+      "testPlaceholder": "01XXXXXXXXX"
+    },
+    "toast": {
+      "saved": "{{section}} settings saved",
+      "savedDesc": "Changes will take effect immediately.",
+      "testEmailSent": "Test email sent",
+      "testEmailDesc": "Sent to {{email}}",
+      "testSmsSent": "Test SMS sent!",
+      "testSmsDelivered": "Delivered",
+      "testFailed": "Test failed"
+    }
   }
 }
+
 
 
