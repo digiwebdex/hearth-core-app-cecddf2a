@@ -513,24 +513,24 @@ const Leads = () => {
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{editingId ? "Edit Lead" : "New Lead"}</DialogTitle>
+              <DialogTitle>{editingId ? t("leadsForm.editLead") : t("leadsForm.newLead")}</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Name *</Label>
+                  <Label>{t("leadsForm.name")} *</Label>
                   <Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required />
                 </div>
                 <div className="space-y-2">
-                  <Label>Phone</Label>
+                  <Label>{t("leadsForm.phone")}</Label>
                   <Input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} />
                 </div>
                 <div className="space-y-2">
-                  <Label>Email</Label>
+                  <Label>{t("leadsForm.email")}</Label>
                   <Input type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} />
                 </div>
                 <div className="space-y-2">
-                  <Label>Status</Label>
+                  <Label>{t("leadsForm.status")}</Label>
                   <Select value={form.status} onValueChange={(v) => setForm((f) => ({ ...f, status: v as LeadStatus }))}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
@@ -539,32 +539,32 @@ const Leads = () => {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>Source</Label>
-                  <Input placeholder="e.g. Facebook, Referral, Walk-in" value={form.source} onChange={(e) => setForm((f) => ({ ...f, source: e.target.value }))} />
+                  <Label>{t("leadsForm.source")}</Label>
+                  <Input placeholder={t("leadsForm.sourcePlaceholder")} value={form.source} onChange={(e) => setForm((f) => ({ ...f, source: e.target.value }))} />
                 </div>
                 <div className="space-y-2">
-                  <Label>Destination</Label>
-                  <Input placeholder="e.g. Makkah, Thailand, Dubai" value={form.destination} onChange={(e) => setForm((f) => ({ ...f, destination: e.target.value }))} />
+                  <Label>{t("leadsForm.destination")}</Label>
+                  <Input placeholder={t("leadsForm.destinationFormPlaceholder")} value={form.destination} onChange={(e) => setForm((f) => ({ ...f, destination: e.target.value }))} />
                 </div>
-                <DatePick label="Travel From" date={travelFrom} onChange={setTravelFrom} />
-                <DatePick label="Travel To" date={travelTo} onChange={setTravelTo} />
+                <DatePick label={t("leadsForm.travelFrom")} date={travelFrom} onChange={setTravelFrom} />
+                <DatePick label={t("leadsForm.travelTo")} date={travelTo} onChange={setTravelTo} />
                 <div className="space-y-2">
-                  <Label>Travelers</Label>
+                  <Label>{t("leadsForm.travelers")}</Label>
                   <Input type="number" min={1} value={form.travelerCount} onChange={(e) => setForm((f) => ({ ...f, travelerCount: +e.target.value }))} />
                 </div>
                 <div className="space-y-2">
-                  <Label>Budget (৳)</Label>
+                  <Label>{t("leadsForm.budgetBdt")}</Label>
                   <Input type="number" min={0} value={form.budget} onChange={(e) => setForm((f) => ({ ...f, budget: +e.target.value }))} />
                 </div>
-                <DatePick label="Next Follow-up" date={followUpDate} onChange={setFollowUpDate} />
+                <DatePick label={t("leadsForm.nextFollowUp")} date={followUpDate} onChange={setFollowUpDate} />
               </div>
               <div className="space-y-2">
-                <Label>Notes</Label>
+                <Label>{t("leadsForm.notes")}</Label>
                 <Textarea rows={3} value={form.notes} onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))} />
               </div>
               <div className="flex gap-2">
-                <Button type="submit" className="flex-1">{editingId ? "Update" : "Create"} Lead</Button>
-                <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
+                <Button type="submit" className="flex-1">{editingId ? t("leadsForm.updateLead") : t("leadsForm.createLead")}</Button>
+                <DialogClose asChild><Button variant="outline">{t("leadsForm.cancel")}</Button></DialogClose>
               </div>
             </form>
           </DialogContent>
