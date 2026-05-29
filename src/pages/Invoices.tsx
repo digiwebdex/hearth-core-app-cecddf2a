@@ -790,35 +790,35 @@ const Invoices = () => {
         {/* ═══════ REFUND DIALOG ═══════ */}
         <Dialog open={refundDialogOpen} onOpenChange={setRefundDialogOpen}>
           <DialogContent>
-            <DialogHeader><DialogTitle>Process Refund</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{t("invoicesForm.refundDialog.title")}</DialogTitle></DialogHeader>
             {selectedInvoice && (
               <div className="mb-3 rounded-md border p-3 text-sm">
-                <div className="flex justify-between"><span className="text-muted-foreground">Paid amount:</span><span className="font-medium text-green-600">৳{selectedInvoice.paidAmount.toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Already refunded:</span><span className="font-medium text-purple-600">৳{(selectedInvoice.refundedAmount || 0).toLocaleString()}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Max refundable:</span><span className="font-semibold">৳{(selectedInvoice.paidAmount - (selectedInvoice.refundedAmount || 0)).toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.refundDialog.paidAmount")}</span><span className="font-medium text-green-600">৳{selectedInvoice.paidAmount.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.refundDialog.alreadyRefunded")}</span><span className="font-medium text-purple-600">৳{(selectedInvoice.refundedAmount || 0).toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t("invoicesForm.refundDialog.maxRefundable")}</span><span className="font-semibold">৳{(selectedInvoice.paidAmount - (selectedInvoice.refundedAmount || 0)).toLocaleString()}</span></div>
               </div>
             )}
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label>Refund Amount (৳)</Label>
+                <Label>{t("invoicesForm.refundDialog.amount")}</Label>
                 <Input type="number" min={0.01} step={0.01} max={selectedInvoice ? selectedInvoice.paidAmount - (selectedInvoice.refundedAmount || 0) : 0} value={refundForm.amount || ""} onChange={(e) => setRefundForm((f) => ({ ...f, amount: parseFloat(e.target.value) || 0 }))} />
               </div>
               <div className="space-y-2">
-                <Label>Reason *</Label>
-                <Textarea value={refundForm.reason} onChange={(e) => setRefundForm((f) => ({ ...f, reason: e.target.value }))} placeholder="Reason for refund..." rows={2} />
+                <Label>{t("invoicesForm.refundDialog.reason")}</Label>
+                <Textarea value={refundForm.reason} onChange={(e) => setRefundForm((f) => ({ ...f, reason: e.target.value }))} placeholder={t("invoicesForm.refundDialog.reasonPh")} rows={2} />
               </div>
               <div className="space-y-2">
-                <Label>Refund Method</Label>
+                <Label>{t("invoicesForm.refundDialog.method")}</Label>
                 <Select value={refundForm.method} onValueChange={(v) => setRefundForm((f) => ({ ...f, method: v }))}>
-                  <SelectTrigger><SelectValue placeholder="Same as payment" /></SelectTrigger>
+                  <SelectTrigger><SelectValue placeholder={t("invoicesForm.refundDialog.methodPh")} /></SelectTrigger>
                   <SelectContent>
-                    {PAYMENT_METHODS.map((m) => <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>)}
+                    {PAYMENT_METHOD_VALUES.map((m) => <SelectItem key={m} value={m}>{t(`invoicesForm.methods.${m}`)}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
               <div className="flex gap-2">
-                <Button onClick={handleRefund} disabled={!refundForm.amount || !refundForm.reason} className="flex-1">Process Refund</Button>
-                <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
+                <Button onClick={handleRefund} disabled={!refundForm.amount || !refundForm.reason} className="flex-1">{t("invoicesForm.refundDialog.submit")}</Button>
+                <DialogClose asChild><Button variant="outline">{t("invoicesForm.cancel")}</Button></DialogClose>
               </div>
             </div>
           </DialogContent>
@@ -827,16 +827,16 @@ const Invoices = () => {
         {/* ═══════ CANCEL DIALOG ═══════ */}
         <Dialog open={cancelDialogOpen} onOpenChange={setCancelDialogOpen}>
           <DialogContent>
-            <DialogHeader><DialogTitle>Cancel Invoice</DialogTitle></DialogHeader>
-            <p className="text-sm text-muted-foreground">This action cannot be undone. The invoice will be marked as cancelled.</p>
+            <DialogHeader><DialogTitle>{t("invoicesForm.cancelDialog.title")}</DialogTitle></DialogHeader>
+            <p className="text-sm text-muted-foreground">{t("invoicesForm.cancelDialog.warning")}</p>
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label>Cancellation Reason *</Label>
-                <Textarea value={cancelReason} onChange={(e) => setCancelReason(e.target.value)} placeholder="Reason for cancellation..." rows={3} />
+                <Label>{t("invoicesForm.cancelDialog.reason")}</Label>
+                <Textarea value={cancelReason} onChange={(e) => setCancelReason(e.target.value)} placeholder={t("invoicesForm.cancelDialog.reasonPh")} rows={3} />
               </div>
               <div className="flex gap-2">
-                <Button variant="destructive" onClick={handleCancel} disabled={!cancelReason.trim()} className="flex-1">Confirm Cancellation</Button>
-                <DialogClose asChild><Button variant="outline">Keep Invoice</Button></DialogClose>
+                <Button variant="destructive" onClick={handleCancel} disabled={!cancelReason.trim()} className="flex-1">{t("invoicesForm.cancelDialog.confirm")}</Button>
+                <DialogClose asChild><Button variant="outline">{t("invoicesForm.cancelDialog.keep")}</Button></DialogClose>
               </div>
             </div>
           </DialogContent>
@@ -845,11 +845,11 @@ const Invoices = () => {
         {/* ═══════ FROM BOOKING DIALOG ═══════ */}
         <Dialog open={fromBookingOpen} onOpenChange={setFromBookingOpen}>
           <DialogContent className="max-w-lg">
-            <DialogHeader><DialogTitle>Create Invoice from Booking</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{t("invoicesForm.fromBooking.title")}</DialogTitle></DialogHeader>
             {bookingsLoading ? (
-              <div className="py-8 text-center text-muted-foreground">Loading bookings...</div>
+              <div className="py-8 text-center text-muted-foreground">{t("invoicesForm.fromBooking.loading")}</div>
             ) : bookingsList.length === 0 ? (
-              <div className="py-8 text-center text-muted-foreground">No bookings found.</div>
+              <div className="py-8 text-center text-muted-foreground">{t("invoicesForm.fromBooking.none")}</div>
             ) : (
               <div className="max-h-[400px] overflow-y-auto space-y-2">
                 {bookingsList.map((bk) => (
@@ -872,7 +872,7 @@ const Invoices = () => {
                   >
                     <div>
                       <p className="text-sm font-medium">{bk.title || `${bk.type} — ${bk.destination || "Trip"}`}</p>
-                      <p className="text-xs text-muted-foreground">{bk.clientName || "No client"} · {bk.status}</p>
+                      <p className="text-xs text-muted-foreground">{bk.clientName || t("invoicesForm.fromBooking.noClient")} · {bk.status}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-sm font-semibold">৳{(bk.amount || 0).toLocaleString()}</p>
@@ -884,6 +884,7 @@ const Invoices = () => {
             )}
           </DialogContent>
         </Dialog>
+
 
         {/* Online Payment Gateway */}
         {payGatewayInvoice && (
