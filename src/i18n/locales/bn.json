@@ -1273,5 +1273,61 @@
       "terms": "শর্তাবলী",
       "termsPh": "শর্তাবলী লিখুন..."
     }
+  },
+  "quotationDetails": {
+    "back": "কোটেশনে ফিরে যান",
+    "untitled": "শিরোনামহীন কোটেশন",
+    "notFound": "কোটেশন পাওয়া যায়নি",
+    "error": "ত্রুটি",
+    "statusUpdated": "স্ট্যাটাস {{label}} এ আপডেট হয়েছে",
+    "bookingCreated": "কোটেশন থেকে বুকিং তৈরি হয়েছে!",
+    "duplicated": "কোটেশন ডুপ্লিকেট হয়েছে — নতুন সংস্করণ তৈরি হয়েছে",
+    "actions": {
+      "edit": "এডিট",
+      "revise": "সংশোধন",
+      "print": "প্রিন্ট",
+      "convert": "বুকিংয়ে রূপান্তর"
+    },
+    "stats": {
+      "grandTotal": "সর্বমোট",
+      "estProfit": "আনুমানিক লাভ",
+      "travelers": "ভ্রমণকারী",
+      "validUntil": "বৈধতার শেষ তারিখ"
+    },
+    "tabs": {
+      "itinerary": "ভ্রমণসূচি",
+      "pricing": "মূল্য ({{count}} আইটেম)",
+      "versions": "সংস্করণ ইতিহাস ({{count}})"
+    },
+    "noItinerary": "কোনো ভ্রমণসূচি যোগ করা হয়নি।",
+    "th": {
+      "type": "ধরন",
+      "description": "বিবরণ",
+      "cost": "খরচ",
+      "selling": "বিক্রয়",
+      "qty": "পরিমাণ",
+      "subtotal": "সাবটোটাল"
+    },
+    "totals": {
+      "totalCost": "মোট খরচ",
+      "totalSelling": "মোট বিক্রয়",
+      "discount": "ছাড়",
+      "tax": "কর",
+      "grandTotal": "সর্বমোট",
+      "profit": "লাভ"
+    },
+    "versions": {
+      "title": "সংস্করণ ইতিহাস",
+      "empty": "কোনো সংস্করণ ইতিহাস নেই।",
+      "version": "সংস্করণ {{n}}",
+      "by": "{{name}} দ্বারা"
+    },
+    "statuses": {
+      "draft": "ড্রাফট",
+      "sent": "পাঠানো হয়েছে",
+      "approved": "অনুমোদিত",
+      "rejected": "প্রত্যাখ্যাত",
+      "expired": "মেয়াদোত্তীর্ণ"
+    }
   }
 }
