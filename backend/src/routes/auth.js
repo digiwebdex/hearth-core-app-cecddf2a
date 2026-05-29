@@ -50,19 +50,25 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Register — creates tenant + owner in PENDING state, notifies admin via Telegram
+// Register — auto-approved with 3-day Pro trial, returns JWT immediately (Pattern B)
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password, tenantName } = req.body;
+    const { name, email, password, tenantName, plan } = req.body;
     const exists = await prisma.user.findUnique({ where: { email } });
     if (exists) return res.status(400).json({ message: "Email already registered" });
     const hashed = await bcrypt.hash(password, 10);
 
-    // 14-day Pro trial (starts after approval, but we set expiry now for reference)
+    // 3-day Pro trial — starts immediately
     const trialEnd = new Date();
-    trialEnd.setDate(trialEnd.getDate() + 14);
+    trialEnd.setDate(trialEnd.getDate() + 3);
 
-    // Generate slug from tenant name
+    const allowedPlans = ["free", "basic", "pro", "business", "enterprise"];
+    const requestedPlan = allowedPlans.includes(plan) ? plan : "pro";
+    // Free → no trial, instant active; everyone else → 3-day Pro trial regardless of intended plan
+    const subscriptionPlan = requestedPlan === "free" ? "free" : "pro";
+    const subscriptionStatus = requestedPlan === "free" ? "active" : "trial";
+    const subscriptionExpiry = requestedPlan === "free" ? null : trialEnd;
+
     const rawSlug = (tenantName || name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50);
     let slug = rawSlug;
     let suffix = 1;
@@ -74,41 +80,49 @@ router.post("/register", async (req, res) => {
       data: {
         name: tenantName || name + "'s Agency",
         slug,
-        subscriptionPlan: "pro",
-        subscriptionStatus: "pending_approval",
-        subscriptionExpiry: trialEnd,
+        subscriptionPlan,
+        subscriptionStatus,
+        subscriptionExpiry,
       },
     });
     const user = await prisma.user.create({
       data: {
         name, email, password: hashed,
         role: "tenant_owner",
-        status: "pending",
+        status: "active", // auto-approved
         tenantId: tenant.id,
       },
     });
     await prisma.tenant.update({ where: { id: tenant.id }, data: { ownerId: user.id } });
 
-    // Audit log
     await prisma.auditLog.create({
       data: {
         actorId: user.id, actorName: name, actorEmail: email, actorRole: "tenant_owner",
         tenantId: tenant.id, tenantName: tenant.name,
-        module: "auth", action: "signup_pending",
+        module: "auth", action: "signup",
         targetType: "user", targetId: user.id, targetLabel: email,
-        newValue: "pending admin approval",
+        newValue: `auto-approved · ${subscriptionStatus} · plan:${subscriptionPlan} · intended:${requestedPlan}`,
       },
     }).catch(() => {});
 
-    // Telegram notification (fire-and-forget, won't block response)
     try {
       const { notifyNewSignup } = require("../services/telegramService");
-      notifyNewSignup({ name, email, tenantName: tenant.name, userId: user.id }).catch(() => {});
+      notifyNewSignup({ name, email, tenantName: tenant.name, userId: user.id, plan: requestedPlan }).catch(() => {});
     } catch (e) { /* ignore */ }
 
+    // Issue JWT — instant access
+    const token = jwt.sign({ userId: user.id, tenantId: tenant.id, role: user.role }, SECRET, { expiresIn: "7d" });
+    const { password: _, resetToken: _r, resetTokenExpiry: _e, ...safeUser } = user;
+
     res.json({
-      pendingApproval: true,
-      message: "Your account has been created and is pending admin approval. You will be notified once approved.",
+      token,
+      user: safeUser,
+      tenant,
+      intendedPlan: requestedPlan,
+      trialDays: requestedPlan === "free" ? 0 : 3,
+      message: requestedPlan === "free"
+        ? "Welcome! Your free account is ready."
+        : "Welcome! Your 3-day Pro trial has started.",
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
