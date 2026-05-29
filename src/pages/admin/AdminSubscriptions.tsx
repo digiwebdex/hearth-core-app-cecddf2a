@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { adminApi, type AdminTenant } from "@/lib/api";
 import AdminLayout from "@/components/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,13 +27,13 @@ import {
   type TenantSubscription, checkUsage, getLimitLabel,
 } from "@/lib/plans";
 
-const STATUS_META: { value: SubscriptionStatus; label: string; color: string; icon: any }[] = [
-  { value: "trial", label: "Trial", color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200", icon: Clock },
-  { value: "active", label: "Active", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200", icon: CheckCircle2 },
-  { value: "overdue", label: "Overdue", color: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200", icon: AlertTriangle },
-  { value: "expired", label: "Expired", color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200", icon: XCircle },
-  { value: "suspended", label: "Suspended", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200", icon: Pause },
-  { value: "cancelled", label: "Cancelled", color: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200", icon: Ban },
+const STATUS_META: { value: SubscriptionStatus; color: string; icon: any }[] = [
+  { value: "trial", color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200", icon: Clock },
+  { value: "active", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200", icon: CheckCircle2 },
+  { value: "overdue", color: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200", icon: AlertTriangle },
+  { value: "expired", color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200", icon: XCircle },
+  { value: "suspended", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200", icon: Pause },
+  { value: "cancelled", color: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200", icon: Ban },
 ];
 
 const getStatusMeta = (s: SubscriptionStatus) => STATUS_META.find((x) => x.value === s) || STATUS_META[1];
@@ -71,6 +72,12 @@ function tenantToSubscription(t: AdminTenant): TenantSubscription {
 }
 
 const AdminSubscriptions = () => {
+  const { t: tt } = useTranslation();
+  const statusLabel = (s: SubscriptionStatus) => tt(`adminSubscriptions.status.${s}`);
+  const planLabel = (p: string) => {
+    const meta = PLANS.find((x) => x.id === p);
+    return meta?.name || p;
+  };
   const [subscriptions, setSubscriptions] = useState<TenantSubscription[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -121,11 +128,11 @@ const AdminSubscriptions = () => {
       const payload: any = { subscriptionPlan: editPlan, subscriptionStatus: editStatus };
       if (editExpiry) payload.subscriptionExpiry = editExpiry;
       await adminApi.updateTenant(editSub.tenantId, payload);
-      toast({ title: "Subscription updated", description: editSub.tenantName });
+      toast({ title: tt("adminSubscriptions.toast.updated"), description: editSub.tenantName });
       setEditSub(null);
       await fetchSubs();
     } catch (err: any) {
-      toast({ title: "Update failed", description: err.message, variant: "destructive" });
+      toast({ title: tt("adminSubscriptions.toast.updateFailed"), description: err.message, variant: "destructive" });
     } finally {
       setSavingEdit(false);
     }
@@ -136,11 +143,11 @@ const AdminSubscriptions = () => {
     setDeleting(true);
     try {
       await adminApi.deleteTenant(deleteSub.tenantId);
-      toast({ title: "Subscription deleted", description: deleteSub.tenantName, variant: "destructive" });
+      toast({ title: tt("adminSubscriptions.toast.deleted"), description: deleteSub.tenantName, variant: "destructive" });
       setDeleteSub(null);
       await fetchSubs();
     } catch (err: any) {
-      toast({ title: "Delete failed", description: err.message, variant: "destructive" });
+      toast({ title: tt("adminSubscriptions.toast.deleteFailed"), description: err.message, variant: "destructive" });
     } finally {
       setDeleting(false);
     }
@@ -205,7 +212,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, plan: newPlan, billingCycle: newCycle, price, status: "active" } : s
     ));
-    toast({ title: "Plan Upgraded", description: `${selectedSub.tenantName} → ${newPlan.toUpperCase()} (${newCycle})` });
+    toast({ title: tt("adminSubscriptions.toast.upgraded"), description: `${selectedSub.tenantName} → ${planLabel(newPlan)} (${tt(`adminSubscriptions.cycle.${newCycle}`)})` });
     setDialogOpen(false);
   };
 
@@ -216,7 +223,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, plan: newPlan, billingCycle: newCycle, price } : s
     ));
-    toast({ title: "Plan Downgraded", description: `${selectedSub.tenantName} → ${newPlan.toUpperCase()}` });
+    toast({ title: tt("adminSubscriptions.toast.downgraded"), description: `${selectedSub.tenantName} → ${planLabel(newPlan)}` });
     setDialogOpen(false);
   };
 
@@ -230,7 +237,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, endDate: newEnd, status: "active" } : s
     ));
-    toast({ title: "Subscription Extended", description: `Expires ${newEnd}` });
+    toast({ title: tt("adminSubscriptions.toast.extended"), description: tt("adminSubscriptions.toast.extendedDesc", { date: newEnd }) });
     setDialogOpen(false);
   };
 
@@ -239,7 +246,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, status: "cancelled" as SubscriptionStatus, cancelReason: actionReason, cancelledAt: new Date().toISOString() } : s
     ));
-    toast({ title: "Cancelled", variant: "destructive" });
+    toast({ title: tt("adminSubscriptions.toast.cancelled"), variant: "destructive" });
     setDialogOpen(false);
   };
 
@@ -248,7 +255,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, status: "suspended" as SubscriptionStatus, suspendReason: actionReason, suspendedAt: new Date().toISOString() } : s
     ));
-    toast({ title: "Suspended" });
+    toast({ title: tt("adminSubscriptions.toast.suspended") });
     setDialogOpen(false);
   };
 
@@ -258,7 +265,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, status: "active" as SubscriptionStatus, endDate: end.toISOString().split("T")[0] } : s
     ));
-    toast({ title: "Reactivated" });
+    toast({ title: tt("adminSubscriptions.toast.reactivated") });
     setDialogOpen(false);
   };
 
@@ -271,7 +278,7 @@ const AdminSubscriptions = () => {
     setSubscriptions((prev) => prev.map((s) =>
       s.id === selectedSub.id ? { ...s, status: "active" as SubscriptionStatus, startDate: start.toISOString().split("T")[0], endDate: end.toISOString().split("T")[0], lastPaymentDate: start.toISOString().split("T")[0] } : s
     ));
-    toast({ title: "Renewed" });
+    toast({ title: tt("adminSubscriptions.toast.renewed") });
     setDialogOpen(false);
   };
 
@@ -290,7 +297,7 @@ const AdminSubscriptions = () => {
     const csv = [headers.join(","), ...rows.map((r) => r.map((c) => `"${c}"`).join(","))].join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a"); a.href = url; a.download = "subscriptions.csv";
+    const a = document.createElement("a"); a.href = url; a.download = tt("adminSubscriptions.exportFilename");
     document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
   };
 
@@ -299,45 +306,45 @@ const AdminSubscriptions = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Subscription Management</h1>
-            <p className="text-muted-foreground">Manage tenant subscriptions, trials, and billing</p>
+            <h1 className="text-3xl font-bold tracking-tight">{tt("adminSubscriptions.title")}</h1>
+            <p className="text-muted-foreground">{tt("adminSubscriptions.subtitle")}</p>
           </div>
-          <Button variant="outline" size="sm" onClick={handleExport}><Download className="mr-1 h-4 w-4" /> Export</Button>
+          <Button variant="outline" size="sm" onClick={handleExport}><Download className="mr-1 h-4 w-4" /> {tt("adminSubscriptions.export")}</Button>
         </div>
 
         {/* Stats */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8">
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">MRR</p><p className="text-xl font-bold">৳{stats.mrr.toLocaleString()}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">ARR</p><p className="text-xl font-bold">৳{stats.arr.toLocaleString()}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Active</p><p className="text-xl font-bold text-green-600">{stats.active}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Trial</p><p className="text-xl font-bold text-blue-600">{stats.trial}</p></CardContent></Card>
-          <Card className={stats.overdue > 0 ? "border-orange-300 dark:border-orange-600" : ""}><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Overdue</p><p className="text-xl font-bold text-orange-600">{stats.overdue}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Expired</p><p className="text-xl font-bold">{stats.expired}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Suspended</p><p className="text-xl font-bold text-destructive">{stats.suspended}</p></CardContent></Card>
-          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">Cancelled</p><p className="text-xl font-bold">{stats.cancelled}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.mrr")}</p><p className="text-xl font-bold">৳{stats.mrr.toLocaleString()}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.arr")}</p><p className="text-xl font-bold">৳{stats.arr.toLocaleString()}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.active")}</p><p className="text-xl font-bold text-green-600">{stats.active}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.trial")}</p><p className="text-xl font-bold text-blue-600">{stats.trial}</p></CardContent></Card>
+          <Card className={stats.overdue > 0 ? "border-orange-300 dark:border-orange-600" : ""}><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.overdue")}</p><p className="text-xl font-bold text-orange-600">{stats.overdue}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.expired")}</p><p className="text-xl font-bold">{stats.expired}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.suspended")}</p><p className="text-xl font-bold text-destructive">{stats.suspended}</p></CardContent></Card>
+          <Card><CardContent className="pt-6"><p className="text-xs text-muted-foreground">{tt("adminSubscriptions.stats.cancelled")}</p><p className="text-xl font-bold">{stats.cancelled}</p></CardContent></Card>
         </div>
 
         {/* Filters */}
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
             <Button variant={statusFilter === "all" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("all")}>
-              All ({statusCounts.all})
+              {tt("adminSubscriptions.status.all")} ({statusCounts.all})
             </Button>
             {STATUS_META.map((s) => (
               <Button key={s.value} variant={statusFilter === s.value ? "default" : "outline"} size="sm" onClick={() => setStatusFilter(s.value)}>
-                {s.label} ({statusCounts[s.value] || 0})
+                {statusLabel(s.value)} ({statusCounts[s.value] || 0})
               </Button>
             ))}
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-2 flex-1 min-w-[200px] max-w-sm">
               <Search className="h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search company or email…" value={search} onChange={(e) => setSearch(e.target.value)} />
+              <Input placeholder={tt("adminSubscriptions.filters.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
             <Select value={planFilter} onValueChange={setPlanFilter}>
-              <SelectTrigger className="w-[150px]"><SelectValue placeholder="Plan" /></SelectTrigger>
+              <SelectTrigger className="w-[150px]"><SelectValue placeholder={tt("adminSubscriptions.filters.plan")} /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Plans</SelectItem>
+                <SelectItem value="all">{tt("adminSubscriptions.filters.allPlans")}</SelectItem>
                 {PLANS.map((p) => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
               </SelectContent>
             </Select>
@@ -346,24 +353,24 @@ const AdminSubscriptions = () => {
 
         {/* Table */}
         <Card>
-          <CardHeader><CardTitle>Subscriptions ({filtered.length})</CardTitle></CardHeader>
+          <CardHeader><CardTitle>{tt("adminSubscriptions.table.title", { count: filtered.length })}</CardTitle></CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Company</TableHead>
-                  <TableHead>Plan</TableHead>
-                  <TableHead>Cycle</TableHead>
-                  <TableHead className="text-right">Price</TableHead>
-                  <TableHead>Period</TableHead>
-                  <TableHead>Usage</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="w-[200px]">Actions</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.company")}</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.plan")}</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.cycle")}</TableHead>
+                  <TableHead className="text-right">{tt("adminSubscriptions.table.price")}</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.period")}</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.usage")}</TableHead>
+                  <TableHead>{tt("adminSubscriptions.table.status")}</TableHead>
+                  <TableHead className="w-[200px]">{tt("adminSubscriptions.table.actions")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filtered.length === 0 ? (
-                  <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">{loading ? "Loading subscriptions…" : "No subscriptions found."}</TableCell></TableRow>
+                  <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">{loading ? tt("adminSubscriptions.table.loading") : tt("adminSubscriptions.table.empty")}</TableCell></TableRow>
                 ) : (
                   filtered.map((sub) => {
                     const meta = getStatusMeta(sub.status);
@@ -380,10 +387,10 @@ const AdminSubscriptions = () => {
                             <p className="text-xs text-muted-foreground">{sub.ownerEmail}</p>
                           </div>
                         </TableCell>
-                        <TableCell><Badge variant="secondary" className="capitalize">{sub.plan}</Badge></TableCell>
-                        <TableCell className="text-sm capitalize">{sub.billingCycle}</TableCell>
+                        <TableCell><Badge variant="secondary">{planLabel(sub.plan)}</Badge></TableCell>
+                        <TableCell className="text-sm">{tt(`adminSubscriptions.cycle.${sub.billingCycle}`)}</TableCell>
                         <TableCell className="text-right font-semibold text-sm">
-                          {sub.price === 0 ? "Free" : `৳${sub.price.toLocaleString()}`}
+                          {sub.price === 0 ? tt("adminSubscriptions.table.free") : `৳${sub.price.toLocaleString()}`}
                         </TableCell>
                         <TableCell className="text-xs text-muted-foreground">
                           <div>{sub.startDate}</div>
@@ -392,45 +399,45 @@ const AdminSubscriptions = () => {
                             {expiringSoon && <AlertTriangle className="h-3 w-3 text-yellow-500" />}
                           </div>
                           {sub.status === "trial" && sub.trialEndDate && (
-                            <div className="text-blue-600 text-[10px]">Trial ends: {sub.trialEndDate}</div>
+                            <div className="text-blue-600 text-[10px]">{tt("adminSubscriptions.table.trialEnds", { date: sub.trialEndDate })}</div>
                           )}
                         </TableCell>
                         <TableCell>
                           {atLimitCount > 0 ? (
-                            <Badge variant="destructive" className="text-[10px]">{atLimitCount} at limit</Badge>
+                            <Badge variant="destructive" className="text-[10px]">{tt("adminSubscriptions.table.atLimit", { count: atLimitCount })}</Badge>
                           ) : nearLimitCount > 0 ? (
-                            <Badge className="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200 text-[10px]">{nearLimitCount} near limit</Badge>
+                            <Badge className="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200 text-[10px]">{tt("adminSubscriptions.table.nearLimit", { count: nearLimitCount })}</Badge>
                           ) : (
-                            <span className="text-xs text-muted-foreground">OK</span>
+                            <span className="text-xs text-muted-foreground">{tt("adminSubscriptions.table.ok")}</span>
                           )}
                         </TableCell>
                         <TableCell>
-                          <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{meta.label}</span>
+                          <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${meta.color}`}>{statusLabel(sub.status)}</span>
                           {sub.autoRenew && sub.status === "active" && <span className="text-[10px] text-muted-foreground ml-1">🔄</span>}
                         </TableCell>
                         <TableCell>
                           <div className="flex gap-1 flex-wrap">
-                            <Button variant="ghost" size="icon" className="h-7 w-7" title="View" onClick={() => openAction(sub, "view")}><Eye className="h-3.5 w-3.5" /></Button>
-                            <Button variant="ghost" size="icon" className="h-7 w-7" title="Edit" onClick={() => openEdit(sub)}><Pencil className="h-3.5 w-3.5" /></Button>
-                            <Button variant="ghost" size="icon" className="h-7 w-7" title="Delete" onClick={() => setDeleteSub(sub)}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
+                            <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.view")} onClick={() => openAction(sub, "view")}><Eye className="h-3.5 w-3.5" /></Button>
+                            <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.edit")} onClick={() => openEdit(sub)}><Pencil className="h-3.5 w-3.5" /></Button>
+                            <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.delete")} onClick={() => setDeleteSub(sub)}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
                             {(sub.status === "active" || sub.status === "trial") && (
                               <>
                                 {getUpgradePlans(sub.plan).length > 0 && (
-                                  <Button variant="ghost" size="icon" className="h-7 w-7" title="Upgrade" onClick={() => openAction(sub, "upgrade")}><ArrowUpCircle className="h-3.5 w-3.5 text-green-600" /></Button>
+                                  <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.upgrade")} onClick={() => openAction(sub, "upgrade")}><ArrowUpCircle className="h-3.5 w-3.5 text-green-600" /></Button>
                                 )}
                                 {getDowngradePlans(sub.plan).length > 0 && (
-                                  <Button variant="ghost" size="icon" className="h-7 w-7" title="Downgrade" onClick={() => openAction(sub, "downgrade")}><ArrowDownCircle className="h-3.5 w-3.5 text-yellow-600" /></Button>
+                                  <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.downgrade")} onClick={() => openAction(sub, "downgrade")}><ArrowDownCircle className="h-3.5 w-3.5 text-yellow-600" /></Button>
                                 )}
-                                <Button variant="ghost" size="icon" className="h-7 w-7" title="Extend" onClick={() => openAction(sub, "extend")}><CalendarPlus className="h-3.5 w-3.5 text-blue-600" /></Button>
-                                <Button variant="ghost" size="icon" className="h-7 w-7" title="Suspend" onClick={() => openAction(sub, "suspend")}><Pause className="h-3.5 w-3.5 text-orange-600" /></Button>
-                                <Button variant="ghost" size="icon" className="h-7 w-7" title="Cancel" onClick={() => openAction(sub, "cancel")}><XCircle className="h-3.5 w-3.5 text-destructive" /></Button>
+                                <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.extend")} onClick={() => openAction(sub, "extend")}><CalendarPlus className="h-3.5 w-3.5 text-blue-600" /></Button>
+                                <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.suspend")} onClick={() => openAction(sub, "suspend")}><Pause className="h-3.5 w-3.5 text-orange-600" /></Button>
+                                <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.cancel")} onClick={() => openAction(sub, "cancel")}><XCircle className="h-3.5 w-3.5 text-destructive" /></Button>
                               </>
                             )}
                             {(sub.status === "expired" || sub.status === "overdue") && (
-                              <Button variant="ghost" size="icon" className="h-7 w-7" title="Renew" onClick={() => openAction(sub, "renew")}><RefreshCcw className="h-3.5 w-3.5 text-green-600" /></Button>
+                              <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.renew")} onClick={() => openAction(sub, "renew")}><RefreshCcw className="h-3.5 w-3.5 text-green-600" /></Button>
                             )}
                             {sub.status === "suspended" && (
-                              <Button variant="ghost" size="icon" className="h-7 w-7" title="Reactivate" onClick={() => openAction(sub, "reactivate")}><Play className="h-3.5 w-3.5 text-green-600" /></Button>
+                              <Button variant="ghost" size="icon" className="h-7 w-7" title={tt("adminSubscriptions.actions.reactivate")} onClick={() => openAction(sub, "reactivate")}><Play className="h-3.5 w-3.5 text-green-600" /></Button>
                             )}
                           </div>
                         </TableCell>
@@ -450,28 +457,28 @@ const AdminSubscriptions = () => {
               const usage = checkUsage(selectedSub);
               return (
                 <>
-                  <DialogHeader><DialogTitle>Subscription Details — {selectedSub.tenantName}</DialogTitle></DialogHeader>
+                  <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.viewTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-2 text-sm">
-                      <span className="text-muted-foreground">Plan:</span>
-                      <Badge variant="secondary" className="capitalize w-fit">{selectedSub.plan}</Badge>
-                      <span className="text-muted-foreground">Billing:</span>
-                      <span className="capitalize">{selectedSub.billingCycle}</span>
-                      <span className="text-muted-foreground">Price:</span>
-                      <span className="font-semibold">{selectedSub.price === 0 ? "Free" : `৳${selectedSub.price.toLocaleString()}/${selectedSub.billingCycle === "yearly" ? "yr" : "mo"}`}</span>
-                      <span className="text-muted-foreground">Status:</span>
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium w-fit ${getStatusMeta(selectedSub.status).color}`}>{getStatusMeta(selectedSub.status).label}</span>
-                      <span className="text-muted-foreground">Period:</span>
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.plan")}</span>
+                      <Badge variant="secondary" className="w-fit">{planLabel(selectedSub.plan)}</Badge>
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.billing")}</span>
+                      <span>{tt(`adminSubscriptions.cycle.${selectedSub.billingCycle}`)}</span>
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.price")}</span>
+                      <span className="font-semibold">{selectedSub.price === 0 ? tt("adminSubscriptions.table.free") : `৳${selectedSub.price.toLocaleString()}/${selectedSub.billingCycle === "yearly" ? tt("adminSubscriptions.cycle.yr") : tt("adminSubscriptions.cycle.mo")}`}</span>
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.status")}</span>
+                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium w-fit ${getStatusMeta(selectedSub.status).color}`}>{statusLabel(selectedSub.status)}</span>
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.period")}</span>
                       <span>{selectedSub.startDate} → {selectedSub.endDate || "—"}</span>
-                      <span className="text-muted-foreground">Auto-Renew:</span>
-                      <span>{selectedSub.autoRenew ? "Yes" : "No"}</span>
-                      {selectedSub.trialEndDate && <><span className="text-muted-foreground">Trial Ends:</span><span className="text-blue-600">{selectedSub.trialEndDate}</span></>}
-                      {selectedSub.cancelReason && <><span className="text-muted-foreground">Cancel Reason:</span><span className="text-destructive">{selectedSub.cancelReason}</span></>}
-                      {selectedSub.suspendReason && <><span className="text-muted-foreground">Suspend Reason:</span><span className="text-orange-600">{selectedSub.suspendReason}</span></>}
+                      <span className="text-muted-foreground">{tt("adminSubscriptions.details.autoRenew")}</span>
+                      <span>{selectedSub.autoRenew ? tt("adminSubscriptions.details.yes") : tt("adminSubscriptions.details.no")}</span>
+                      {selectedSub.trialEndDate && <><span className="text-muted-foreground">{tt("adminSubscriptions.details.trialEnds")}</span><span className="text-blue-600">{selectedSub.trialEndDate}</span></>}
+                      {selectedSub.cancelReason && <><span className="text-muted-foreground">{tt("adminSubscriptions.details.cancelReason")}</span><span className="text-destructive">{selectedSub.cancelReason}</span></>}
+                      {selectedSub.suspendReason && <><span className="text-muted-foreground">{tt("adminSubscriptions.details.suspendReason")}</span><span className="text-orange-600">{selectedSub.suspendReason}</span></>}
                     </div>
 
                     <Separator />
-                    <h4 className="text-sm font-medium">Usage & Limits</h4>
+                    <h4 className="text-sm font-medium">{tt("adminSubscriptions.details.usageLimits")}</h4>
                     <div className="grid gap-2">
                       {usage.map((u) => (
                         <div key={u.resource} className="space-y-1">
@@ -491,135 +498,135 @@ const AdminSubscriptions = () => {
                       ))}
                     </div>
                   </div>
-                  <DialogClose asChild><Button variant="outline" className="mt-4 w-full">Close</Button></DialogClose>
+                  <DialogClose asChild><Button variant="outline" className="mt-4 w-full">{tt("adminSubscriptions.actions.close")}</Button></DialogClose>
                 </>
               );
             })()}
 
             {selectedSub && actionType === "upgrade" && (
               <>
-                <DialogHeader><DialogTitle>Upgrade — {selectedSub.tenantName}</DialogTitle></DialogHeader>
-                <p className="text-sm text-muted-foreground">Current: <Badge variant="secondary" className="capitalize ml-1">{selectedSub.plan}</Badge> ({selectedSub.billingCycle})</p>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.upgradeTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
+                <p className="text-sm text-muted-foreground">{tt("adminSubscriptions.dialog.current")} <Badge variant="secondary" className="ml-1">{planLabel(selectedSub.plan)}</Badge> ({tt(`adminSubscriptions.cycle.${selectedSub.billingCycle}`)})</p>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>New Plan</Label>
+                      <Label>{tt("adminSubscriptions.fields.newPlan")}</Label>
                       <Select value={newPlan} onValueChange={(v) => setNewPlan(v as PlanType)}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
                           {getUpgradePlans(selectedSub.plan).map((p) => {
                             const plan = PLANS.find((x) => x.id === p);
-                            return <SelectItem key={p} value={p}>{plan?.name} (৳{plan?.price}/mo)</SelectItem>;
+                            return <SelectItem key={p} value={p}>{plan?.name} (৳{plan?.price}/{tt("adminSubscriptions.cycle.mo")})</SelectItem>;
                           })}
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label>Billing Cycle</Label>
+                      <Label>{tt("adminSubscriptions.fields.billingCycle")}</Label>
                       <Select value={newCycle} onValueChange={(v) => setNewCycle(v as BillingCycle)}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="monthly">Monthly</SelectItem>
-                          <SelectItem value="yearly">Yearly (save 20%)</SelectItem>
+                          <SelectItem value="monthly">{tt("adminSubscriptions.cycle.monthly")}</SelectItem>
+                          <SelectItem value="yearly">{tt("adminSubscriptions.cycle.yearlySave")}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
-                  <Button onClick={handleUpgrade} className="w-full">Confirm Upgrade</Button>
+                  <Button onClick={handleUpgrade} className="w-full">{tt("adminSubscriptions.actions.confirmUpgrade")}</Button>
                 </div>
               </>
             )}
 
             {selectedSub && actionType === "downgrade" && (
               <>
-                <DialogHeader><DialogTitle>Downgrade — {selectedSub.tenantName}</DialogTitle></DialogHeader>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.downgradeTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label>New Plan</Label>
+                      <Label>{tt("adminSubscriptions.fields.newPlan")}</Label>
                       <Select value={newPlan} onValueChange={(v) => setNewPlan(v as PlanType)}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
                           {getDowngradePlans(selectedSub.plan).map((p) => {
                             const plan = PLANS.find((x) => x.id === p);
-                            return <SelectItem key={p} value={p}>{plan?.name} (৳{plan?.price}/mo)</SelectItem>;
+                            return <SelectItem key={p} value={p}>{plan?.name} (৳{plan?.price}/{tt("adminSubscriptions.cycle.mo")})</SelectItem>;
                           })}
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label>Billing Cycle</Label>
+                      <Label>{tt("adminSubscriptions.fields.billingCycle")}</Label>
                       <Select value={newCycle} onValueChange={(v) => setNewCycle(v as BillingCycle)}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="monthly">Monthly</SelectItem>
-                          <SelectItem value="yearly">Yearly</SelectItem>
+                          <SelectItem value="monthly">{tt("adminSubscriptions.cycle.monthly")}</SelectItem>
+                          <SelectItem value="yearly">{tt("adminSubscriptions.cycle.yearly")}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
-                  <Button onClick={handleDowngrade} variant="secondary" className="w-full">Confirm Downgrade</Button>
+                  <Button onClick={handleDowngrade} variant="secondary" className="w-full">{tt("adminSubscriptions.actions.confirmDowngrade")}</Button>
                 </div>
               </>
             )}
 
             {selectedSub && actionType === "extend" && (
               <>
-                <DialogHeader><DialogTitle>Extend — {selectedSub.tenantName}</DialogTitle></DialogHeader>
-                <p className="text-sm text-muted-foreground">Current expiry: {selectedSub.endDate || "N/A"}</p>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.extendTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
+                <p className="text-sm text-muted-foreground">{tt("adminSubscriptions.dialog.currentExpiry", { date: selectedSub.endDate || "N/A" })}</p>
                 <div className="flex gap-4 mt-2">
                   <Input type="number" min={1} value={extendValue} onChange={(e) => setExtendValue(e.target.value)} className="w-24" />
                   <Select value={extendUnit} onValueChange={(v) => setExtendUnit(v as "days" | "months")}>
                     <SelectTrigger className="w-32"><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="days">Days</SelectItem>
-                      <SelectItem value="months">Months</SelectItem>
+                      <SelectItem value="days">{tt("adminSubscriptions.fields.days")}</SelectItem>
+                      <SelectItem value="months">{tt("adminSubscriptions.fields.months")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                <Button onClick={handleExtend} className="w-full mt-4">Extend Subscription</Button>
+                <Button onClick={handleExtend} className="w-full mt-4">{tt("adminSubscriptions.actions.extendSubscription")}</Button>
               </>
             )}
 
             {selectedSub && actionType === "renew" && (
               <>
-                <DialogHeader><DialogTitle>Renew — {selectedSub.tenantName}</DialogTitle></DialogHeader>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.renewTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
                 <p className="text-sm text-muted-foreground">
-                  Renew {selectedSub.plan} plan ({selectedSub.billingCycle}) for ৳{selectedSub.price.toLocaleString()}
+                  {tt("adminSubscriptions.dialog.renewMsg", { plan: planLabel(selectedSub.plan), cycle: tt(`adminSubscriptions.cycle.${selectedSub.billingCycle}`), price: selectedSub.price.toLocaleString() })}
                 </p>
-                <Button onClick={handleRenew} className="w-full mt-4">Confirm Renewal</Button>
+                <Button onClick={handleRenew} className="w-full mt-4">{tt("adminSubscriptions.actions.confirmRenewal")}</Button>
               </>
             )}
 
             {selectedSub && actionType === "suspend" && (
               <>
-                <DialogHeader><DialogTitle>Suspend — {selectedSub.tenantName}</DialogTitle></DialogHeader>
-                <p className="text-sm text-muted-foreground">The tenant will lose access until reactivated.</p>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.suspendTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
+                <p className="text-sm text-muted-foreground">{tt("adminSubscriptions.dialog.suspendMsg")}</p>
                 <div className="space-y-2 mt-2">
-                  <Label>Reason</Label>
-                  <Textarea value={actionReason} onChange={(e) => setActionReason(e.target.value)} placeholder="Reason for suspension..." rows={3} />
+                  <Label>{tt("adminSubscriptions.fields.reason")}</Label>
+                  <Textarea value={actionReason} onChange={(e) => setActionReason(e.target.value)} placeholder={tt("adminSubscriptions.fields.reasonPlaceholder")} rows={3} />
                 </div>
-                <Button onClick={handleSuspend} variant="destructive" className="w-full mt-4" disabled={!actionReason.trim()}>Suspend</Button>
+                <Button onClick={handleSuspend} variant="destructive" className="w-full mt-4" disabled={!actionReason.trim()}>{tt("adminSubscriptions.actions.suspend")}</Button>
               </>
             )}
 
             {selectedSub && actionType === "reactivate" && (
               <>
-                <DialogHeader><DialogTitle>Reactivate — {selectedSub.tenantName}</DialogTitle></DialogHeader>
-                <p className="text-sm text-muted-foreground">This will reactivate the subscription with 1 month added.</p>
-                <Button onClick={handleReactivate} className="w-full mt-4">Reactivate</Button>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.reactivateTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
+                <p className="text-sm text-muted-foreground">{tt("adminSubscriptions.dialog.reactivateMsg")}</p>
+                <Button onClick={handleReactivate} className="w-full mt-4">{tt("adminSubscriptions.actions.reactivate")}</Button>
               </>
             )}
 
             {selectedSub && actionType === "cancel" && (
               <>
-                <DialogHeader><DialogTitle>Cancel — {selectedSub.tenantName}</DialogTitle></DialogHeader>
-                <p className="text-sm text-muted-foreground">This action cannot be undone easily.</p>
+                <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.cancelTitle", { name: selectedSub.tenantName })}</DialogTitle></DialogHeader>
+                <p className="text-sm text-muted-foreground">{tt("adminSubscriptions.dialog.cancelMsg")}</p>
                 <div className="space-y-2 mt-2">
-                  <Label>Cancellation Reason</Label>
-                  <Textarea value={actionReason} onChange={(e) => setActionReason(e.target.value)} placeholder="Why is this being cancelled?" rows={3} />
+                  <Label>{tt("adminSubscriptions.fields.cancelReason")}</Label>
+                  <Textarea value={actionReason} onChange={(e) => setActionReason(e.target.value)} placeholder={tt("adminSubscriptions.fields.cancelReasonPlaceholder")} rows={3} />
                 </div>
-                <Button onClick={handleCancel} variant="destructive" className="w-full mt-4" disabled={!actionReason.trim()}>Confirm Cancellation</Button>
+                <Button onClick={handleCancel} variant="destructive" className="w-full mt-4" disabled={!actionReason.trim()}>{tt("adminSubscriptions.actions.confirmCancellation")}</Button>
               </>
             )}
           </DialogContent>
@@ -628,10 +635,10 @@ const AdminSubscriptions = () => {
         {/* Edit subscription */}
         <Dialog open={!!editSub} onOpenChange={(o) => !o && setEditSub(null)}>
           <DialogContent className="max-w-md">
-            <DialogHeader><DialogTitle>Edit Subscription — {editSub?.tenantName}</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{tt("adminSubscriptions.dialog.editTitle", { name: editSub?.tenantName || "" })}</DialogTitle></DialogHeader>
             <div className="grid gap-4 py-2">
               <div className="grid gap-2">
-                <Label>Plan</Label>
+                <Label>{tt("adminSubscriptions.fields.plan")}</Label>
                 <Select value={editPlan} onValueChange={(v) => setEditPlan(v as PlanType)}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -640,22 +647,22 @@ const AdminSubscriptions = () => {
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label>Status</Label>
+                <Label>{tt("adminSubscriptions.fields.status")}</Label>
                 <Select value={editStatus} onValueChange={(v) => setEditStatus(v as SubscriptionStatus)}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    {STATUS_META.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
+                    {STATUS_META.map((s) => <SelectItem key={s.value} value={s.value}>{statusLabel(s.value)}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label>Expiry Date</Label>
+                <Label>{tt("adminSubscriptions.fields.expiryDate")}</Label>
                 <Input type="date" value={editExpiry} onChange={(e) => setEditExpiry(e.target.value)} />
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setEditSub(null)} disabled={savingEdit}>Cancel</Button>
-              <Button onClick={saveEdit} disabled={savingEdit}>{savingEdit ? "Saving…" : "Save changes"}</Button>
+              <Button variant="outline" onClick={() => setEditSub(null)} disabled={savingEdit}>{tt("adminSubscriptions.actions.cancel")}</Button>
+              <Button onClick={saveEdit} disabled={savingEdit}>{savingEdit ? tt("adminSubscriptions.actions.saving") : tt("adminSubscriptions.actions.saveChanges")}</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -664,15 +671,19 @@ const AdminSubscriptions = () => {
         <AlertDialog open={!!deleteSub} onOpenChange={(o) => !o && setDeleteSub(null)}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Delete subscription?</AlertDialogTitle>
+              <AlertDialogTitle>{tt("adminSubscriptions.dialog.deleteTitle")}</AlertDialogTitle>
               <AlertDialogDescription>
-                This permanently deletes <strong>{deleteSub?.tenantName}</strong> along with its users, bookings, clients, invoices, and all related data. This cannot be undone.
+                <Trans
+                  i18nKey="adminSubscriptions.dialog.deleteDesc"
+                  values={{ name: deleteSub?.tenantName || "" }}
+                  components={{ 1: <strong /> }}
+                />
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel disabled={deleting}>Cancel</AlertDialogCancel>
+              <AlertDialogCancel disabled={deleting}>{tt("adminSubscriptions.actions.cancel")}</AlertDialogCancel>
               <AlertDialogAction onClick={confirmDelete} disabled={deleting} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                {deleting ? "Deleting…" : "Delete permanently"}
+                {deleting ? tt("adminSubscriptions.actions.deleting") : tt("adminSubscriptions.actions.deletePermanently")}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
