@@ -399,14 +399,14 @@ const HajjUmrah = () => {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-              <Moon className="h-8 w-8" /> Hajj & Umrah Management
+              <Moon className="h-8 w-8" /> {t("pages.hajjTitle")}
             </h1>
-            <p className="text-muted-foreground">Packages, pilgrims, visa tracking, room allocation, and payment collection</p>
+            <p className="text-muted-foreground">{t("pages.hajjSubtitle")}</p>
           </div>
           <div className="flex gap-2">
             <PermissionGate module="hajj_umrah" action="export">
               <Button variant="outline" size="sm" onClick={handleExport}>
-                <Download className="mr-1 h-4 w-4" /> Export
+                <Download className="mr-1 h-4 w-4" /> {t("pages.export")}
               </Button>
             </PermissionGate>
           </div>
