@@ -467,7 +467,7 @@ const AdminSubscriptions = () => {
                       <span className="text-muted-foreground">Price:</span>
                       <span className="font-semibold">{selectedSub.price === 0 ? "Free" : `৳${selectedSub.price.toLocaleString()}/${selectedSub.billingCycle === "yearly" ? "yr" : "mo"}`}</span>
                       <span className="text-muted-foreground">Status:</span>
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium w-fit ${getStatusMeta(selectedSub.status).color}`}>{getStatusMeta(selectedSub.status).label}</span>
+                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium w-fit ${getStatusMeta(selectedSub.status).color}`}>{statusLabel(selectedSub.status)}</span>
                       <span className="text-muted-foreground">Period:</span>
                       <span>{selectedSub.startDate} → {selectedSub.endDate || "—"}</span>
                       <span className="text-muted-foreground">Auto-Renew:</span>
