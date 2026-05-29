@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export default function StaffPerformanceReport({ leads, bookings, quotations, teamMembers }: Props) {
+  const { t } = useTranslation();
   const data = useMemo(() => {
     const staffMap: Record<string, {
       name: string; leads: number; wonLeads: number; quotations: number;
@@ -82,14 +84,14 @@ export default function StaffPerformanceReport({ leads, bookings, quotations, te
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold flex items-center gap-2"><Users className="h-5 w-5" />Staff Performance</h3>
+        <h3 className="text-lg font-semibold flex items-center gap-2"><Users className="h-5 w-5" />{t("reportComponents.staff.title")}</h3>
         <PermissionGate module="reports" action="export">
-          <Button variant="outline" size="sm" onClick={exportCsv}><Download className="mr-2 h-4 w-4" />Export</Button>
+          <Button variant="outline" size="sm" onClick={exportCsv}><Download className="mr-2 h-4 w-4" />{t("reportComponents.common.export")}</Button>
         </PermissionGate>
       </div>
 
       <Card>
-        <CardHeader><CardTitle className="text-base">Staff Comparison</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-base">{t("reportComponents.staff.comparison")}</CardTitle></CardHeader>
         <CardContent>
           {data.chartData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
@@ -99,29 +101,29 @@ export default function StaffPerformanceReport({ leads, bookings, quotations, te
                 <YAxis tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }} />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="leads" name="Leads" fill="hsl(var(--primary))" radius={[4,4,0,0]} />
-                <Bar dataKey="bookings" name="Bookings" fill="#10b981" radius={[4,4,0,0]} />
+                <Bar dataKey="leads" name={t("reportComponents.staff.leads")} fill="hsl(var(--primary))" radius={[4,4,0,0]} />
+                <Bar dataKey="bookings" name={t("reportComponents.staff.bookings")} fill="#10b981" radius={[4,4,0,0]} />
               </BarChart>
             </ResponsiveContainer>
-          ) : <p className="text-center text-muted-foreground py-12">No staff activity data</p>}
+          ) : <p className="text-center text-muted-foreground py-12">{t("reportComponents.staff.noActivity")}</p>}
         </CardContent>
       </Card>
 
       <Card>
-        <CardHeader><CardTitle className="text-base">Detailed Staff Metrics</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-base">{t("reportComponents.staff.detailed")}</CardTitle></CardHeader>
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Staff Member</TableHead><TableHead className="text-right">Leads</TableHead>
-                <TableHead className="text-right">Won</TableHead><TableHead className="text-right">Conv. %</TableHead>
-                <TableHead className="text-right">Quotations</TableHead><TableHead className="text-right">Approved</TableHead>
-                <TableHead className="text-right">Bookings</TableHead><TableHead className="text-right">Revenue</TableHead>
+                <TableHead>{t("reportComponents.staff.th.staff")}</TableHead><TableHead className="text-right">{t("reportComponents.staff.th.leads")}</TableHead>
+                <TableHead className="text-right">{t("reportComponents.staff.th.won")}</TableHead><TableHead className="text-right">{t("reportComponents.staff.th.conv")}</TableHead>
+                <TableHead className="text-right">{t("reportComponents.staff.th.quotations")}</TableHead><TableHead className="text-right">{t("reportComponents.staff.th.approved")}</TableHead>
+                <TableHead className="text-right">{t("reportComponents.staff.th.bookings")}</TableHead><TableHead className="text-right">{t("reportComponents.staff.th.revenue")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {data.staffArr.length === 0 ? (
-                <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">No staff data available. Assign leads and bookings to team members.</TableCell></TableRow>
+                <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">{t("reportComponents.staff.noStaff")}</TableCell></TableRow>
               ) : data.staffArr.map((s) => (
                 <TableRow key={s.id}>
                   <TableCell className="font-medium">{s.name}</TableCell>
