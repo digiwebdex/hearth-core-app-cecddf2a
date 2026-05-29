@@ -31,13 +31,13 @@ import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const LEAD_STATUSES: { value: LeadStatus; label: string; color: string }[] = [
-  { value: "new", label: "New", color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200" },
-  { value: "contacted", label: "Contacted", color: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200" },
-  { value: "qualified", label: "Qualified", color: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200" },
-  { value: "quoted", label: "Quoted", color: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200" },
-  { value: "won", label: "Won", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" },
-  { value: "lost", label: "Lost", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200" },
+const LEAD_STATUSES: { value: LeadStatus; color: string }[] = [
+  { value: "new", color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200" },
+  { value: "contacted", color: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200" },
+  { value: "qualified", color: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200" },
+  { value: "quoted", color: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200" },
+  { value: "won", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" },
+  { value: "lost", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200" },
 ];
 
 const getStatusMeta = (status: LeadStatus) => LEAD_STATUSES.find((s) => s.value === status) || LEAD_STATUSES[0];
