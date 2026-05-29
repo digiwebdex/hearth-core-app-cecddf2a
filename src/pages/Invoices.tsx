@@ -566,7 +566,7 @@ const Invoices = () => {
         {/* ═══════ DETAIL DIALOG ═══════ */}
         <Dialog open={detailDialogOpen} onOpenChange={(open) => { setDetailDialogOpen(open); if (!open) setSelectedInvoiceId(null); }}>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader><DialogTitle>Invoice Details</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{t("invoicesForm.detail.title")}</DialogTitle></DialogHeader>
             {selectedInvoice && (
               <div className="space-y-4">
                 {/* Summary */}
@@ -574,31 +574,31 @@ const Invoices = () => {
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-sm font-medium">{selectedInvoice.invoiceNumber || `INV-${selectedInvoice.id.slice(0, 6).toUpperCase()}`}</span>
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${getStatusMeta(selectedInvoice.status).color}`}>
-                      {getStatusMeta(selectedInvoice.status).label}
+                      {t(`invoicesForm.statuses.${selectedInvoice.status}`)}
                     </span>
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div><span className="text-muted-foreground">Client:</span> {selectedInvoice.clientName || "—"}</div>
-                    <div><span className="text-muted-foreground">Booking:</span> {selectedInvoice.bookingTitle || selectedInvoice.bookingId?.slice(0, 8)}</div>
-                    <div><span className="text-muted-foreground">Due Date:</span> {selectedInvoice.dueDate || "Not set"}</div>
-                    <div><span className="text-muted-foreground">Created:</span> {selectedInvoice.createdAt?.slice(0, 10)}</div>
+                    <div><span className="text-muted-foreground">{t("invoicesForm.detail.client")}:</span> {selectedInvoice.clientName || "—"}</div>
+                    <div><span className="text-muted-foreground">{t("invoicesForm.detail.booking")}:</span> {selectedInvoice.bookingTitle || selectedInvoice.bookingId?.slice(0, 8)}</div>
+                    <div><span className="text-muted-foreground">{t("invoicesForm.detail.dueDate")}:</span> {selectedInvoice.dueDate || t("invoicesForm.detail.notSet")}</div>
+                    <div><span className="text-muted-foreground">{t("invoicesForm.detail.created")}:</span> {selectedInvoice.createdAt?.slice(0, 10)}</div>
                   </div>
                   <Separator />
                   <div className="grid grid-cols-4 gap-2 text-sm">
                     <div className="text-center">
-                      <p className="text-muted-foreground text-xs">Total</p>
+                      <p className="text-muted-foreground text-xs">{t("invoicesForm.detail.total")}</p>
                       <p className="font-bold">৳{selectedInvoice.totalAmount.toLocaleString()}</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-muted-foreground text-xs">Paid</p>
+                      <p className="text-muted-foreground text-xs">{t("invoicesForm.detail.paid")}</p>
                       <p className="font-bold text-green-600">৳{selectedInvoice.paidAmount.toLocaleString()}</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-muted-foreground text-xs">Due</p>
+                      <p className="text-muted-foreground text-xs">{t("invoicesForm.detail.due")}</p>
                       <p className="font-bold text-destructive">৳{selectedInvoice.dueAmount.toLocaleString()}</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-muted-foreground text-xs">Profit</p>
+                      <p className="text-muted-foreground text-xs">{t("invoicesForm.detail.profit")}</p>
                       <p className={`font-bold ${(selectedInvoice.bookingProfit || 0) >= 0 ? "text-green-600" : "text-destructive"}`}>
                         ৳{(selectedInvoice.bookingProfit || 0).toLocaleString()}
                       </p>
@@ -613,28 +613,28 @@ const Invoices = () => {
                     <>
                       <PermissionGate module="invoices" action="edit">
                         <Button size="sm" onClick={() => setPayDialogOpen(true)}>
-                          <CreditCard className="mr-1 h-3.5 w-3.5" /> Record Payment
+                          <CreditCard className="mr-1 h-3.5 w-3.5" /> {t("invoicesForm.detail.recordPayment")}
                         </Button>
                       </PermissionGate>
                       <Button size="sm" variant="outline" onClick={async () => {
-                        try { await emailApi.sendInvoice(selectedInvoice.id); toast({ title: "Reminder sent" }); }
-                        catch (err: any) { toast({ title: "Failed", description: err.message, variant: "destructive" }); }
+                        try { await emailApi.sendInvoice(selectedInvoice.id); toast({ title: t("invoicesForm.toast.reminderSent") }); }
+                        catch (err: any) { toast({ title: t("invoicesForm.toast.failed"), description: err.message, variant: "destructive" }); }
                       }}>
-                        <Send className="mr-1 h-3.5 w-3.5" /> Send Reminder
+                        <Send className="mr-1 h-3.5 w-3.5" /> {t("invoicesForm.detail.sendReminder")}
                       </Button>
                     </>
                   )}
                   {selectedInvoice.paidAmount > 0 && selectedInvoice.status !== "refunded" && (
                     <PermissionGate module="invoices" action="approve">
                       <Button size="sm" variant="outline" onClick={() => setRefundDialogOpen(true)}>
-                        <RotateCcw className="mr-1 h-3.5 w-3.5" /> Refund
+                        <RotateCcw className="mr-1 h-3.5 w-3.5" /> {t("invoicesForm.detail.refund")}
                       </Button>
                     </PermissionGate>
                   )}
                   {selectedInvoice.status !== "cancelled" && selectedInvoice.status !== "refunded" && (
                     <PermissionGate module="invoices" action="delete">
                       <Button size="sm" variant="destructive" onClick={() => setCancelDialogOpen(true)}>
-                        <Ban className="mr-1 h-3.5 w-3.5" /> Cancel
+                        <Ban className="mr-1 h-3.5 w-3.5" /> {t("invoicesForm.detail.cancel")}
                       </Button>
                     </PermissionGate>
                   )}
@@ -643,10 +643,11 @@ const Invoices = () => {
                 {/* Tabs: Payments / Refunds / Audit Trail */}
                 <Tabs defaultValue="payments">
                   <TabsList>
-                    <TabsTrigger value="payments">Payments ({invoicePayments.length})</TabsTrigger>
-                    <TabsTrigger value="refunds">Refunds ({invoiceRefunds.length})</TabsTrigger>
-                    <TabsTrigger value="audit">Audit Trail ({invoiceAudit.length})</TabsTrigger>
+                    <TabsTrigger value="payments">{t("invoicesForm.detail.payments")} ({invoicePayments.length})</TabsTrigger>
+                    <TabsTrigger value="refunds">{t("invoicesForm.detail.refunds")} ({invoiceRefunds.length})</TabsTrigger>
+                    <TabsTrigger value="audit">{t("invoicesForm.detail.audit")} ({invoiceAudit.length})</TabsTrigger>
                   </TabsList>
+
 
                   <TabsContent value="payments" className="mt-3">
                     {invoicePayments.length === 0 ? (
