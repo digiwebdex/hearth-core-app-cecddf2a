@@ -139,26 +139,27 @@ export function AppSidebar() {
   const { user, logout, currentPlan, appRole } = useAuth();
   const { canAccessAdmin } = usePermissions();
   const roleMeta = getRoleMeta(appRole);
+  const { t } = useTranslation();
 
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
         <div className="px-3 py-3">
-          {!collapsed && <span className="text-sm font-bold tracking-tight">SaaS App</span>}
+          {!collapsed && <span className="text-sm font-bold tracking-tight">{t("common.brand")}</span>}
         </div>
-        <NavGroup label="Overview" items={mainItems} collapsed={collapsed} currentPlan={currentPlan} />
-        <NavGroup label="CRM" items={crmItems} collapsed={collapsed} currentPlan={currentPlan} />
-        <NavGroup label="Management" items={managementItems} collapsed={collapsed} currentPlan={currentPlan} />
+        <NavGroup label={t("sidebar.overview")} items={mainItems} collapsed={collapsed} currentPlan={currentPlan} />
+        <NavGroup label={t("sidebar.crm")} items={crmItems} collapsed={collapsed} currentPlan={currentPlan} />
+        <NavGroup label={t("sidebar.management")} items={managementItems} collapsed={collapsed} currentPlan={currentPlan} />
         {canAccessAdmin && (
           <SidebarGroup>
-            <SidebarGroupLabel>{!collapsed ? "Admin" : ""}</SidebarGroupLabel>
+            <SidebarGroupLabel>{!collapsed ? t("sidebar.admin") : ""}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
                     <NavLink to="/admin" className="hover:bg-sidebar-accent/50 text-destructive" activeClassName="bg-sidebar-accent font-medium">
                       <Shield className="mr-2 h-4 w-4" />
-                      {!collapsed && <span>Admin Panel</span>}
+                      {!collapsed && <span>{t("sidebar.adminPanel")}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -181,7 +182,7 @@ export function AppSidebar() {
         )}
         <Button variant="ghost" size="sm" className="w-full justify-start" onClick={logout}>
           <LogOut className="mr-2 h-4 w-4" />
-          {!collapsed && "Logout"}
+          {!collapsed && t("common.logout")}
         </Button>
       </SidebarFooter>
     </Sidebar>
