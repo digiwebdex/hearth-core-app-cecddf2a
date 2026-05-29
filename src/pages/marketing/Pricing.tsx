@@ -68,28 +68,28 @@ const Pricing = () => {
 
   return (
     <MarketingLayout
-      title="Pricing — Travel Agency Website & Software Solution"
-      description="Simple, transparent pricing for travel agencies. Choose Basic, Pro, Business, or Unlimited."
+      title={t("marketing.pricing.metaTitle")}
+      description={t("marketing.pricing.metaDesc")}
     >
       {/* Hero */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 text-center">
           <Badge className="mb-6 bg-amber-400/10 text-amber-400 border-amber-400/25 text-sm px-4 py-1.5">
-            Simple Pricing — No Hidden Fees
+            {t("marketing.pricing.badge")}
           </Badge>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-            Simple, Transparent Pricing
+            {t("marketing.pricing.title")}
           </h1>
           <p className="text-lg text-white/45 max-w-2xl mx-auto mb-8">
-            Choose the plan that fits your travel agency. All prices in BDT.
+            {t("marketing.pricing.subtitle")}
           </p>
           {/* Billing toggle */}
           <div className="inline-flex items-center gap-3 p-1.5 rounded-full bg-white/5 border border-white/8">
             <button onClick={() => setBilling("monthly")} className={`px-5 py-2 rounded-full text-sm font-medium transition ${billing === "monthly" ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md" : "text-white/45 hover:text-white"}`}>
-              Monthly
+              {t("marketing.pricing.monthly")}
             </button>
             <button onClick={() => setBilling("yearly")} className={`px-5 py-2 rounded-full text-sm font-medium transition flex items-center gap-2 ${billing === "yearly" ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md" : "text-white/45 hover:text-white"}`}>
-              Yearly <Badge variant="secondary" className="text-[10px] bg-emerald-500/20 text-emerald-400 border-0">Save 20%</Badge>
+              {t("marketing.pricing.yearly")} <Badge variant="secondary" className="text-[10px] bg-emerald-500/20 text-emerald-400 border-0">{t("marketing.pricing.save20")}</Badge>
             </button>
           </div>
         </div>
