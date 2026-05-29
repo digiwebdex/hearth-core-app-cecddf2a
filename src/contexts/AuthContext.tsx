@@ -13,7 +13,7 @@ interface AuthContextType {
   trialDaysLeft: number;
   loading: boolean;
   login: (email: string, password: string) => Promise<User>;
-  register: (data: { name: string; email: string; password: string; tenantName: string }) => Promise<{ pendingApproval: boolean; message?: string; user?: User }>;
+  register: (data: { name: string; email: string; password: string; tenantName: string; plan?: string }) => Promise<{ pendingApproval: boolean; message?: string; user?: User; trialDays?: number }>;
   logout: () => void;
   refreshTenant: () => Promise<void>;
 }
