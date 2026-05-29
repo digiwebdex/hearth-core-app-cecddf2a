@@ -332,7 +332,7 @@ const AdminSubscriptions = () => {
             </Button>
             {STATUS_META.map((s) => (
               <Button key={s.value} variant={statusFilter === s.value ? "default" : "outline"} size="sm" onClick={() => setStatusFilter(s.value)}>
-                {s.label} ({statusCounts[s.value] || 0})
+                {statusLabel(s.value)} ({statusCounts[s.value] || 0})
               </Button>
             ))}
           </div>
