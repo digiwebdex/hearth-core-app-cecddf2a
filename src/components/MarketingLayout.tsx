@@ -94,9 +94,10 @@ const MarketingLayout = ({ children, title, description }: Props) => {
                 {link.label}
               </Link>
             ))}
+            <LanguageSwitcher className="text-white/70 hover:text-white" />
             <Link to="/demo">
               <Button size="sm" variant="outline" className="border-amber-400/30 text-amber-400 hover:bg-amber-400/10">
-                Book a Demo
+                {t("common.bookDemo")}
               </Button>
             </Link>
           </nav>
@@ -121,8 +122,9 @@ const MarketingLayout = ({ children, title, description }: Props) => {
                 {link.label}
               </Link>
             ))}
+            <div className="py-2.5"><LanguageSwitcher className="text-white/70" /></div>
             <Link to="/demo" className="block py-2.5">
-              <Button size="sm" variant="outline" className="w-full border-amber-400/30 text-amber-400">Book a Demo</Button>
+              <Button size="sm" variant="outline" className="w-full border-amber-400/30 text-amber-400">{t("common.bookDemo")}</Button>
             </Link>
           </div>
         )}
