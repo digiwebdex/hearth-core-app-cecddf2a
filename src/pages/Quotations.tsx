@@ -77,9 +77,9 @@ const Quotations = () => {
     try {
       await quotationApi.delete(id);
       setQuotations((p) => p.filter((q) => q.id !== id));
-      toast({ title: "Quotation deleted" });
+      toast({ title: t("quotationsForm.toast.deleted") });
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("quotationsForm.toast.error"), description: err.message });
     }
   };
 
@@ -87,19 +87,19 @@ const Quotations = () => {
     try {
       const dup = await quotationApi.duplicate(id);
       setQuotations((p) => [dup, ...p]);
-      toast({ title: "Quotation duplicated" });
+      toast({ title: t("quotationsForm.toast.duplicated") });
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("quotationsForm.toast.error"), description: err.message });
     }
   };
 
   const handleConvert = async (q: Quotation) => {
     try {
       await quotationApi.convertToBooking(q.id);
-      toast({ title: "Booking created from quotation!" });
+      toast({ title: t("quotationsForm.toast.converted") });
       navigate("/bookings");
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("quotationsForm.toast.error"), description: err.message });
     }
   };
 
