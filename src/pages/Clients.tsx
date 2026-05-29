@@ -102,15 +102,15 @@ const Clients = () => {
       if (editingId) {
         const updated = await clientApi.update(editingId, payload);
         setClients((p) => p.map((c) => (c.id === editingId ? { ...c, ...updated } : c)));
-        toast({ title: "Client updated" });
+        toast({ title: t("clientsForm.clientUpdated") });
       } else {
         const created = await clientApi.create(payload as any);
         setClients((p) => [created, ...p]);
-        toast({ title: "Client created" });
+        toast({ title: t("clientsForm.clientCreated") });
       }
       setDialogOpen(false);
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("clientsForm.error"), description: err.message });
     }
   };
 
@@ -118,9 +118,9 @@ const Clients = () => {
     try {
       await clientApi.delete(id);
       setClients((p) => p.filter((c) => c.id !== id));
-      toast({ title: "Client deleted" });
+      toast({ title: t("clientsForm.clientDeleted") });
     } catch (err: any) {
-      toast({ variant: "destructive", title: "Error", description: err.message });
+      toast({ variant: "destructive", title: t("clientsForm.error"), description: err.message });
     }
   };
 
@@ -131,7 +131,7 @@ const Clients = () => {
         <PopoverTrigger asChild>
           <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}>
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : "Pick a date"}
+            {date ? format(date, "PPP") : t("clientsForm.pickDate")}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
@@ -156,7 +156,7 @@ const Clients = () => {
 
         <div className="flex items-center gap-2 max-w-sm">
           <Search className="h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Search name, email, phone, passport..." value={search} onChange={(e) => setSearch(e.target.value)} />
+          <Input placeholder={t("clientsForm.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
 
         {loading ? (
@@ -171,17 +171,17 @@ const Clients = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Contact</TableHead>
-                    <TableHead>Passport</TableHead>
-                    <TableHead>Nationality</TableHead>
-                    <TableHead>Tags</TableHead>
-                    <TableHead className="w-[120px]">Actions</TableHead>
+                    <TableHead>{t("clientsForm.name")}</TableHead>
+                    <TableHead>{t("clientsForm.contact")}</TableHead>
+                    <TableHead>{t("clientsForm.passport")}</TableHead>
+                    <TableHead>{t("clientsForm.nationality")}</TableHead>
+                    <TableHead>{t("clientsForm.tags")}</TableHead>
+                    <TableHead className="w-[120px]">{t("clientsForm.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filtered.length === 0 ? (
-                    <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground">No clients found.</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground">{t("clientsForm.noClientsFound")}</TableCell></TableRow>
                   ) : (
                     filtered.map((c) => (
                       <TableRow key={c.id} className="cursor-pointer" onClick={() => navigate(`/clients/${c.id}`)}>
@@ -205,16 +205,16 @@ const Clients = () => {
                         </TableCell>
                         <TableCell>
                           <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
-                            <Button variant="ghost" size="icon" title="View" onClick={() => navigate(`/clients/${c.id}`)}>
+                            <Button variant="ghost" size="icon" title={t("clientsForm.view")} onClick={() => navigate(`/clients/${c.id}`)}>
                               <Eye className="h-4 w-4" />
                             </Button>
                             <PermissionGate module="clients" action="edit">
-                              <Button variant="ghost" size="icon" title="Edit" onClick={() => openEdit(c)}>
+                              <Button variant="ghost" size="icon" title={t("clientsForm.edit")} onClick={() => openEdit(c)}>
                                 <Pencil className="h-4 w-4" />
                               </Button>
                             </PermissionGate>
                             <PermissionGate module="clients" action="delete">
-                              <Button variant="ghost" size="icon" title="Delete" onClick={() => handleDelete(c.id)}>
+                              <Button variant="ghost" size="icon" title={t("clientsForm.delete")} onClick={() => handleDelete(c.id)}>
                                 <Trash2 className="h-4 w-4 text-destructive" />
                               </Button>
                             </PermissionGate>
@@ -232,33 +232,33 @@ const Clients = () => {
         {/* Client Form Dialog */}
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
-            <DialogHeader><DialogTitle>{editingId ? "Edit Client" : "New Client"}</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{editingId ? t("clientsForm.editClient") : t("clientsForm.newClient")}</DialogTitle></DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Contact Info</p>
+              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{t("clientsForm.contactInfo")}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2"><Label>Name *</Label><Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required /></div>
-                <div className="space-y-2"><Label>Phone</Label><Input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} /></div>
-                <div className="space-y-2"><Label>Email</Label><Input type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} /></div>
-                <div className="space-y-2"><Label>Alternate Phone</Label><Input value={form.alternatePhone} onChange={(e) => setForm((f) => ({ ...f, alternatePhone: e.target.value }))} /></div>
-                <div className="md:col-span-2 space-y-2"><Label>Address</Label><Input value={form.address} onChange={(e) => setForm((f) => ({ ...f, address: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.name")} *</Label><Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.phone")}</Label><Input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.email")}</Label><Input type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.alternatePhone")}</Label><Input value={form.alternatePhone} onChange={(e) => setForm((f) => ({ ...f, alternatePhone: e.target.value }))} /></div>
+                <div className="md:col-span-2 space-y-2"><Label>{t("clientsForm.address")}</Label><Input value={form.address} onChange={(e) => setForm((f) => ({ ...f, address: e.target.value }))} /></div>
               </div>
-              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider pt-2">Identity & Documents</p>
+              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider pt-2">{t("clientsForm.identityDocs")}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <DatePick label="Date of Birth" date={dobDate} onChange={setDobDate} />
-                <div className="space-y-2"><Label>Nationality</Label><Input value={form.nationality} onChange={(e) => setForm((f) => ({ ...f, nationality: e.target.value }))} /></div>
-                <div className="space-y-2"><Label>Passport Number</Label><Input value={form.passportNumber} onChange={(e) => setForm((f) => ({ ...f, passportNumber: e.target.value }))} /></div>
-                <DatePick label="Passport Expiry" date={passportExpiry} onChange={setPassportExpiry} />
-                <div className="space-y-2"><Label>NID Number</Label><Input value={form.nidNumber} onChange={(e) => setForm((f) => ({ ...f, nidNumber: e.target.value }))} /></div>
+                <DatePick label={t("clientsForm.dateOfBirth")} date={dobDate} onChange={setDobDate} />
+                <div className="space-y-2"><Label>{t("clientsForm.nationality")}</Label><Input value={form.nationality} onChange={(e) => setForm((f) => ({ ...f, nationality: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.passportNumber")}</Label><Input value={form.passportNumber} onChange={(e) => setForm((f) => ({ ...f, passportNumber: e.target.value }))} /></div>
+                <DatePick label={t("clientsForm.passportExpiry")} date={passportExpiry} onChange={setPassportExpiry} />
+                <div className="space-y-2"><Label>{t("clientsForm.nidNumber")}</Label><Input value={form.nidNumber} onChange={(e) => setForm((f) => ({ ...f, nidNumber: e.target.value }))} /></div>
               </div>
-              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider pt-2">Emergency Contact</p>
+              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider pt-2">{t("clientsForm.emergencyContact")}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2"><Label>Contact Name</Label><Input value={form.emergencyContact} onChange={(e) => setForm((f) => ({ ...f, emergencyContact: e.target.value }))} /></div>
-                <div className="space-y-2"><Label>Contact Phone</Label><Input value={form.emergencyPhone} onChange={(e) => setForm((f) => ({ ...f, emergencyPhone: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.contactName")}</Label><Input value={form.emergencyContact} onChange={(e) => setForm((f) => ({ ...f, emergencyContact: e.target.value }))} /></div>
+                <div className="space-y-2"><Label>{t("clientsForm.contactPhone")}</Label><Input value={form.emergencyPhone} onChange={(e) => setForm((f) => ({ ...f, emergencyPhone: e.target.value }))} /></div>
               </div>
-              <div className="space-y-2"><Label>Notes</Label><Textarea rows={3} value={form.notes} onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))} /></div>
+              <div className="space-y-2"><Label>{t("clientsForm.notes")}</Label><Textarea rows={3} value={form.notes} onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))} /></div>
               <div className="flex gap-2">
-                <Button type="submit" className="flex-1">{editingId ? "Update" : "Create"} Client</Button>
-                <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
+                <Button type="submit" className="flex-1">{editingId ? t("clientsForm.updateClient") : t("clientsForm.createClient")}</Button>
+                <DialogClose asChild><Button variant="outline">{t("clientsForm.cancel")}</Button></DialogClose>
               </div>
             </form>
           </DialogContent>

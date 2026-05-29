@@ -276,6 +276,25 @@
     "convertedTitle": "কোটেশন থেকে বুকিং তৈরি হয়েছে",
     "convertedDesc": "{{name}} সফলভাবে রূপান্তর হয়েছে।"
   },
+  "clientsForm": {
+    "searchPlaceholder": "নাম, ইমেইল, ফোন, পাসপোর্ট খুঁজুন...",
+    "name": "নাম", "contact": "যোগাযোগ", "passport": "পাসপোর্ট",
+    "nationality": "জাতীয়তা", "tags": "ট্যাগ", "actions": "অ্যাকশন",
+    "noClientsFound": "কোনো ক্লায়েন্ট পাওয়া যায়নি।",
+    "view": "দেখুন", "edit": "সম্পাদনা", "delete": "মুছুন",
+    "editClient": "ক্লায়েন্ট সম্পাদনা", "newClient": "নতুন ক্লায়েন্ট",
+    "contactInfo": "যোগাযোগের তথ্য", "identityDocs": "পরিচয় ও ডকুমেন্ট",
+    "emergencyContact": "জরুরি যোগাযোগ",
+    "phone": "ফোন", "email": "ইমেইল", "alternatePhone": "বিকল্প ফোন",
+    "address": "ঠিকানা", "dateOfBirth": "জন্ম তারিখ",
+    "passportNumber": "পাসপোর্ট নম্বর", "passportExpiry": "পাসপোর্ট মেয়াদ",
+    "nidNumber": "এনআইডি নম্বর", "contactName": "যোগাযোগের নাম",
+    "contactPhone": "যোগাযোগের ফোন", "notes": "নোট",
+    "pickDate": "তারিখ নির্বাচন করুন",
+    "updateClient": "ক্লায়েন্ট আপডেট", "createClient": "ক্লায়েন্ট তৈরি", "cancel": "বাতিল",
+    "clientCreated": "ক্লায়েন্ট তৈরি হয়েছে", "clientUpdated": "ক্লায়েন্ট আপডেট হয়েছে",
+    "clientDeleted": "ক্লায়েন্ট মুছে ফেলা হয়েছে", "error": "ত্রুটি"
+  },
   "trial": {
     "proTrial": "প্রো ট্রায়াল",
     "daysLeft": "দিন বাকি",
