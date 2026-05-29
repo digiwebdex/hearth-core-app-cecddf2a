@@ -1805,5 +1805,92 @@
       "retryFailed": "❌ পুনরায় চেষ্টা ব্যর্থ",
       "sentOk": "নোটিফিকেশন সফলভাবে পাঠানো হয়েছে"
     }
+  },
+  "adminPlans": {
+    "title": "প্ল্যান পরিচালনা",
+    "subtitle": "প্রতিটি প্ল্যানের মূল্য, সীমা এবং ফিচার কনফিগার করুন",
+    "addPlan": "নতুন প্ল্যান",
+    "editPlan": "প্ল্যান সম্পাদনা",
+    "createPlan": "প্ল্যান তৈরি করুন",
+    "fields": {
+      "name": "প্ল্যানের নাম",
+      "slug": "স্লাগ",
+      "trialDays": "ট্রায়াল দিন",
+      "monthly": "মাসিক (৳)",
+      "yearly": "বার্ষিক (৳)",
+      "yearlySavings": "বার্ষিক সাশ্রয়",
+      "saved": "৳{{amount}} সাশ্রয়",
+      "pricing": "মূল্য নির্ধারণ",
+      "limitsTitle": "ফিচার সীমা (-1 = সীমাহীন)",
+      "featuresLabel": "ফিচার (কমা-বিভক্ত)",
+      "featuresPlaceholder": "ফিচার A, ফিচার B",
+      "paymentGateways": "পেমেন্ট গেটওয়ে",
+      "featureAccess": "ফিচার অ্যাক্সেস",
+      "active": "সক্রিয়"
+    },
+    "limits": {
+      "maxClients": "ক্লায়েন্ট",
+      "maxBookings": "বুকিং",
+      "maxUsers": "ব্যবহারকারী",
+      "maxBranches": "শাখা",
+      "maxSmsPerMonth": "এসএমএস/মাস",
+      "maxStorageMB": "স্টোরেজ (MB)",
+      "maxReports": "রিপোর্ট",
+      "maxLeads": "লিড",
+      "maxQuotations": "কোটেশন"
+    },
+    "features": {
+      "hasCustomDomain": "কাস্টম ডোমেইন",
+      "hasEmailNotifications": "ইমেইল",
+      "hasSmsIntegration": "এসএমএস",
+      "hasWhatsApp": "হোয়াটসঅ্যাপ",
+      "hasAgentCommission": "এজেন্ট কমিশন",
+      "hasAdvancedAnalytics": "অ্যানালিটিক্স",
+      "hasRefundSystem": "রিফান্ড সিস্টেম",
+      "hasApiAccess": "API অ্যাক্সেস",
+      "hasHajjUmrah": "হজ ও উমরাহ",
+      "hasPrioritySupport": "অগ্রাধিকার সহায়তা"
+    },
+    "gateways": {
+      "manual": "ম্যানুয়াল",
+      "sslcommerz": "SSLCommerz",
+      "bkash": "বিকাশ",
+      "custom": "কাস্টম"
+    },
+    "actions": {
+      "update": "আপডেট",
+      "create": "তৈরি করুন",
+      "cancel": "বাতিল"
+    },
+    "table": {
+      "plans": "প্ল্যানসমূহ",
+      "name": "নাম",
+      "monthly": "মাসিক",
+      "yearly": "বার্ষিক",
+      "trial": "ট্রায়াল",
+      "users": "ব্যবহারকারী",
+      "bookings": "বুকিং",
+      "sms": "এসএমএস",
+      "storage": "স্টোরেজ",
+      "features": "ফিচার",
+      "status": "স্ট্যাটাস",
+      "actions": "কর্ম",
+      "trialDays": "{{days}} দিন",
+      "yearlySuffix": "৳{{amount}}/বছর",
+      "active": "সক্রিয়",
+      "inactive": "নিষ্ক্রিয়"
+    },
+    "badges": {
+      "domain": "ডোমেইন",
+      "sms": "এসএমএস",
+      "whatsapp": "WA",
+      "analytics": "অ্যানালিটিক্স",
+      "api": "API",
+      "hajj": "হজ"
+    },
+    "toast": {
+      "updated": "প্ল্যান আপডেট হয়েছে",
+      "created": "প্ল্যান তৈরি হয়েছে"
+    }
   }
 }
