@@ -1329,5 +1329,44 @@
       "rejected": "Rejected",
       "expired": "Expired"
     }
+  },
+  "reports": {
+    "gate": {
+      "title": "Advanced Reports & Analytics",
+      "desc": "Gain deep insights into your agency's sales, payments, vendors, staff performance, and profitability.",
+      "features": {
+        "f1": "Sales and booking analytics with charts",
+        "f2": "Lead-to-booking conversion tracking",
+        "f3": "Payment collection vs outstanding reports",
+        "f4": "Vendor payable summaries",
+        "f5": "Staff performance comparison",
+        "f6": "Booking-level profitability margins",
+        "f7": "Export all reports to CSV"
+      },
+      "upgrade": "Upgrade to Business Plan"
+    },
+    "filters": {
+      "label": "Filters:",
+      "fromDate": "From date",
+      "toDate": "To date",
+      "staff": "Staff",
+      "allStaff": "All Staff",
+      "status": "Status",
+      "allStatuses": "All Statuses",
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "ticketed": "Ticketed",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "reset": "Reset"
+    },
+    "tabs": {
+      "sales": "Sales",
+      "leads": "Leads & Quotes",
+      "payments": "Payments",
+      "vendors": "Vendors",
+      "staff": "Staff",
+      "profitability": "Profitability"
+    }
   }
 }
