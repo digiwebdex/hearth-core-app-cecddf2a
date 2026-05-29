@@ -181,129 +181,129 @@ const AdminTenants = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">All Agencies</h1>
-            <p className="text-muted-foreground">View and manage all registered companies</p>
+            <h1 className="text-3xl font-bold tracking-tight">{tt("adminTenants.title")}</h1>
+            <p className="text-muted-foreground">{tt("adminTenants.subtitle")}</p>
           </div>
           <div className="flex items-center gap-2">
             <Dialog open={createOpen} onOpenChange={(o) => { setCreateOpen(o); if (!o) resetForm(); }}>
               <DialogTrigger asChild>
-                <Button size="sm"><Plus className="mr-2 h-4 w-4" /> Create Agency</Button>
+                <Button size="sm"><Plus className="mr-2 h-4 w-4" /> {tt("adminTenants.createAgency")}</Button>
               </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
-                  <DialogTitle>Create New Agency</DialogTitle>
-                  <DialogDescription>Manually create a company and its owner account with a subscription.</DialogDescription>
+                  <DialogTitle>{tt("adminTenants.dialog.createTitle")}</DialogTitle>
+                  <DialogDescription>{tt("adminTenants.dialog.createDesc")}</DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-2">
                   <div className="space-y-3">
-                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Company</h3>
+                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">{tt("adminTenants.sections.company")}</h3>
                     <div className="grid gap-2">
-                      <Label>Company Name *</Label>
+                      <Label>{tt("adminTenants.fields.companyName")} *</Label>
                       <Input value={form.tenantName} onChange={(e) => setForm({ ...form, tenantName: e.target.value })} placeholder="Al-Safa Travel Agency" />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="grid gap-2">
-                        <Label>Company Phone</Label>
+                        <Label>{tt("adminTenants.fields.companyPhone")}</Label>
                         <Input value={form.companyPhone} onChange={(e) => setForm({ ...form, companyPhone: e.target.value })} placeholder="+8801XXXXXXXXX" />
                       </div>
                       <div className="grid gap-2">
-                        <Label>Company WhatsApp</Label>
+                        <Label>{tt("adminTenants.fields.companyWhatsapp")}</Label>
                         <Input value={form.companyWhatsapp} onChange={(e) => setForm({ ...form, companyWhatsapp: e.target.value })} placeholder="+8801XXXXXXXXX" />
                       </div>
                     </div>
                     <div className="grid gap-2">
-                      <Label>Address</Label>
-                      <Input value={form.companyAddress} onChange={(e) => setForm({ ...form, companyAddress: e.target.value })} placeholder="Street, area" />
+                      <Label>{tt("adminTenants.fields.address")}</Label>
+                      <Input value={form.companyAddress} onChange={(e) => setForm({ ...form, companyAddress: e.target.value })} />
                     </div>
                     <div className="grid grid-cols-3 gap-3">
                       <div className="grid gap-2">
-                        <Label>City</Label>
+                        <Label>{tt("adminTenants.fields.city")}</Label>
                         <Input value={form.companyCity} onChange={(e) => setForm({ ...form, companyCity: e.target.value })} />
                       </div>
                       <div className="grid gap-2">
-                        <Label>Country</Label>
+                        <Label>{tt("adminTenants.fields.country")}</Label>
                         <Input value={form.companyCountry} onChange={(e) => setForm({ ...form, companyCountry: e.target.value })} />
                       </div>
                       <div className="grid gap-2">
-                        <Label>Website</Label>
-                        <Input value={form.companyWebsite} onChange={(e) => setForm({ ...form, companyWebsite: e.target.value })} placeholder="example.com" />
+                        <Label>{tt("adminTenants.fields.website")}</Label>
+                        <Input value={form.companyWebsite} onChange={(e) => setForm({ ...form, companyWebsite: e.target.value })} placeholder={tt("adminTenants.fields.websitePlaceholder")} />
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Owner Account</h3>
+                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">{tt("adminTenants.sections.ownerAccount")}</h3>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="grid gap-2">
-                        <Label>Owner Name *</Label>
+                        <Label>{tt("adminTenants.fields.ownerName")} *</Label>
                         <Input value={form.ownerName} onChange={(e) => setForm({ ...form, ownerName: e.target.value })} />
                       </div>
                       <div className="grid gap-2">
-                        <Label>Owner Email *</Label>
+                        <Label>{tt("adminTenants.fields.ownerEmail")} *</Label>
                         <Input type="email" value={form.ownerEmail} onChange={(e) => setForm({ ...form, ownerEmail: e.target.value })} />
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="grid gap-2">
-                        <Label>Owner Mobile</Label>
+                        <Label>{tt("adminTenants.fields.ownerMobile")}</Label>
                         <Input value={form.ownerPhone} onChange={(e) => setForm({ ...form, ownerPhone: e.target.value })} placeholder="+8801XXXXXXXXX" />
                       </div>
                       <div className="grid gap-2">
-                        <Label>Owner WhatsApp</Label>
+                        <Label>{tt("adminTenants.fields.ownerWhatsapp")}</Label>
                         <Input value={form.ownerWhatsapp} onChange={(e) => setForm({ ...form, ownerWhatsapp: e.target.value })} placeholder="+8801XXXXXXXXX" />
                       </div>
                     </div>
                     <div className="grid gap-2">
-                      <Label>Temporary Password *</Label>
-                      <Input type="text" value={form.ownerPassword} onChange={(e) => setForm({ ...form, ownerPassword: e.target.value })} placeholder="Min 6 characters" />
+                      <Label>{tt("adminTenants.fields.tempPassword")} *</Label>
+                      <Input type="text" value={form.ownerPassword} onChange={(e) => setForm({ ...form, ownerPassword: e.target.value })} placeholder={tt("adminTenants.fields.passwordPlaceholder")} />
                     </div>
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Subscription</h3>
+                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">{tt("adminTenants.sections.subscription")}</h3>
                     <div className="grid grid-cols-3 gap-3">
                       <div className="grid gap-2">
-                        <Label>Plan</Label>
+                        <Label>{tt("adminTenants.fields.plan")}</Label>
                         <Select value={form.subscriptionPlan} onValueChange={(v) => setForm({ ...form, subscriptionPlan: v })}>
                           <SelectTrigger><SelectValue /></SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="basic">Basic</SelectItem>
-                            <SelectItem value="pro">Pro</SelectItem>
-                            <SelectItem value="business">Business</SelectItem>
-                            <SelectItem value="enterprise">Unlimited</SelectItem>
+                            <SelectItem value="basic">{tt("adminTenants.plans.basic")}</SelectItem>
+                            <SelectItem value="pro">{tt("adminTenants.plans.pro")}</SelectItem>
+                            <SelectItem value="business">{tt("adminTenants.plans.business")}</SelectItem>
+                            <SelectItem value="enterprise">{tt("adminTenants.plans.enterprise")}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div className="grid gap-2">
-                        <Label>Status</Label>
+                        <Label>{tt("adminTenants.fields.status")}</Label>
                         <Select value={form.subscriptionStatus} onValueChange={(v) => setForm({ ...form, subscriptionStatus: v })}>
                           <SelectTrigger><SelectValue /></SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="active">Active</SelectItem>
-                            <SelectItem value="trial">Trial</SelectItem>
-                            <SelectItem value="suspended">Suspended</SelectItem>
+                            <SelectItem value="active">{tt("adminTenants.status.active")}</SelectItem>
+                            <SelectItem value="trial">{tt("adminTenants.status.trial")}</SelectItem>
+                            <SelectItem value="suspended">{tt("adminTenants.status.suspended")}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div className="grid gap-2">
-                        <Label>Months</Label>
+                        <Label>{tt("adminTenants.fields.months")}</Label>
                         <Input type="number" min={1} value={form.subscriptionMonths} onChange={(e) => setForm({ ...form, subscriptionMonths: Number(e.target.value) })} />
                       </div>
                     </div>
                     <div className="grid gap-2">
-                      <Label>Notes (internal)</Label>
-                      <Input value={form.companyNotes} onChange={(e) => setForm({ ...form, companyNotes: e.target.value })} placeholder="Optional internal notes" />
+                      <Label>{tt("adminTenants.fields.notesInternal")}</Label>
+                      <Input value={form.companyNotes} onChange={(e) => setForm({ ...form, companyNotes: e.target.value })} placeholder={tt("adminTenants.fields.notesPlaceholder")} />
                     </div>
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button variant="outline" onClick={() => setCreateOpen(false)} disabled={creating}>Cancel</Button>
-                  <Button onClick={handleCreate} disabled={creating}>{creating ? "Creating…" : "Create Agency"}</Button>
+                  <Button variant="outline" onClick={() => setCreateOpen(false)} disabled={creating}>{tt("adminTenants.actions.cancel")}</Button>
+                  <Button onClick={handleCreate} disabled={creating}>{creating ? tt("adminTenants.creating") : tt("adminTenants.createAgency")}</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
             <Button variant="outline" size="sm" onClick={fetchTenants} disabled={loading}>
-              <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> Refresh
+              <RefreshCw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} /> {tt("adminTenants.refresh")}
             </Button>
           </div>
         </div>
