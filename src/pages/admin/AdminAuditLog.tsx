@@ -21,6 +21,7 @@ import { auditLogApi, type AuditLogEntry } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
 
 const AdminAuditLog = () => {
+  const { t } = useTranslation();
   const [logs, setLogs] = useState<AuditLogEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
