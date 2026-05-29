@@ -22,6 +22,7 @@ import {
 const planIcons: Record<string, React.ElementType> = { free: Star, basic: Zap, pro: Crown, business: Rocket, enterprise: Gem };
 
 const Pricing = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const { register } = useAuth();
   const navigate = useNavigate();
