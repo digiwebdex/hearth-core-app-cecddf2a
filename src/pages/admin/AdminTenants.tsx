@@ -310,11 +310,11 @@ const AdminTenants = () => {
 
         <div className="flex items-center gap-2 max-w-sm">
           <Search className="h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Search by name or email…" value={search} onChange={(e) => setSearch(e.target.value)} />
+          <Input placeholder={tt("adminTenants.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
 
         <Card>
-          <CardHeader><CardTitle>Companies ({filtered.length})</CardTitle></CardHeader>
+          <CardHeader><CardTitle>{tt("adminTenants.companies", { count: filtered.length })}</CardTitle></CardHeader>
           <CardContent>
             {loading ? (
               <div className="space-y-3">{[1,2,3,4,5].map(i => <Skeleton key={i} className="h-12 w-full" />)}</div>
@@ -322,62 +322,64 @@ const AdminTenants = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Company</TableHead>
-                    <TableHead>Owner</TableHead>
-                    <TableHead>Plan</TableHead>
-                    <TableHead className="text-center">Users</TableHead>
-                    <TableHead className="text-center">Bookings</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Created</TableHead>
-                    <TableHead className="w-[200px]">Actions</TableHead>
+                    <TableHead>{tt("adminTenants.table.company")}</TableHead>
+                    <TableHead>{tt("adminTenants.table.owner")}</TableHead>
+                    <TableHead>{tt("adminTenants.table.plan")}</TableHead>
+                    <TableHead className="text-center">{tt("adminTenants.table.users")}</TableHead>
+                    <TableHead className="text-center">{tt("adminTenants.table.bookings")}</TableHead>
+                    <TableHead>{tt("adminTenants.table.status")}</TableHead>
+                    <TableHead>{tt("adminTenants.table.created")}</TableHead>
+                    <TableHead className="w-[200px]">{tt("adminTenants.table.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filtered.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={8} className="text-center text-muted-foreground py-8">No agencies found.</TableCell>
+                      <TableCell colSpan={8} className="text-center text-muted-foreground py-8">{tt("adminTenants.noAgencies")}</TableCell>
                     </TableRow>
                   ) : (
-                    filtered.map((t) => {
-                      const owner = t.users?.find((u) => u.role === "tenant_owner" || u.role === "owner") || t.users?.[0];
+                    filtered.map((tn) => {
+                      const owner = tn.users?.find((u) => u.role === "tenant_owner" || u.role === "owner") || tn.users?.[0];
+                      const planKey = (tn.subscriptionPlan || "free") as string;
+                      const planLabel = tt(`adminTenants.plans.${planKey}`, { defaultValue: planKey });
                       return (
-                        <TableRow key={t.id} className={t.subscriptionStatus === "suspended" ? "opacity-60" : ""}>
-                          <TableCell className="font-medium">{t.name}</TableCell>
+                        <TableRow key={tn.id} className={tn.subscriptionStatus === "suspended" ? "opacity-60" : ""}>
+                          <TableCell className="font-medium">{tn.name}</TableCell>
                           <TableCell>
                             <div>
                               <p className="text-sm">{owner?.name || "—"}</p>
                               <p className="text-xs text-muted-foreground">{owner?.email || "—"}</p>
                             </div>
                           </TableCell>
-                          <TableCell><Badge variant="secondary" className="capitalize">{t.subscriptionPlan || "free"}</Badge></TableCell>
-                          <TableCell className="text-center">{t._count?.users || 0}</TableCell>
-                          <TableCell className="text-center">{t._count?.bookings || 0}</TableCell>
+                          <TableCell><Badge variant="secondary">{planLabel}</Badge></TableCell>
+                          <TableCell className="text-center">{tn._count?.users || 0}</TableCell>
+                          <TableCell className="text-center">{tn._count?.bookings || 0}</TableCell>
                           <TableCell>
-                            {t.subscriptionStatus === "active" ? (
-                              <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Active</Badge>
-                            ) : t.subscriptionStatus === "suspended" ? (
-                              <Badge variant="destructive">Suspended</Badge>
+                            {tn.subscriptionStatus === "active" ? (
+                              <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">{tt("adminTenants.status.active")}</Badge>
+                            ) : tn.subscriptionStatus === "suspended" ? (
+                              <Badge variant="destructive">{tt("adminTenants.status.suspended")}</Badge>
                             ) : (
-                              <Badge variant="secondary" className="capitalize">{t.subscriptionStatus || "—"}</Badge>
+                              <Badge variant="secondary">{tt(`adminTenants.status.${tn.subscriptionStatus}`, { defaultValue: tn.subscriptionStatus || "—" })}</Badge>
                             )}
                           </TableCell>
-                          <TableCell className="text-muted-foreground text-sm">{new Date(t.createdAt).toLocaleDateString()}</TableCell>
+                          <TableCell className="text-muted-foreground text-sm">{new Date(tn.createdAt).toLocaleDateString()}</TableCell>
                           <TableCell>
                             <div className="flex gap-1">
-                              <Button variant="ghost" size="icon" onClick={() => navigate(`/admin/tenants/${t.id}`)} title="View details">
+                              <Button variant="ghost" size="icon" onClick={() => navigate(`/admin/tenants/${tn.id}`)} title={tt("adminTenants.actions.viewDetails")}>
                                 <Eye className="h-4 w-4" />
                               </Button>
-                              <Button variant="ghost" size="icon" onClick={() => openEdit(t)} title="Edit">
+                              <Button variant="ghost" size="icon" onClick={() => openEdit(tn)} title={tt("adminTenants.actions.edit")}>
                                 <Pencil className="h-4 w-4" />
                               </Button>
-                              <Button variant="ghost" size="icon" onClick={() => toggleSuspend(t)} title={t.subscriptionStatus === "suspended" ? "Reactivate" : "Suspend"}>
-                                {t.subscriptionStatus === "suspended" ? (
+                              <Button variant="ghost" size="icon" onClick={() => toggleSuspend(tn)} title={tn.subscriptionStatus === "suspended" ? tt("adminTenants.actions.reactivate") : tt("adminTenants.actions.suspend")}>
+                                {tn.subscriptionStatus === "suspended" ? (
                                   <CheckCircle className="h-4 w-4 text-green-600" />
                                 ) : (
                                   <Ban className="h-4 w-4 text-destructive" />
                                 )}
                               </Button>
-                              <Button variant="ghost" size="icon" onClick={() => setDeleteTarget(t)} title="Delete">
+                              <Button variant="ghost" size="icon" onClick={() => setDeleteTarget(tn)} title={tt("adminTenants.actions.delete")}>
                                 <Trash2 className="h-4 w-4 text-destructive" />
                               </Button>
                             </div>
