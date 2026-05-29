@@ -9,7 +9,7 @@ import { PLANS } from "@/lib/plans";
 import {
   Plane, BarChart3, Shield, Moon, Receipt,
   Check, ArrowRight, Zap, Crown, Rocket, Gem, Star,
-  Target, FileText, Store, ChevronDown, Quote,
+  Target, FileText, Store, UserCheck, MapPin, ChevronDown, Quote,
 } from "lucide-react";
 
 const BRAND = "Travel Agency Website & Software Solution";
