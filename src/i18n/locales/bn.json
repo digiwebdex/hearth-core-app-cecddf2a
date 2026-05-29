@@ -1187,5 +1187,91 @@
       "converted": "কোটেশন থেকে বুকিং তৈরি হয়েছে!",
       "error": "ত্রুটি"
     }
+  },
+  "quotationBuilder": {
+    "back": "কোটেশনে ফিরে যান",
+    "newTitle": "নতুন কোটেশন",
+    "editTitle": "কোটেশন এডিট",
+    "saveDraft": "ড্রাফট সংরক্ষণ",
+    "saveSend": "সংরক্ষণ ও পাঠান",
+    "errorLoading": "কোটেশন লোড করতে ত্রুটি",
+    "updated": "কোটেশন আপডেট হয়েছে",
+    "created": "কোটেশন তৈরি হয়েছে",
+    "error": "ত্রুটি",
+    "pickDate": "তারিখ নির্বাচন করুন",
+    "tabs": {
+      "details": "বিস্তারিত",
+      "itinerary": "ভ্রমণসূচি ({{count}} দিন)",
+      "pricing": "মূল্য ({{count}} আইটেম)",
+      "notes": "নোট ও শর্তাবলী"
+    },
+    "details": {
+      "section": "কোটেশন বিস্তারিত",
+      "title": "কোটেশন শিরোনাম *",
+      "titlePh": "যেমন: মালয়েশিয়া ফ্যামিলি ট্যুর — ৪ রাত/৫ দিন",
+      "clientName": "ক্লায়েন্টের নাম",
+      "clientNamePh": "যেমন: জনাব করিম আহমেদ",
+      "leadName": "লিডের নাম (যদি লিড থেকে আসে)",
+      "leadNamePh": "ঐচ্ছিক — বিদ্যমান লিডের সাথে সংযুক্ত করুন",
+      "destination": "গন্তব্য *",
+      "destinationPh": "যেমন: দুবাই ও আবু ধাবি, UAE",
+      "travelers": "ভ্রমণকারীর সংখ্যা",
+      "travelFrom": "ভ্রমণ শুরু",
+      "travelTo": "ভ্রমণ শেষ",
+      "validUntil": "কোটেশন বৈধতার শেষ তারিখ"
+    },
+    "itinerary": {
+      "dayBadge": "দিন {{n}}",
+      "dayTitlePh": "দিনের শিরোনাম",
+      "description": "বিবরণ",
+      "descriptionPh": "দিনের কার্যক্রম, দর্শনীয় স্থান ও অভিজ্ঞতা বর্ণনা করুন...",
+      "meals": "খাবার",
+      "mealsPh": "যেমন: সকালের নাস্তা, দুপুরের খাবার",
+      "accommodation": "আবাসন",
+      "accommodationPh": "যেমন: হিল্টন পাতায়া",
+      "addDay": "দিন {{n}} যোগ করুন"
+    },
+    "pricing": {
+      "lineItems": "লাইন আইটেম",
+      "addItem": "আইটেম যোগ",
+      "descriptionPh": "বিবরণ",
+      "th": {
+        "type": "ধরন",
+        "description": "বিবরণ",
+        "cost": "খরচ (৳)",
+        "markup": "মার্কআপ %",
+        "selling": "বিক্রয়মূল্য (৳)",
+        "qty": "পরিমাণ",
+        "nights": "রাত",
+        "subtotal": "সাবটোটাল"
+      },
+      "totals": {
+        "totalCost": "মোট খরচ",
+        "totalSelling": "মোট বিক্রয়",
+        "discount": "ছাড়",
+        "tax": "কর",
+        "grandTotal": "সর্বমোট",
+        "estProfit": "আনুমানিক লাভ",
+        "profitMargin": "লাভের মার্জিন"
+      }
+    },
+    "itemTypes": {
+      "hotel": "হোটেল / আবাসন",
+      "flight": "ফ্লাইট / এয়ার টিকিট",
+      "visa": "ভিসা প্রসেসিং",
+      "transport": "পরিবহন / ট্রান্সফার",
+      "tour": "ট্যুর / দর্শনীয় স্থান",
+      "activity": "কার্যক্রম / ভ্রমণ",
+      "insurance": "ভ্রমণ বীমা",
+      "service_fee": "সার্ভিস ফি",
+      "discount": "ছাড়",
+      "tax": "কর / VAT"
+    },
+    "notes": {
+      "internal": "অভ্যন্তরীণ নোট",
+      "internalPh": "অভ্যন্তরীণ নোট (ক্লায়েন্টকে দেখানো হবে না)...",
+      "terms": "শর্তাবলী",
+      "termsPh": "শর্তাবলী লিখুন..."
+    }
   }
 }
