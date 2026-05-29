@@ -55,6 +55,13 @@ export const authApi = {
       method: "POST",
       body: JSON.stringify({ token, password }),
     }),
+  verifyEmail: (token: string) =>
+    request<{ message: string; email: string }>("/auth/verify-email", {
+      method: "POST",
+      body: JSON.stringify({ token }),
+    }),
+  resendVerification: () =>
+    request<{ message: string }>("/auth/resend-verification", { method: "POST" }),
   logout: () =>
     request<{ message: string }>("/auth/logout", { method: "POST" }).catch(() => {}),
 };
@@ -237,6 +244,7 @@ export interface User {
   email: string;
   role: "super_admin" | "tenant_owner" | "manager" | "sales_agent" | "accountant" | "operations" | "owner" | "admin" | "member";
   tenantId: string;
+  emailVerified?: boolean;
   createdAt: string;
 }
 
