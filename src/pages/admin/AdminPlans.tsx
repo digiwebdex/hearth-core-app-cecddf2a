@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import AdminLayout from "@/components/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -87,7 +88,21 @@ const emptyForm: Omit<Plan, "id"> = {
   active: true,
 };
 
+const LIMIT_KEYS = [
+  "maxClients", "maxBookings", "maxUsers", "maxBranches",
+  "maxSmsPerMonth", "maxStorageMB", "maxReports", "maxLeads", "maxQuotations",
+] as const;
+
+const FEATURE_KEYS = [
+  "hasCustomDomain", "hasEmailNotifications", "hasSmsIntegration", "hasWhatsApp",
+  "hasAgentCommission", "hasAdvancedAnalytics", "hasRefundSystem", "hasApiAccess",
+  "hasHajjUmrah", "hasPrioritySupport",
+] as const;
+
+const GATEWAYS = ["manual", "sslcommerz", "bkash", "custom"] as const;
+
 const AdminPlans = () => {
+  const { t } = useTranslation();
   const [plans, setPlans] = useState<Plan[]>(defaultPlans);
   const [form, setForm] = useState<Omit<Plan, "id">>(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -100,10 +115,10 @@ const AdminPlans = () => {
     e.preventDefault();
     if (editingId) {
       setPlans((prev) => prev.map((p) => p.id === editingId ? { ...p, ...form } : p));
-      toast({ title: "Plan updated" });
+      toast({ title: t("adminPlans.toast.updated") });
     } else {
       setPlans((prev) => [...prev, { ...form, id: crypto.randomUUID() }]);
-      toast({ title: "Plan created" });
+      toast({ title: t("adminPlans.toast.created") });
     }
     resetForm();
     setDialogOpen(false);
@@ -136,48 +151,46 @@ const AdminPlans = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Manage Plans</h1>
-            <p className="text-muted-foreground">Configure pricing, limits, and features per plan</p>
+            <h1 className="text-3xl font-bold tracking-tight">{t("adminPlans.title")}</h1>
+            <p className="text-muted-foreground">{t("adminPlans.subtitle")}</p>
           </div>
           <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) resetForm(); }}>
             <DialogTrigger asChild>
-              <Button><Plus className="mr-2 h-4 w-4" />Add Plan</Button>
+              <Button><Plus className="mr-2 h-4 w-4" />{t("adminPlans.addPlan")}</Button>
             </DialogTrigger>
             <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader><DialogTitle>{editingId ? "Edit" : "Create"} Plan</DialogTitle></DialogHeader>
+              <DialogHeader><DialogTitle>{editingId ? t("adminPlans.editPlan") : t("adminPlans.createPlan")}</DialogTitle></DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Basic Info */}
                 <div className="grid grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label>Plan Name</Label>
+                    <Label>{t("adminPlans.fields.name")}</Label>
                     <Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required />
                   </div>
                   <div className="space-y-2">
-                    <Label>Slug</Label>
+                    <Label>{t("adminPlans.fields.slug")}</Label>
                     <Input value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} required />
                   </div>
                   <div className="space-y-2">
-                    <Label>Trial Days</Label>
+                    <Label>{t("adminPlans.fields.trialDays")}</Label>
                     <Input type="number" min={0} value={form.trialDays} onChange={(e) => setForm((f) => ({ ...f, trialDays: parseInt(e.target.value) || 0 }))} />
                   </div>
                 </div>
 
-                {/* Pricing */}
                 <div>
-                  <h4 className="text-sm font-medium mb-3 flex items-center gap-1"><DollarSign className="h-4 w-4" /> Pricing</h4>
+                  <h4 className="text-sm font-medium mb-3 flex items-center gap-1"><DollarSign className="h-4 w-4" /> {t("adminPlans.fields.pricing")}</h4>
                   <div className="grid grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label>Monthly (৳)</Label>
+                      <Label>{t("adminPlans.fields.monthly")}</Label>
                       <Input type="number" min={0} value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: parseFloat(e.target.value) || 0 }))} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Yearly (৳)</Label>
+                      <Label>{t("adminPlans.fields.yearly")}</Label>
                       <Input type="number" min={0} value={form.yearlyPrice} onChange={(e) => setForm((f) => ({ ...f, yearlyPrice: parseFloat(e.target.value) || 0 }))} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Yearly Savings</Label>
+                      <Label>{t("adminPlans.fields.yearlySavings")}</Label>
                       <div className="flex h-10 items-center rounded-md border px-3 text-sm font-medium text-green-600">
-                        {yearlySavings > 0 ? `৳${yearlySavings.toLocaleString()} saved` : "—"}
+                        {yearlySavings > 0 ? t("adminPlans.fields.saved", { amount: yearlySavings.toLocaleString() }) : "—"}
                       </div>
                     </div>
                   </div>
@@ -185,23 +198,12 @@ const AdminPlans = () => {
 
                 <Separator />
 
-                {/* Limits */}
                 <div>
-                  <h4 className="text-sm font-medium mb-3">Feature Limits (-1 = unlimited)</h4>
+                  <h4 className="text-sm font-medium mb-3">{t("adminPlans.fields.limitsTitle")}</h4>
                   <div className="grid grid-cols-4 gap-3">
-                    {[
-                      { key: "maxClients", label: "Clients" },
-                      { key: "maxBookings", label: "Bookings" },
-                      { key: "maxUsers", label: "Users" },
-                      { key: "maxBranches", label: "Branches" },
-                      { key: "maxSmsPerMonth", label: "SMS/month" },
-                      { key: "maxStorageMB", label: "Storage (MB)" },
-                      { key: "maxReports", label: "Reports" },
-                      { key: "maxLeads", label: "Leads" },
-                      { key: "maxQuotations", label: "Quotations" },
-                    ].map(({ key, label }) => (
+                    {LIMIT_KEYS.map((key) => (
                       <div key={key} className="space-y-1">
-                        <Label className="text-xs">{label}</Label>
+                        <Label className="text-xs">{t(`adminPlans.limits.${key}`)}</Label>
                         <Input type="number" value={(form as any)[key]} onChange={(e) => setForm((f) => ({ ...f, [key]: parseInt(e.target.value) || 0 }))} className="h-8 text-sm" />
                       </div>
                     ))}
@@ -210,42 +212,30 @@ const AdminPlans = () => {
 
                 <Separator />
 
-                {/* Features & Gateways */}
                 <div className="space-y-2">
-                  <Label>Features (comma-separated)</Label>
-                  <Input value={form.features} onChange={(e) => setForm((f) => ({ ...f, features: e.target.value }))} placeholder="Feature A, Feature B" />
+                  <Label>{t("adminPlans.fields.featuresLabel")}</Label>
+                  <Input value={form.features} onChange={(e) => setForm((f) => ({ ...f, features: e.target.value }))} placeholder={t("adminPlans.fields.featuresPlaceholder")} />
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Payment Gateways</Label>
+                  <Label>{t("adminPlans.fields.paymentGateways")}</Label>
                   <div className="flex flex-wrap gap-4">
-                    {["manual", "sslcommerz", "bkash", "custom"].map((gw) => (
+                    {GATEWAYS.map((gw) => (
                       <div key={gw} className="flex items-center gap-2">
                         <Checkbox checked={form.paymentGateways.includes(gw)} onCheckedChange={() => toggleGateway(gw)} />
-                        <Label className="text-sm capitalize">{gw}</Label>
+                        <Label className="text-sm">{t(`adminPlans.gateways.${gw}`)}</Label>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Feature Access</Label>
+                  <Label>{t("adminPlans.fields.featureAccess")}</Label>
                   <div className="grid grid-cols-3 gap-3">
-                    {[
-                      { key: "hasCustomDomain", label: "Custom Domain" },
-                      { key: "hasEmailNotifications", label: "Email" },
-                      { key: "hasSmsIntegration", label: "SMS" },
-                      { key: "hasWhatsApp", label: "WhatsApp" },
-                      { key: "hasAgentCommission", label: "Agent Commission" },
-                      { key: "hasAdvancedAnalytics", label: "Analytics" },
-                      { key: "hasRefundSystem", label: "Refund System" },
-                      { key: "hasApiAccess", label: "API Access" },
-                      { key: "hasHajjUmrah", label: "Hajj & Umrah" },
-                      { key: "hasPrioritySupport", label: "Priority Support" },
-                    ].map(({ key, label }) => (
+                    {FEATURE_KEYS.map((key) => (
                       <div key={key} className="flex items-center gap-2">
-                        <Switch checked={form[key as keyof typeof form] as boolean} onCheckedChange={(v) => setForm((f) => ({ ...f, [key]: v }))} />
-                        <Label className="text-sm">{label}</Label>
+                        <Switch checked={form[key] as boolean} onCheckedChange={(v) => setForm((f) => ({ ...f, [key]: v }))} />
+                        <Label className="text-sm">{t(`adminPlans.features.${key}`)}</Label>
                       </div>
                     ))}
                   </div>
@@ -253,11 +243,11 @@ const AdminPlans = () => {
 
                 <div className="flex items-center gap-2">
                   <Switch checked={form.active} onCheckedChange={(v) => setForm((f) => ({ ...f, active: v }))} />
-                  <Label>Active</Label>
+                  <Label>{t("adminPlans.fields.active")}</Label>
                 </div>
                 <div className="flex gap-2">
-                  <Button type="submit" className="flex-1">{editingId ? "Update" : "Create"}</Button>
-                  <DialogClose asChild><Button type="button" variant="outline">Cancel</Button></DialogClose>
+                  <Button type="submit" className="flex-1">{editingId ? t("adminPlans.actions.update") : t("adminPlans.actions.create")}</Button>
+                  <DialogClose asChild><Button type="button" variant="outline">{t("adminPlans.actions.cancel")}</Button></DialogClose>
                 </div>
               </form>
             </DialogContent>
@@ -265,23 +255,23 @@ const AdminPlans = () => {
         </div>
 
         <Card>
-          <CardHeader><CardTitle>Plans</CardTitle></CardHeader>
+          <CardHeader><CardTitle>{t("adminPlans.table.plans")}</CardTitle></CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead className="text-right">Monthly</TableHead>
-                    <TableHead className="text-right">Yearly</TableHead>
-                    <TableHead className="text-center">Trial</TableHead>
-                    <TableHead className="text-center">Users</TableHead>
-                    <TableHead className="text-center">Bookings</TableHead>
-                    <TableHead className="text-center">SMS</TableHead>
-                    <TableHead className="text-center">Storage</TableHead>
-                    <TableHead>Features</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[100px]">Actions</TableHead>
+                    <TableHead>{t("adminPlans.table.name")}</TableHead>
+                    <TableHead className="text-right">{t("adminPlans.table.monthly")}</TableHead>
+                    <TableHead className="text-right">{t("adminPlans.table.yearly")}</TableHead>
+                    <TableHead className="text-center">{t("adminPlans.table.trial")}</TableHead>
+                    <TableHead className="text-center">{t("adminPlans.table.users")}</TableHead>
+                    <TableHead className="text-center">{t("adminPlans.table.bookings")}</TableHead>
+                    <TableHead className="text-center">{t("adminPlans.table.sms")}</TableHead>
+                    <TableHead className="text-center">{t("adminPlans.table.storage")}</TableHead>
+                    <TableHead>{t("adminPlans.table.features")}</TableHead>
+                    <TableHead>{t("adminPlans.table.status")}</TableHead>
+                    <TableHead className="w-[100px]">{t("adminPlans.table.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -289,27 +279,27 @@ const AdminPlans = () => {
                     <TableRow key={p.id} className={!p.active ? "opacity-50" : ""}>
                       <TableCell className="font-medium">{p.name}</TableCell>
                       <TableCell className="text-right font-semibold">৳{p.price.toLocaleString()}</TableCell>
-                      <TableCell className="text-right text-sm">৳{p.yearlyPrice.toLocaleString()}/yr</TableCell>
-                      <TableCell className="text-center text-sm">{p.trialDays > 0 ? `${p.trialDays}d` : "—"}</TableCell>
+                      <TableCell className="text-right text-sm">{t("adminPlans.table.yearlySuffix", { amount: p.yearlyPrice.toLocaleString() })}</TableCell>
+                      <TableCell className="text-center text-sm">{p.trialDays > 0 ? t("adminPlans.table.trialDays", { days: p.trialDays }) : "—"}</TableCell>
                       <TableCell className="text-center text-sm">{getLimitLabel(p.maxUsers)}</TableCell>
                       <TableCell className="text-center text-sm">{getLimitLabel(p.maxBookings)}</TableCell>
                       <TableCell className="text-center text-sm">{getLimitLabel(p.maxSmsPerMonth)}</TableCell>
                       <TableCell className="text-center text-sm">{p.maxStorageMB === -1 ? "∞" : `${p.maxStorageMB} MB`}</TableCell>
                       <TableCell>
                         <div className="flex flex-wrap gap-1">
-                          {p.hasCustomDomain && <Badge variant="secondary" className="text-[10px]">Domain</Badge>}
-                          {p.hasSmsIntegration && <Badge variant="secondary" className="text-[10px]">SMS</Badge>}
-                          {p.hasWhatsApp && <Badge variant="secondary" className="text-[10px]">WA</Badge>}
-                          {p.hasAdvancedAnalytics && <Badge variant="secondary" className="text-[10px]">Analytics</Badge>}
-                          {p.hasApiAccess && <Badge variant="secondary" className="text-[10px]">API</Badge>}
-                          {p.hasHajjUmrah && <Badge variant="secondary" className="text-[10px]">Hajj</Badge>}
+                          {p.hasCustomDomain && <Badge variant="secondary" className="text-[10px]">{t("adminPlans.badges.domain")}</Badge>}
+                          {p.hasSmsIntegration && <Badge variant="secondary" className="text-[10px]">{t("adminPlans.badges.sms")}</Badge>}
+                          {p.hasWhatsApp && <Badge variant="secondary" className="text-[10px]">{t("adminPlans.badges.whatsapp")}</Badge>}
+                          {p.hasAdvancedAnalytics && <Badge variant="secondary" className="text-[10px]">{t("adminPlans.badges.analytics")}</Badge>}
+                          {p.hasApiAccess && <Badge variant="secondary" className="text-[10px]">{t("adminPlans.badges.api")}</Badge>}
+                          {p.hasHajjUmrah && <Badge variant="secondary" className="text-[10px]">{t("adminPlans.badges.hajj")}</Badge>}
                         </div>
                       </TableCell>
                       <TableCell>
                         {p.active ? (
-                          <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Active</Badge>
+                          <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">{t("adminPlans.table.active")}</Badge>
                         ) : (
-                          <Badge variant="secondary">Inactive</Badge>
+                          <Badge variant="secondary">{t("adminPlans.table.inactive")}</Badge>
                         )}
                       </TableCell>
                       <TableCell>
